@@ -6,7 +6,7 @@ import './App.css';
 import StudentSignUp from './Components/StudentSignUp';
 import TeacherSignUp from './Components/TeacherSignUp';
 import CreatePost from './Components/CreatePost';
-import SignIn from './components/SignIn';
+import SignIn from './Components/SignIn'
 
 
 function App() {
@@ -16,6 +16,10 @@ function App() {
       
       
     <Route path="/in" element={ <SignIn/>} />
+    <Route path="/StudentSignUp"element={<StudentSignUp/>} />
+
+    <Route path="/TeacherSignUp"element={<TeacherSignUp/>} />
+
       </Routes>
       </Router>
   );
