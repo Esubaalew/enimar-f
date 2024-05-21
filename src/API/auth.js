@@ -4,9 +4,12 @@ const domain = 'http://127.0.0.1:8000/';
 // const domain = 'http://localhost:8000/';
 
 // Function to sign up a user
-export const signUpStudent= async (userData) => {
+
+
+
+export const signIn = async (userData) => {
   try {
-    const response = await axios.post(`${domain}/account/signup/student/`, userData);
+    const response = await axios.post(`${domain}/account/signin/`, userData);
     return response.data;
   } catch (error) {
     throw error.response.data;
@@ -26,4 +29,17 @@ export const signUpTeacher = async (teacherData) => {
   }
 };
 
+export const signUpStudent = async (teacherData) => {
+  try {
+    const response = await axios.post(`${domain}/account/signup/student/`, teacherData);
+    return response.data; // Ensure the correct path to the data
+  } catch (error) {
+    console.error('Error signing up teacher:', error);
+    // Handle the error appropriately
+    throw error;
+  }
+};
+
+
   
+
