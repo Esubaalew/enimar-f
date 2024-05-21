@@ -1,0 +1,29 @@
+import axios from 'axios';
+
+const domain = 'http://127.0.0.1:8000/';
+// const domain = 'http://localhost:8000/';
+
+// Function to sign up a user
+export const signUpStudent= async (userData) => {
+  try {
+    const response = await axios.post(`${domain}/account/signup/student/`, userData);
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};
+// auth.js
+
+
+export const signUpTeacher = async (teacherData) => {
+  try {
+    const response = await axios.post(`${domain}/account/signup/teacher/`, teacherData);
+    return response.data; // Ensure the correct path to the data
+  } catch (error) {
+    console.error('Error signing up teacher:', error);
+    // Handle the error appropriately
+    throw error;
+  }
+};
+
+  
