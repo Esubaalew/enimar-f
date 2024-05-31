@@ -1,7 +1,16 @@
 import '../styles/Guest.css';
 import guestImage from '../assets/images/guestL.jpeg';
+import { useNavigate } from 'react-router-dom';
 
 const Guest = () => {
+    const navigate = useNavigate();
+    const handleSSignUp = () => {
+      navigate('/StudentSignUp');
+    };
+    const handleTSignUp = () => {
+        navigate('/TeacherSignUp');
+        }
+
   return (
     <div className="guest-container">
       <header className="guest-header">
@@ -21,8 +30,8 @@ const Guest = () => {
               from experts, and bring your projects to life.
             </p>
             <div className="buttons">
-              <button className="btn-primary">Sign Up</button>
-              <button className="btn-secondary">Learn More</button>
+              <button className="btn-primary" onClick={handleSSignUp}>Learn Today</button>
+              <button className="btn-secondary" onClick={handleTSignUp} >Start Teaching</button>
             </div>
           </div>
           <div className="intro-image">

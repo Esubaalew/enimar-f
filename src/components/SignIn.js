@@ -40,16 +40,21 @@ const SignIn = () => {
 
   return (
     <div className="signin-container">
-      <h2>Sign In</h2>
-      <div className="signin-form">
-        <input type="text" name="username" placeholder="Username" onChange={handleChange} className="input-field" />
-        <input type="password" name="password" placeholder="Password" onChange={handleChange} className="input-field" />
-        {error && <p className="error-message">{error}</p>}
-        <button onClick={handleSignIn} className="signin-button" disabled={loading}>
-          {loading ? <i className="fa fa-spinner fa-spin"></i> : 'Sign In'}
-        </button>
-        <p className="forgot-password-link"><Link to="/reset">Forgot Password?</Link></p>
-        <p className="register-link">Not Registered Yet? <Link to="/signup">Register</Link></p>
+      <div className="left-side">
+        <h1>Enimar Code Learning</h1>
+        <p>Connect with friends and the world around you on Enimar Code Learning.</p>
+      </div>
+      <div className="right-side">
+        <div className="signin-form">
+          <input type="text" name="username" placeholder="Username" onChange={handleChange} className="input-field" />
+          <input type="password" name="password" placeholder="Password" onChange={handleChange} className="input-field" />
+          {error && <p className="error-message">{error}</p>}
+          <button onClick={handleSignIn} className="signin-button" disabled={loading}>
+            {loading ? <i className="fa fa-spinner fa-spin"></i> : 'Sign In'}
+          </button>
+          <p className="forgot-password-link"><Link to="/reset">Forgot Password?</Link></p>
+          <p className="register-link">Not Registered Yet? <Link to="/signup">Register</Link></p>
+        </div>
       </div>
     </div>
   );
