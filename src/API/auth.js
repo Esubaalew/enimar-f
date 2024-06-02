@@ -15,7 +15,6 @@ export const signIn = async (userData) => {
     throw error.response.data;
   }
 };
-// auth.js
 
 
 export const signUpTeacher = async (teacherData) => {
@@ -41,5 +40,16 @@ export const signUpStudent = async (teacherData) => {
 };
 
 
-  
-
+  // Function to get details of the logged-in user
+export const getLoggedInUser = async (accessToken) => {
+  try {
+    const response = await axios.get(`${domain}api/loggedin/`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    throw error.response.data;
+  }
+};

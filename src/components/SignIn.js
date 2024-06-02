@@ -24,7 +24,7 @@ const SignIn = () => {
       const response = await signIn(userData);
       console.log('Signed in successfully:', response);
       localStorage.setItem('user', JSON.stringify(response));
-      navigate('/');
+      navigate(`/`);
     } catch (error) {
       console.error('Error signing in:', error);
       setError('Invalid credentials. Please try again.');

@@ -7,6 +7,7 @@ import StudentSignUp from './Components/StudentSignUp';
 import TeacherSignUp from './Components/TeacherSignUp';
 import SignIn from './Components/SignIn'
 import Guest from './Components/Guest';
+import ProfilePage from './Components/ProfilePage';
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
     <Routes>
 
     <Route path="/in" element={ <SignIn/>} />
+    <Route path="/user/:username" element={<ProfilePage />} />
     <Route path="/StudentSignUp"element={<StudentSignUp/>} />
     <Route path="/TeacherSignUp"element={<TeacherSignUp/>} />
     <Route path="/" element={<Guest/>}/>
