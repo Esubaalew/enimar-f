@@ -5,6 +5,7 @@ import {
     getUserFollowers,
     getUserFollowing,
     getPostsByUser,
+    getCoursesByTeacher
 } from './users'; // Make sure to import your API functions correctly
 import './Profile.css'; // Import the CSS file
 

@@ -14,6 +14,7 @@ import {
   updateFirstName,
   updateLastName,
   updateBio,
+  getCoursesByTeacher,  // Add this import
 } from '../API/users';
 import { getLoggedInUser } from '../API/auth';
 
@@ -32,7 +33,7 @@ const ProfilePage = () => {
   const [lastName, setLastName] = useState('');
   const [bio, setBio] = useState('');
   const [isEditingProfile, setIsEditingProfile] = useState(false);
-
+  const [courses, setCourses] = useState([]); // Add this state
   
   const userData = JSON.parse(localStorage.getItem('user'));
   const accessToken = userData ? userData.access : null;
@@ -63,6 +64,12 @@ const ProfilePage = () => {
           }
           const isFollowingUser = followingUsers.some(followedUser => followedUser.followed_user === fetchedUser.id);
           setIsFollowing(isFollowingUser);
+        }
+
+        // Fetch courses if the user is a teacher
+        if (fetchedUser.is_teacher) {
+          const userCourses = await getCoursesByTeacher(fetchedUser.id, accessToken);
+          setCourses(userCourses);
         }
       } catch (error) {
         console.error('Error fetching user data:', error.message);
@@ -240,6 +247,9 @@ const ProfilePage = () => {
         <button className={`tab ${selectedTab === 'posts' ? 'active' : ''}`} onClick={() => handleTabClick('posts')}>Posts</button>
         <button className={`tab ${selectedTab === 'following' ? 'active' : ''}`} onClick={() => handleTabClick('following')}>Following</button>
         <button className={`tab ${selectedTab === 'followers' ? 'active' : ''}`} onClick={() => handleTabClick('followers')}>Followers</button>
+        {user?.is_teacher && (
+          <button className={`tab ${selectedTab === 'courses' ? 'active' : ''}`} onClick={() => handleTabClick('courses')}>Courses</button>
+        )}
       </div>
 
       {selectedTab === 'posts' && (
@@ -298,6 +308,23 @@ const ProfilePage = () => {
                 <div className="following-info">
                   <h3>{followedUser.user?.first_name} {followedUser.user?.last_name}</h3>
                   <p className="username">@{followedUser.user?.username}</p>
+                </div>
+              </div>
+            ))
+          )}
+        </div>
+      )}
+
+      {selectedTab === 'courses' && user?.is_teacher && (
+        <div className="courses-container">
+          {courses.length === 0 ? (
+            <p>No courses found.</p>
+          ) : (
+            courses.map(course => (
+              <div key={course.id} className="course-card">
+                <div className="course-info">
+                  <h3>{course.title}</h3>
+                  <p>{course.description}</p>
                 </div>
               </div>
             ))
