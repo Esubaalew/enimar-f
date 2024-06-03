@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const domain = 'http://127.0.0.1:8000/';
+const domain = 'http://127.0.0.1:8000';
 // const domain = 'http://localhost:8000/';
 
 // Function to sign up a user

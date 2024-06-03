@@ -55,6 +55,7 @@ const ProfilePage = () => {
       try {
         const userPosts = await getPostsByUser(username, accessToken);
         setPosts(userPosts);
+        console.log('User posts:', userPosts);
         setLoading(false);
       } catch (error) {
         console.error('Error fetching user posts:', error.message);

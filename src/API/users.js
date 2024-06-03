@@ -69,6 +69,21 @@ export const getPostsByUser = async (username, accessToken) => {
     }
 }
 
+// get course by teaher
+export const getCoursesByTeacher = async (username, accessToken) => {
+    try {
+        const response = await axios.get(`${domain}/account/teacher/${username}/courses/`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching user courses:', error.response ? error.response.data : error.message);
+        throw new Error('Error fetching user courses');
+    }
+}
+
 // Function to follow a user
 const followUser = async (userId, accessToken) => {
     try {
@@ -200,4 +215,28 @@ const deleteUser = async (userId, accessToken) => {
         throw new Error('Error deleting user');
     }
 };
-export { getUserFollowers, getUserFollowing, getUserByUsername, followUser, unfollowUser, updateFirstName, updateLastName, updateBio, updateProfilePicture, deactivateUser, deleteUser};
+
+const getAllUsers = async (accessToken) => {
+    try {
+        const response = await axios.get(`${domain}/account/users/`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching all users:', error.response.data);
+        throw new Error('Error fetching all users');
+    }
+}
+
+export { 
+    getUserFollowers, 
+    getUserFollowing, 
+    getUserByUsername, 
+    followUser, unfollowUser, 
+    updateFirstName, updateLastName, 
+    updateBio, updateProfilePicture, 
+    deactivateUser, deleteUser,  
+    getAllUsers
+};
