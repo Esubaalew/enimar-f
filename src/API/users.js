@@ -3,7 +3,7 @@ import axios from 'axios';
 const domain = ' http://127.0.0.1:8000';
 const getUserFollowers = async (userId, accessToken) => {
     try {
-        const response = await axios.get(`/account/users/${userId}/followers/`, {
+        const response = await axios.get(`${domain}/account/users/${userId}/followers/`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -17,7 +17,7 @@ const getUserFollowers = async (userId, accessToken) => {
 
 const getUserFollowing = async (userId, accessToken) => {
     try {
-        const response = await axios.get(`/account/users/${userId}/following/`, {
+        const response = await axios.get(`${domain}/account/users/${userId}/following/`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -31,7 +31,7 @@ const getUserFollowing = async (userId, accessToken) => {
 // Function to get a user by username
 const getUserByUsername = async (username, accessToken) => {
     try {
-        const response = await axios.get(`${domain}account/user/${username}/`, {
+        const response = await axios.get(`${domain}/account/user/${username}/`, {
             headers: {
                 Authorization: `Bearer ${accessToken}`
             }
@@ -42,6 +42,7 @@ const getUserByUsername = async (username, accessToken) => {
         throw new Error('Error fetching user by username');
     }
 };
+
 export const getUserById = async (userId, accessToken) => {
     try {
         const response = await axios.get(`${domain}/account/users/${userId}/`, {

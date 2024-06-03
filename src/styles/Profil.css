@@ -1,71 +1,116 @@
+.profile-container {
+  width: 60%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
 .profile-card {
-    display: flex;
-    border: 1px solid #ccc;
-    border-radius: 8px;
-    margin-bottom: 20px;
-    padding: 20px;
-    background-color: #f9f9f9;
-  }
-  
-  .profile-picture {
-    width: 80px;
-    height: 80px;
-    border-radius: 50%;
-    background-color: #ccc;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    font-size: 24px;
-    color: #fff;
-    margin-right: 20px;
-  }
-  
-  .profile-info {
-    flex: 1;
-  }
-  
-  .profile-info h2 {
-    margin: 0 0 10px 0;
-  }
-  
-  .username {
-    color: #666;
-    font-size: 14px;
-  }
-  
-  .bio {
-    color: #333;
-    font-size: 16px;
-    margin-bottom: 10px;
-  }
-  
-  .follow-button {
-    background-color: #007bff;
-    color: #fff;
-    border: none;
-    padding: 8px 16px;
-    font-size: 14px;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .follow-button:hover {
-    background-color: #0056b3;
-  }
-  
-  @media (max-width: 768px) {
-    .profile-card {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-      width: 100%;
-    }
-  
-    .profile-picture {
-      margin-bottom: 10px;
-    }
-  }
-  .profile-card-link {
-    text-decoration: none;
-    color: inherit;
-  }
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.top-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.name-and-username {
+  margin-left: 20px;
+}
+
+.name-and-username h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.name-and-username .username {
+  color: #888;
+  font-size: 14px;
+}
+
+.bio {
+  margin: 20px 0;
+  font-size: 16px;
+}
+
+.button-container {
+  display: flex;
+  gap: 10px;
+}
+
+.btn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.edit-profile-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.follow-btn, .message-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.save-changes-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.cancel-edit-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.tabs-container {
+  display: flex;
+  margin-top: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.tab {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.tab.active {
+  border-bottom: 2px solid #007bff;
+  font-weight: bold;
+}
+
+.posts-container, .followers-container, .following-container {
+  margin-top: 20px;
+}
+
+.post-card, .follower-card, .following-card {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.post-header, .follower-info, .following-info {
+  display: flex;
+  align-items: center;
+}
+
+.post-info, .follower-info, .following-info {
+  margin-left: 20px;
+}
+
+.post-content {
+  margin-top: 10px;
+}
+
+.post-date {
+  color: #888;
+  font-size: 14px;
+}

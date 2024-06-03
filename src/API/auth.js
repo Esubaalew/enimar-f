@@ -43,7 +43,7 @@ export const signUpStudent = async (teacherData) => {
   // Function to get details of the logged-in user
 export const getLoggedInUser = async (accessToken) => {
   try {
-    const response = await axios.get(`${domain}api/loggedin/`, {
+    const response = await axios.get(`${domain}account/loggedin/`, {
       headers: {
         Authorization: `Bearer ${accessToken}`
       }
