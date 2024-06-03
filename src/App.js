@@ -7,6 +7,7 @@ import SignIn from './Components/SignIn'
 import Guest from './Components/Guest';
 import ProfilePage from './Components/ProfilePage';
 import ProfileList from './Components/ProfileList';
+import Home from './Components/Home';
 
 
 
@@ -20,6 +21,7 @@ function App() {
     <Route path="/TeacherSignUp"element={<TeacherSignUp/>} />
     <Route path="/community"element={<ProfileList/>} />
     <Route path="/" element={<Guest/>}/>
+    <Route path="/home" element={<Home/>} />
     </Routes>
      </Router>
   );
