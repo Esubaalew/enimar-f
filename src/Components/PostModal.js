@@ -1,21 +1,37 @@
 // components/PostModal.js
 import React, { useState } from 'react';
 import '../styles/PostModal.css';
+import { createPost } from '../API/posts';
 
 const PostModal = ({ onClose }) => {
   const [title, setTitle] = useState('');
   const [caption, setCaption] = useState('');
   const [photo, setPhoto] = useState(null);
+  const [error, setError] = useState(null);
+  const accessToken = JSON.parse(localStorage.getItem('user')).access;
 
   const handlePhotoChange = (event) => {
     setPhoto(event.target.files[0]);
   };
 
-  const handleSubmit = (event) => {
+  const handleSubmit = async (event) => {
     event.preventDefault();
-    // Handle form submission logic here
-    console.log({ title, caption, photo });
-    onClose();
+
+    const postData = new FormData();
+    postData.append('title', title);
+    postData.append('text', caption);
+    if (photo) {
+      postData.append('photo', photo);
+    }
+
+    try {
+      const newPost = await createPost(postData, accessToken);
+      console.log('New post created:', newPost);
+      onClose(); // Close the modal on success
+    } catch (error) {
+      setError(error.message);
+      console.error('Failed to create post:', error);
+    }
   };
 
   return (
@@ -31,6 +47,7 @@ const PostModal = ({ onClose }) => {
               value={title}
               onChange={(e) => setTitle(e.target.value)}
               placeholder="Enter a title"
+              required
             />
           </div>
           <div className="form-group">
@@ -40,6 +57,7 @@ const PostModal = ({ onClose }) => {
               value={caption}
               onChange={(e) => setCaption(e.target.value)}
               placeholder="Write a caption"
+              required
             />
           </div>
           <div className="form-group">
@@ -55,6 +73,7 @@ const PostModal = ({ onClose }) => {
             <button type="button" className="cancel-button" onClick={onClose}>Cancel</button>
           </div>
         </form>
+        {error && <p style={{ color: 'red' }}>{error}</p>}
       </div>
     </div>
   );
