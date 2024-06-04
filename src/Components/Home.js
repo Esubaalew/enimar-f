@@ -39,10 +39,10 @@ const Home = () => {
         })
         .catch(error => {
           console.error('Error fetching data:', error);
-          navigate('/login'); 
+          navigate('/in'); 
         });
     } else {
-      navigate('/login'); 
+      navigate('/in'); 
     }
   }, [navigate]);
 
