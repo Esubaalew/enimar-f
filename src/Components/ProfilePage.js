@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
 import ProfileIcon from './ProfileIcon';
-import '../styles/Profil.css';  // Ensure this path is correct
+import '../styles/Profil.css';  
 import {
   getUserByUsername,
   getPostsByUser,
@@ -14,7 +14,7 @@ import {
   updateFirstName,
   updateLastName,
   updateBio,
-  getCoursesByTeacher,  // Add this import
+  getCoursesByTeacher, 
 } from '../API/users';
 import { getLoggedInUser } from '../API/auth';
 

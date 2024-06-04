@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { getUserById } from '../API/users';
 import ProfileIcon from './ProfileIcon'; // Make sure to import the ProfileIcon component
 import { FaThumbsUp, FaCommentAlt, FaShare } from 'react-icons/fa'; // Import the icons
+import { formatDistanceToNow } from 'date-fns'; // Import the date-fns function
 import '../styles/PostCard.css';
 
 const PostCard = ({ post }) => {
@@ -29,14 +30,14 @@ const PostCard = ({ post }) => {
     }
 
     return (
-        <div className="postt-card">
+        <div className="post-card">
             <div className="post-header">
                 {user && (
                     <ProfileIcon firstName={user.first_name} lastName={user.last_name} />
                 )}
                 <div className="post-author">
                     <strong>{user?.username}</strong>
-                    <small>{new Date(post.created).toLocaleDateString()}</small>
+                    <small>{formatDistanceToNow(new Date(post.created))} ago</small>
                 </div>
             </div>
             <div className="post-content">
