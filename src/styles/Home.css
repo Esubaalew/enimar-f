@@ -71,7 +71,7 @@
     flex: 1;
   }
   
-  .course-list, .user-list {
+  .course-list {
     border: 1px solid #ddd;
     padding: 10px;
     margin: 10px 0;

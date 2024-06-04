@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getUserById } from '../API/users';
+import '../styles/CourseList.css';
 
 const CourseItem = ({ course, accessToken }) => {
     const [teacher, setTeacher] = useState(null);
@@ -26,9 +27,18 @@ const CourseItem = ({ course, accessToken }) => {
 
     return (
         <div className="course-item">
-            <h3>{course.title}</h3>
-            <p>{course.description}</p>
-            {teacher && <small>By: {teacher.username}</small>}
+            <div className="course-avatar">
+                {course.poster ? (
+                    <img src={course.poster} alt={`${course.title} poster`} className="course-poster" />
+                ) : (
+                    <div className="placeholder-avatar"></div>
+                )}
+            </div>
+            <div className="course-info">
+                <h3>{course.title}</h3>
+                <p>{course.description}</p>
+                {teacher && <small>By: {teacher.username}</small>}
+            </div>
         </div>
     );
 };
@@ -38,7 +48,7 @@ const CourseList = ({ courses }) => {
 
     return (
         <div className="course-list">
-            <h2>Available Courses</h2>
+            <h2>Recommended Courses</h2>
             {courses.map(course => (
                 <CourseItem key={course.id} course={course} accessToken={accessToken} />
             ))}
