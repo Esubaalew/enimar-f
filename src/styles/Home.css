@@ -37,3 +37,43 @@
     color: #9e9e9e;
   }
   
+
+  .home-container {
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .header {
+    display: flex;
+    justify-content: space-between;
+    padding: 10px;
+    background-color: #f8f9fa;
+  }
+  
+  .main-content {
+    display: flex;
+    justify-content: space-between;
+    padding: 20px;
+  }
+  
+  .post-section {
+    flex: 2;
+    margin-right: 20px;
+  }
+  
+  .post-card {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px 0;
+  }
+  
+  .sidebar {
+    flex: 1;
+  }
+  
+  .course-list, .user-list {
+    border: 1px solid #ddd;
+    padding: 10px;
+    margin: 10px 0;
+  }
+  

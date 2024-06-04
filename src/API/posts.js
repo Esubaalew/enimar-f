@@ -17,3 +17,18 @@ export const createPost = async (postData, accessToken) => {
     throw new Error('Error creating post');
   }
 }
+
+// Function to get all posts
+export const getPosts = async (accessToken) => {
+  try {
+    const response = await axios.get(`${domain}social/posts/`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching posts:', error.response ? error.response.data : error.message);
+    throw new Error('Error fetching posts');
+  }
+};
