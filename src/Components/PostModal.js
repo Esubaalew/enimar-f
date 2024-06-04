@@ -9,6 +9,7 @@ const PostModal = ({ onClose }) => {
   const [photo, setPhoto] = useState(null);
   const [error, setError] = useState(null);
   const accessToken = JSON.parse(localStorage.getItem('user')).access;
+  const author = JSON.parse(localStorage.getItem('user')).id; 
 
   const handlePhotoChange = (event) => {
     setPhoto(event.target.files[0]);
@@ -20,6 +21,7 @@ const PostModal = ({ onClose }) => {
     const postData = new FormData();
     postData.append('title', title);
     postData.append('text', caption);
+    postData.append('author', author);
     if (photo) {
       postData.append('photo', photo);
     }
@@ -27,7 +29,7 @@ const PostModal = ({ onClose }) => {
     try {
       const newPost = await createPost(postData, accessToken);
       console.log('New post created:', newPost);
-      onClose(); // Close the modal on success
+      onClose();
     } catch (error) {
       setError(error.message);
       console.error('Failed to create post:', error);
