@@ -6,6 +6,7 @@
     display: flex;
     align-items: center;
     margin-bottom: 16px;
+    background-color: whitesmoke;
   }
   
   .user-avatar {
@@ -32,9 +33,9 @@
   }
   
   .follow-button {
-    background-color: #1da1f2;
-    color: white;
-    border: none;
+    background-color: white;
+    color: black;
+    border: 1px solid #ddd;
     border-radius: 16px;
     padding: 6px 12px;
     font-size: 14px;

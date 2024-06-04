@@ -37,7 +37,7 @@ const CourseItem = ({ course, accessToken }) => {
             <div className="course-info">
                 <h3>{course.title}</h3>
                 <p>{course.description}</p>
-                {teacher && <small>By: {teacher.username}</small>}
+                {teacher && <small>By: {teacher.first_name + ' '+ teacher.last_name}</small>}
             </div>
         </div>
     );

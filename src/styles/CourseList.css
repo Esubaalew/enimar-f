@@ -4,6 +4,7 @@
     border-radius: 8px;
     padding: 16px;
     max-width: 300px;
+    margin-bottom: 10px;
   }
   
   .course-list h2 {
@@ -16,7 +17,7 @@
     align-items: center;
     margin-bottom: 16px;
     padding: 12px;
-    background-color: #f9f9f9;
+    background-color: whitesmoke;
     border-radius: 8px;
   }
   

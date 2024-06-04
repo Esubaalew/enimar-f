@@ -56,9 +56,12 @@ const Home = () => {
     <div className="home-container">
       <Header />
       <div className="main-content">
-        <div className="post-section" onClick={openModal}>
-          <ProfileIcon firstName={user?.first_name} lastName={user?.last_name} />
-          <input type="text" placeholder="What's on your mind?" />
+        <div className="post-section">
+          <div className="create-post-card" onClick={openModal}>
+            <ProfileIcon firstName={user?.first_name} lastName={user?.last_name} />
+            <input type="text" placeholder="What's on your mind?" />
+            <button type="button">Post</button>
+          </div>
           {isModalOpen && <PostModal onClose={() => setIsModalOpen(false)} />}
           {posts.map(post => (
             <PostCard key={post.id} post={post} />
