@@ -18,7 +18,6 @@ export const getAllSubsections = async (accessToken) => {
 };
 
 // function to add a subsection
-
 export const addSubsection = async (subsectionData, accessToken) => {
   try {
     const response = await axios.post(`${domain}learning/subsections/`, subsectionData, {
@@ -34,7 +33,6 @@ export const addSubsection = async (subsectionData, accessToken) => {
 };
 
 // get files of a subsection
-
 export const getSubsectionFiles = async (subsectionId, accessToken) => {
   try {
     const response = await axios.get(`${domain}learning/subsections/${subsectionId}/files/`, {
@@ -53,7 +51,6 @@ export const getSubsectionFiles = async (subsectionId, accessToken) => {
 
 
 // get a readings to a subsection
-
 export const getSubsectionReadings = async (subsectionId, accessToken) => {
   try {
     const response = await axios.get(`${domain}learning/subsections/${subsectionId}/readings/`, {
@@ -70,7 +67,6 @@ export const getSubsectionReadings = async (subsectionId, accessToken) => {
 
 
 // get a photos to a subsection
-
 export const getSubsectionPhotos = async (subsectionId, accessToken) => {
   try {
     const response = await axios.get(`${domain}learning/subsections/${subsectionId}/photos/`, {
@@ -87,7 +83,6 @@ export const getSubsectionPhotos = async (subsectionId, accessToken) => {
 
 
 // add a file to a subsection
-
 export const addSubsectionFile = async (fileData, accessToken) => {
   try {
     const response = await axios.post(`${domain}learning/files/`, fileData, {
@@ -103,7 +98,6 @@ export const addSubsectionFile = async (fileData, accessToken) => {
 }
 
 // add a reading to a subsection
-
 export const addSubsectionReading = async (readingData, accessToken) => {
   try {
     const response = await axios.post(`${domain}learning/readings/`, readingData, {
@@ -119,10 +113,9 @@ export const addSubsectionReading = async (readingData, accessToken) => {
 }
 
 // add a photo to a subsection
-
 export const addSubsectionPhoto = async (photoData, accessToken) => {
   try {
-    const response = await axios.post(`${domain}learning/photos/`, photoData, {
+    const response = await axios.post(`${domain}learning/course-photos/`, photoData, {
       headers: {
         Authorization: `Bearer ${accessToken}`
       }
