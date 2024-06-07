@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 import { getCourseById, getCourseSections } from '../API/courses';
 import { addSection, getSectionSubsections } from '../API/sections';
 import { addSubsection } from '../API/subsections';
-import AddSectionModal from './AddSectionModal'; // Import the AddSectionModal component
-import AddSubsectionModal from './AddSubsectionModal'; // Import the AddSubsectionModal component
+import AddSectionModal from './AddSectionModal';
+import AddSubsectionModal from './AddSubsectionModal';
 import '../styles/CourseDashboard.css';
 
 const CourseDashboard = () => {
