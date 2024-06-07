@@ -127,3 +127,34 @@ export const addSubsectionPhoto = async (photoData, accessToken) => {
     throw new Error('Error adding photo');
   }
 };
+
+// add a video to a subsection
+export const addSubsectionVideo = async (videoData, accessToken) => {
+  try {
+    const response = await axios.post(`${domain}learning/course-videos/`, videoData, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
+    return response.data;
+  }
+  catch (error) {
+    console.error('Error adding video:', error.response ? error.response.data : error.message);
+    throw new Error('Error adding video');
+  }
+};
+
+//get videos of a subsection
+export const getSubsectionVideos = async (subsectionId, accessToken) => {
+  try {
+    const response = await axios.get(`${domain}learning/subsections/${subsectionId}/videos/`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching subsection videos:', error.response ? error.response.data : error.message);
+    throw new Error('Error fetching subsection videos');
+  }
+};
