@@ -1,21 +1,125 @@
+/* CourseDashboard.css */
+
 .course-dashboard-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .course-details {
-    background-color: #f9f9f9;
-    border: 1px solid #ddd;
-    padding: 20px;
-    margin-top: 20px;
-  }
-  
-  .course-details h2 {
-    margin-top: 0;
-  }
-  
-  .course-details p {
-    margin-bottom: 10px;
-  }
-  
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.course-details {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 20px;
+  margin-top: 20px;
+}
+
+.course-details h2 {
+  margin-top: 0;
+}
+
+.course-details p {
+  margin-bottom: 10px;
+}
+
+.sections {
+  margin-top: 20px;
+}
+
+.section-list {
+  list-style: none;
+  padding: 0;
+}
+
+.section-item {
+  border: 1px solid #ddd;
+  margin-bottom: 20px;
+}
+
+.section-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #f2f2f2;
+  padding: 10px;
+}
+
+.section-header button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.subsection-item {
+  padding: 10px;
+  border-bottom: 1px solid #ddd;
+}
+
+.subsection-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.subsection-actions button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 5px 10px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 12px;
+  margin-left: 10px;
+  cursor: pointer;
+}
+
+.subsection-content {
+  margin-top: 10px;
+}
+
+.reading-list,
+.file-list,
+.photo-list,
+.video-list {
+  margin-bottom: 15px;
+}
+
+.reading-list h3,
+.file-list h3,
+.photo-list h3,
+.video-list h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.reading-list ul,
+.file-list ul,
+.photo-list ul,
+.video-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.reading-list ul li,
+.file-list ul li,
+.photo-list ul li,
+.video-list ul li {
+  margin-bottom: 5px;
+}
+
+.photo-list img {
+  max-width: 100%;
+  height: auto;
+}
+
+.video-list video {
+  max-width: 100%;
+  height: auto;
+}

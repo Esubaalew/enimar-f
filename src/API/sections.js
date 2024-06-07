@@ -19,7 +19,6 @@ export const getAllSections = async (accessToken) => {
 
 
 // function to add a section
-
 export const addSection = async (sectionData, accessToken) => {
   try {
     const response = await axios.post(`${domain}learning/sections/`, sectionData, {
@@ -35,7 +34,6 @@ export const addSection = async (sectionData, accessToken) => {
 };
 
 // get subsection for sections
-
 export const getSectionSubsections = async (sectionId, accessToken) => {
   try {
     const response = await axios.get(`${domain}learning/sections/${sectionId}/subsections/`, {

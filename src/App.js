@@ -10,6 +10,7 @@ import ProfileList from './Components/ProfileList';
 import Home from './Components/Home';
 import CourseDashboard from './Components/CourseDashboard';
 import NotFound from './Components/NotFound';
+import StudentCourseView from './Components/StudentCourseView';
 
 
 
@@ -25,6 +26,7 @@ function App() {
     <Route path="/" element={<Guest/>}/>
     <Route path="/home" element={<Home/>} />
     <Route path="/course/:id/edit" element={<CourseDashboard />} />
+    <Route path="/course/:id/learn" element={<StudentCourseView />} />
     <Route path="*" element={<NotFound />} />
     </Routes>
      </Router>
