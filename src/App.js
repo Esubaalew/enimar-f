@@ -8,6 +8,7 @@ import Guest from './Components/Guest';
 import ProfilePage from './Components/ProfilePage';
 import ProfileList from './Components/ProfileList';
 import Home from './Components/Home';
+import CourseDashboard from './Components/CourseDashboard';
 
 
 
@@ -22,6 +23,7 @@ function App() {
     <Route path="/community"element={<ProfileList/>} />
     <Route path="/" element={<Guest/>}/>
     <Route path="/home" element={<Home/>} />
+    <Route path="/course/:id/edit" element={<CourseDashboard />} />
     </Routes>
      </Router>
   );

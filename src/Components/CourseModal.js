@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
 import '../styles/CourseModal.css';
 import { addCourse } from '../API/courses';
 
@@ -8,8 +9,10 @@ const CourseModal = ({ onClose }) => {
   const [poster, setPoster] = useState(null);
   const [price, setPrice] = useState('');
   const [error, setError] = useState(null);
+  const [successMessage, setSuccessMessage] = useState(null); // State for success message
   const accessToken = JSON.parse(localStorage.getItem('user')).access;
   const teacher = JSON.parse(localStorage.getItem('user')).id; 
+  const navigate = useNavigate(); // Initialize navigate
 
   const handlePosterChange = (event) => {
     setPoster(event.target.files[0]);
@@ -28,7 +31,12 @@ const CourseModal = ({ onClose }) => {
     try {
       const newCourse = await addCourse(courseData, accessToken);
       console.log('New course created:', newCourse);
-      onClose();
+      setError(null);
+      setSuccessMessage('Course created successfully!'); 
+      navigate(`/course/${newCourse.id}/edit`);
+      setTimeout(() => {
+        onClose();
+      }, 2000); 
     } catch (error) {
       setError(error.message);
       console.error('Failed to create course:', error);
@@ -86,6 +94,7 @@ const CourseModal = ({ onClose }) => {
           </div>
         </form>
         {error && <p style={{ color: 'red' }}>{error}</p>}
+        {successMessage && <p style={{ color: 'green' }}>{successMessage}</p>}
       </div>
     </div>
   );

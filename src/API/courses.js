@@ -31,3 +31,19 @@ export const addCourse = async (courseData, accessToken) => {
     throw new Error('Error adding course');
   } 
 };
+
+// function to get course by id
+export const getCourseById = async (courseId, accessToken) => {
+  try {
+    const response = await axios.get(`${domain}learning/courses/${courseId}/`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
+    return response.data;
+  }
+  catch (error) {
+    console.error('Error fetching course:', error.response ? error.response.data : error.message);
+    throw new Error('Error fetching course');
+  }
+};
