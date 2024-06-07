@@ -9,10 +9,10 @@ const CourseModal = ({ onClose }) => {
   const [poster, setPoster] = useState(null);
   const [price, setPrice] = useState('');
   const [error, setError] = useState(null);
-  const [successMessage, setSuccessMessage] = useState(null); // State for success message
+  const [successMessage, setSuccessMessage] = useState(null);
   const accessToken = JSON.parse(localStorage.getItem('user')).access;
   const teacher = JSON.parse(localStorage.getItem('user')).id; 
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate(); 
 
   const handlePosterChange = (event) => {
     setPoster(event.target.files[0]);

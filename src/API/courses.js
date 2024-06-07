@@ -47,3 +47,20 @@ export const getCourseById = async (courseId, accessToken) => {
     throw new Error('Error fetching course');
   }
 };
+
+
+// get course course sections
+
+export const getCourseSections = async (courseId, accessToken) => {
+  try {
+    const response = await axios.get(`${domain}learning/courses/${courseId}/sections/`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching course sections:', error.response ? error.response.data : error.message);
+    throw new Error('Error fetching course sections');
+  }
+};
