@@ -33,3 +33,19 @@ export const addSection = async (sectionData, accessToken) => {
     throw new Error('Error adding section');
   } 
 };
+
+// get subsection for sections
+
+export const getSectionSubsections = async (sectionId, accessToken) => {
+  try {
+    const response = await axios.get(`${domain}learning/sections/${sectionId}/subsections/`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching subsections:', error.response ? error.response.data : error.message);
+    throw new Error('Error fetching subsections');
+  }
+};
