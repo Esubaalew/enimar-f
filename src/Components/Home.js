@@ -6,6 +6,7 @@ import ProfileIcon from './ProfileIcon';
 import PostCard from './PostCard';
 import CourseList from './CourseList';
 import UserList from './UserList';
+import CourseModal from './CourseModal'; // Import the CourseModal
 import { getAllUsers } from '../API/users';
 import { getLoggedInUser } from '../API/auth';
 import { getPosts } from '../API/posts';
@@ -13,7 +14,8 @@ import { getAllCourses } from '../API/courses';
 import '../styles/Home.css';
 
 const Home = () => {
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isPostModalOpen, setIsPostModalOpen] = useState(false);
+  const [isCourseModalOpen, setIsCourseModalOpen] = useState(false); // State for CourseModal
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
   const [courses, setCourses] = useState([]);
@@ -29,7 +31,7 @@ const Home = () => {
           return Promise.all([
             getPosts(accessToken),
             getAllCourses(accessToken),
-            getAllUsers(accessToken)
+            getAllUsers(accessToken),
           ]);
         })
         .then(([postsData, coursesData, usersData]) => {
@@ -46,9 +48,15 @@ const Home = () => {
     }
   }, [navigate]);
 
-  const openModal = (event) => {
+  const openPostModal = (event) => {
     if (event.currentTarget === event.target) {
-      setIsModalOpen(true);
+      setIsPostModalOpen(true);
+    }
+  };
+
+  const openCourseModal = (event) => {
+    if (event.currentTarget === event.target) {
+      setIsCourseModalOpen(true);
     }
   };
 
@@ -57,12 +65,20 @@ const Home = () => {
       <Header />
       <div className="main-content">
         <div className="post-section">
-          <div className="create-post-card" onClick={openModal}>
+          <div className="create-post-card" onClick={openPostModal}>
             <ProfileIcon firstName={user?.first_name} lastName={user?.last_name} />
             <input type="text" placeholder="What's on your mind?" />
             <button type="button">Post</button>
           </div>
-          {isModalOpen && <PostModal onClose={() => setIsModalOpen(false)} />}
+          {user?.is_teacher && (
+            <div className="create-post-card" onClick={openCourseModal}>
+              <ProfileIcon firstName={user?.first_name} lastName={user?.last_name} />
+              <input type="text" placeholder="Create a new course" />
+              <button type="button">Create</button>
+            </div>
+          )}
+          {isPostModalOpen && <PostModal onClose={() => setIsPostModalOpen(false)} />}
+          {isCourseModalOpen && <CourseModal onClose={() => setIsCourseModalOpen(false)} />}
           {posts.map(post => (
             <PostCard key={post.id} post={post} />
           ))}

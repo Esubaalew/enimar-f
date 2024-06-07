@@ -10,7 +10,6 @@ const PostModal = ({ onClose }) => {
   const [error, setError] = useState(null);
   const accessToken = JSON.parse(localStorage.getItem('user')).access;
   const author = JSON.parse(localStorage.getItem('user')).id; 
-
   const handlePhotoChange = (event) => {
     setPhoto(event.target.files[0]);
   };

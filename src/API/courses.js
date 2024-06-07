@@ -16,3 +16,18 @@ export const getAllCourses = async (accessToken) => {
     throw new Error('Error fetching courses');
   }
 };
+
+// function to add a course
+export const addCourse = async (courseData, accessToken) => {
+  try {
+    const response = await axios.post(`${domain}learning/courses/`, courseData, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      } });
+    return response.data;
+  }
+  catch (error) {
+    console.error('Error adding course:', error.response ? error.response.data : error.message);
+    throw new Error('Error adding course');
+  } 
+};
