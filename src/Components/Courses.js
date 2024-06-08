@@ -2,9 +2,16 @@ import React, { useEffect, useState } from 'react';
 import '../styles/Courses.css';
 import { getAllCourses } from '../API/courses';
 import { getUserById } from '../API/users';
+import { initializePayment } from '../API/pay';
+import { getLoggedInUser } from '../API/auth';
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState(null); 
+  const [showModal, setShowModal] = useState(false); 
+  const [loggedInUser, setLoggedInUser] = useState(null); 
+  const [paymentDetails, setPaymentDetails] = useState(null); 
+
   const accessToken = JSON.parse(localStorage.getItem('user')).access;
 
   useEffect(() => {
@@ -23,7 +30,50 @@ const Courses = () => {
     };
 
     fetchCourses();
+
+    const fetchUser = async () => {
+      try {
+        const user = await getLoggedInUser(accessToken);
+        setLoggedInUser(user);
+      } catch (error) {
+        console.error('Error fetching logged-in user:', error);
+      }
+    };
+
+    fetchUser();
   }, [accessToken]);
+
+  const handleEnrollClick = (course) => {
+    setSelectedCourse(course);
+    setShowModal(true);
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
+  };
+
+  const proceedToPayment = async () => {
+    try {
+      const paymentData = {
+        amount: selectedCourse.price,
+        course: selectedCourse.id,
+      };
+  
+      const response = await initializePayment(paymentData, accessToken);
+      
+      if (response && response.checkout_url) {
+        const { checkout_url } = response;
+        // Redirect to the checkout URL
+        window.location.href = checkout_url;
+      } else {
+        console.error('Error: Invalid response or missing checkout URL.');
+      }
+    } catch (error) {
+      console.error('Error initializing payment:', error);
+    }
+  };
+  
+  
 
   return (
     <div className="courses-container">
@@ -39,10 +89,31 @@ const Courses = () => {
             <p>{course.description}</p>
             <p className="course-price">ETB{course.price}</p>
             <p className="course-teacher">By {course.teacher.first_name} {course.teacher.last_name}</p>
-            <button className="enroll-button">Enroll</button>
+            <button className="enroll-button" onClick={() => handleEnrollClick(course)}>Enroll</button>
           </div>
         ))}
       </div>
+
+      {showModal && selectedCourse && loggedInUser && (
+        <div className="modal">
+          <div className="modal-content">
+            <span className="close" onClick={closeModal}>&times;</span>
+            <h2>Confirm Enrollment</h2>
+            <p>You are about to enroll in {selectedCourse.title}.</p>
+            <p>Price: ETB{selectedCourse.price}</p>
+            <p>Logged-in User: {loggedInUser.email}</p>
+            <button className="confirm-enroll-button" onClick={proceedToPayment}>Proceed to Payment</button>
+          </div>
+        </div>
+      )}
+
+      {paymentDetails && (
+        <div className="payment-details">
+          <h2>Payment Details</h2>
+          <p>Status: {paymentDetails.status}</p>
+          <p>Message: {paymentDetails.message}</p>
+        </div>
+      )}
     </div>
   );
 };

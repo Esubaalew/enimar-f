@@ -4,7 +4,7 @@ const domain = 'http://localhost:8000/';
 
 export const initializePayment = async (paymentData, accessToken) => {
   try {
-    const response = await axios.post(`${domain}payments/pay/`, paymentData, {
+    const response = await axios.post(`${domain}payments/initialize/`, paymentData, {
       headers: {
         Authorization: `Bearer ${accessToken}`,
         'Content-Type': 'application/json',
