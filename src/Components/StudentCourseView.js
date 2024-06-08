@@ -70,7 +70,7 @@ const StudentCourseView = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
-    <div className="course-dashboard-container">
+    <div className="coursee-dashboard-container">
       <div className="sidebarL">
         <h2>Sections</h2>
         {sections.length === 0 ? (

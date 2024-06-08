@@ -1,4 +1,4 @@
-.course-dashboard-container {
+.coursee-dashboard-container {
     display: flex;
     height: 100vh;
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
@@ -23,7 +23,7 @@
     padding: 20px;
     overflow-y: auto;
     background-color: #f4f4f4;
-    margin-left: 250px; 
+    margin-left: 290px; 
     border-left: 2px solid #ececec;
     width: calc(100% - 250px); 
   }
