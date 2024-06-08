@@ -11,6 +11,7 @@ import Home from './Components/Home';
 import CourseDashboard from './Components/CourseDashboard';
 import NotFound from './Components/NotFound';
 import StudentCourseView from './Components/StudentCourseView';
+import Courses from './Components/Courses';
 
 
 
@@ -19,6 +20,7 @@ function App() {
     <Router>
     <Routes>
     <Route path="/in" element={ <SignIn/>} />
+    <Route path="/courses" element={<Courses/>} />
     <Route path="/user/:username" element={<ProfilePage />} />
     <Route path="/StudentSignUp"element={<StudentSignUp/>} />
     <Route path="/TeacherSignUp"element={<TeacherSignUp/>} />
