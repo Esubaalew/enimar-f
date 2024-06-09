@@ -231,6 +231,21 @@ const getAllUsers = async (accessToken) => {
     }
 }
 
+// courses enrolled  by student
+export const getCoursesEnrolledByStudent = async (userId, accessToken) => {
+    try {
+        const response = await axios.get(`${domain}/account/student/${userId}/courses/`, {
+            headers: {
+                Authorization: `Bearer ${accessToken}`
+            }
+        });
+        return response.data;
+    } catch (error) {
+        console.error('Error fetching courses enrolled by student:', error.response ? error.response.data : error.message);
+        throw new Error('Error fetching courses enrolled by student');
+    }
+};
+
 export { 
     getUserFollowers, 
     getUserFollowing, 
@@ -239,5 +254,5 @@ export {
     updateFirstName, updateLastName, 
     updateBio, updateProfilePicture, 
     deactivateUser, deleteUser,  
-    getAllUsers
+    getAllUsers,
 };

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from 'react';
 import '../styles/Courses.css';
 import { getAllCourses } from '../API/courses';
 import { getUserById } from '../API/users';
-import { initializePayment } from '../API/pay';
+import { initializePayment, verifyPayment } from '../API/pay';
 import { getLoggedInUser } from '../API/auth';
 
 const Courses = () => {
@@ -10,6 +10,7 @@ const Courses = () => {
   const [selectedCourse, setSelectedCourse] = useState(null); 
   const [showModal, setShowModal] = useState(false); 
   const [loggedInUser, setLoggedInUser] = useState(null); 
+  // eslint-disable-next-line
   const [paymentDetails, setPaymentDetails] = useState(null); 
 
   const accessToken = JSON.parse(localStorage.getItem('user')).access;
@@ -63,8 +64,12 @@ const Courses = () => {
       
       if (response && response.checkout_url) {
         const { checkout_url } = response;
-        // Redirect to the checkout URL
         window.location.href = checkout_url;
+        verifyPayment(response.tx_ref, accessToken).then((paymentStatus) => {  
+            setPaymentDetails(paymentStatus);
+            }).catch((error) => {
+                console.error('Error verifying payment:', error);
+                });
       } else {
         console.error('Error: Invalid response or missing checkout URL.');
       }
