@@ -114,3 +114,203 @@
   color: #888;
   font-size: 14px;
 }
+
+
+
+
+
+/* Profil.css */
+.CMprofiles-container {
+  width: 80%;
+  margin: 0 auto;
+  padding: 20px;
+  background-color: #f9f9f9;
+}
+
+.CMprofile-card-link {
+  text-decoration: none; /* Remove underline */
+}
+
+.CMprofile-card {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: transform 0.3s;
+  text-align: center;
+}
+
+.CMprofile-card:hover {
+  transform: translateY(-10px);
+}
+
+.CMprofile-picture {
+  width: 100px;
+  height: 100px;
+  background-color: #007bff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 32px;
+  font-weight: bold;
+  color: white;
+  margin: 0 auto 20px auto;
+}
+
+.CMprofile-info {
+  flex: 1;
+}
+
+.CMprofile-info h2 {
+  font-size: 18px;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.CMprofile-info .CMusername {
+  font-size: 14px;
+  color: #888;
+  margin-bottom: 10px;
+  text-decoration: none; /* Remove underline */
+}
+
+.CMprofile-info .CMbio {
+  font-size: 16px;
+  color: #555;
+  margin-bottom: 20px;
+}
+
+.CMfollow-button {
+  background-color: #007bff;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 5px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: background-color 0.2s;
+}
+
+.CMfollow-button:hover {
+  background-color: #0056b3;
+}
+
+.CMspinner-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 400px;
+}
+
+.CMloading-text {
+  text-align: center;
+  margin-top: 20px;
+  color: #007bff;
+  font-size: 16px;
+}
+
+.CMfooter-container {
+  width: 100%;
+  padding: 20px;
+  background-color: #f0f0f0;
+  text-align: center;
+}
+
+.CMtop-section {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.CMname-and-username {
+  margin-left: 20px;
+}
+
+.CMname-and-username h1 {
+  margin: 0;
+  font-size: 24px;
+}
+
+.CMname-and-username .CMusername {
+  color: #888;
+  font-size: 14px;
+}
+
+.CMbutton-container {
+  display: flex;
+  gap: 10px;
+}
+
+.CMbtn {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.CMedit-profile-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.CMfollow-btn, .CMmessage-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.CMsave-changes-btn {
+  background-color: #007bff;
+  color: white;
+}
+
+.CMcancel-edit-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.CMtabs-container {
+  display: flex;
+  margin-top: 20px;
+  border-bottom: 1px solid #ddd;
+}
+
+.CMtab {
+  padding: 10px 20px;
+  cursor: pointer;
+}
+
+.CMtab.active {
+  border-bottom: 2px solid #007bff;
+  font-weight: bold;
+}
+
+.CMposts-container, .CMfollowers-container, .CMfollowing-container {
+  margin-top: 20px;
+}
+
+.CMpost-card, .CMfollower-card, .CMfollowing-card {
+  background-color: white;
+  padding: 20px;
+  border-radius: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.CMpost-header, .CMfollower-info, .CMfollowing-info {
+  display: flex;
+  align-items: center;
+}
+
+.CMpost-info, .CMfollower-info, .CMfollowing-info {
+  margin-left: 20px;
+}
+
+.CMpost-content {
+  margin-top: 10px;
+}
+
+.CMpost-date {
+  color: #888;
+  font-size: 14px;
+}

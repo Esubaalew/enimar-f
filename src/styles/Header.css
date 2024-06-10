@@ -1,4 +1,4 @@
-/* Header.css */
+
 .Hheader {
     display: flex;
     justify-content: space-between;
@@ -14,8 +14,8 @@
   }
   
   .Hlogo-bing {
-    background-color: #ffffff; /* Example background color */
-    color: #0a1628; /* Example text color */
+    background-color: #ffffff;
+    color: #0a1628; 
     display: flex;
     align-items: center;
     justify-content: center;
