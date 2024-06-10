@@ -1,15 +1,17 @@
 import React, { useEffect, useState } from 'react';
-import {  getStudentsWhoPaidForCourse } from '../API/courses';
+import { getStudentsWhoPaidForCourse } from '../API/courses';
 import { getCoursesByTeacher } from '../API/users';
 import { getLoggedInUser } from '../API/auth';
-
-import '../styles/Courses.css';
+import { useNavigate } from 'react-router-dom';
+import '../styles/TeacherCourses.css';
 
 const TeacherCourses = () => {
   const [courses, setCourses] = useState([]);
   const [loggedInUser, setLoggedInUser] = useState(null);
   const [loading, setLoading] = useState(true);
+  const [students, setStudents] = useState({});
   const accessToken = JSON.parse(localStorage.getItem('user')).access;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchTeacherData = async () => {
@@ -20,8 +22,7 @@ const TeacherCourses = () => {
           const teacherCourses = await getCoursesByTeacher(user.username, accessToken);
           setCourses(teacherCourses);
         } else {
-          // If not a teacher, redirect or show an appropriate message
-          alert('Access denied. Only teachers can access this page.');
+          navigate('/coursesS');
         }
       } catch (error) {
         console.error('Error fetching teacher data:', error);
@@ -31,16 +32,22 @@ const TeacherCourses = () => {
     };
 
     fetchTeacherData();
-  }, [accessToken]);
+  }, [accessToken, navigate]);
 
-  const [students, setStudents] = useState({});
-  
-  const fetchStudentsForCourse = async (courseId) => {
-    try {
-      const studentsData = await getStudentsWhoPaidForCourse(courseId, accessToken);
-      setStudents(prevState => ({ ...prevState, [courseId]: studentsData }));
-    } catch (error) {
-      console.error(`Error fetching students for course ${courseId}:`, error);
+  const toggleStudentsForCourse = async (courseId) => {
+    if (students[courseId]) {
+      setStudents(prevState => {
+        const newState = { ...prevState };
+        delete newState[courseId];
+        return newState;
+      });
+    } else {
+      try {
+        const studentsData = await getStudentsWhoPaidForCourse(courseId, accessToken);
+        setStudents(prevState => ({ ...prevState, [courseId]: studentsData }));
+      } catch (error) {
+        console.error(`Error fetching students for course ${courseId}:`, error);
+      }
     }
   };
 
@@ -48,7 +55,7 @@ const TeacherCourses = () => {
 
   return (
     <div className="teacher-courses-container">
-      <h1>{loggedInUser.first_name}'s Courses</h1>
+      <h1>{loggedInUser?.first_name}'s Courses</h1>
       {courses.length === 0 ? (
         <p>No courses found.</p>
       ) : (
@@ -58,9 +65,15 @@ const TeacherCourses = () => {
               <div className="course-info">
                 <h2>{course.title}</h2>
                 <p>{course.description}</p>
-                <button onClick={() => fetchStudentsForCourse(course.id)}>
-                  {students[course.id] ? 'Hide Students' : 'Show Students'}
-                </button>
+                {students[course.id] ? (
+                  <button onClick={() => toggleStudentsForCourse(course.id)}>
+                    {students[course.id] ? 'Hide Students' : 'Show Students'}
+                  </button>
+                ) : (
+                  <button onClick={() => toggleStudentsForCourse(course.id)}>
+                    Show Students
+                  </button>
+                )}
               </div>
               {students[course.id] && (
                 <div className="students-list">
