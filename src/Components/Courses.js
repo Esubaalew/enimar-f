@@ -4,7 +4,7 @@ import { getAllCourses } from '../API/courses';
 import { getUserById, getCoursesEnrolledByStudent } from '../API/users';
 import { initializePayment, verifyPayment } from '../API/pay';
 import { getLoggedInUser } from '../API/auth';
-import { useNavigate } from 'react-router-dom';
+import { useNavigate, Link } from 'react-router-dom';
 import Header from './Header';
 
 const Courses = () => {
@@ -123,18 +123,27 @@ const Courses = () => {
             <button className="enroll-button" onClick={() => handleEnrollClick(course)}>Enroll</button>
           </div>
         ))}
-        {activeTab === 'enrolled' && enrolledCourses.map((course) => (
-          <div className="enrolled-course-card" key={course.id}>
-            <div className="enrolled-course-poster">
-              <img src={`${backendUrl}${course.poster}`}  alt={course.title} />
+        {activeTab === 'enrolled' && (
+          enrolledCourses.length > 0 ? (
+            enrolledCourses.map((course) => (
+              <div className="enrolled-course-card" key={course.id}>
+                <div className="enrolled-course-poster">
+                  <img src={`${backendUrl}${course.poster}`} alt={course.title} />
+                </div>
+                <div className="enrolled-course-details">
+                  <h2>{course.title}</h2>
+                  <p>{course.description}</p>
+                  <p className="course-price">ETB{course.price}</p>
+                </div>
+              </div>
+            ))
+          ) : (
+            <div className="no-courses-message">
+              <p>You are not enrolled in any courses.</p>
+              <Link to="/coursesS">Find courses to enroll</Link>
             </div>
-            <div className="enrolled-course-details">
-              <h2>{course.title}</h2>
-              <p>{course.description}</p>
-              <p className="course-price">ETB{course.price}</p>
-            </div>
-          </div>
-        ))}
+          )
+        )}
       </div>
 
       {showModal && selectedCourse && loggedInUser && (
