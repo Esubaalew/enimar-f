@@ -3,7 +3,7 @@ import { getStudentsWhoPaidForCourse } from '../API/courses';
 import { getCoursesByTeacher } from '../API/users';
 import { getLoggedInUser } from '../API/auth';
 import { useNavigate } from 'react-router-dom';
-import '../styles/TeacherCourses.css';
+// import '../styles/TeacherCourses.css';
 
 const TeacherCourses = () => {
   const [courses, setCourses] = useState([]);

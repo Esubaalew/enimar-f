@@ -1,21 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import '../styles/Courses.css';
 import { getAllCourses } from '../API/courses';
-import { getUserById, getCoursesEnrolledByStudent } from '../API/users'; // Import getCoursesEnrolledByStudent
+import { getUserById, getCoursesEnrolledByStudent } from '../API/users';
 import { initializePayment, verifyPayment } from '../API/pay';
 import { getLoggedInUser } from '../API/auth';
+import { useNavigate } from 'react-router-dom';
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
-  const [enrolledCourses, setEnrolledCourses] = useState([]); // New state for enrolled courses
-  const [selectedCourse, setSelectedCourse] = useState(null); 
-  const [showModal, setShowModal] = useState(false); 
-  const [loggedInUser, setLoggedInUser] = useState(null); 
-  const [activeTab, setActiveTab] = useState('recommended'); // State for active tab
+  const [enrolledCourses, setEnrolledCourses] = useState([]);
+  const [selectedCourse, setSelectedCourse] = useState(null);
+  const [showModal, setShowModal] = useState(false);
+  const [loggedInUser, setLoggedInUser] = useState(null);
+  const [activeTab, setActiveTab] = useState('recommended');
   const [paymentDetails, setPaymentDetails] = useState(null);
-  
+
   const accessToken = JSON.parse(localStorage.getItem('user')).access;
   const backendUrl = 'http://localhost:8000';
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCourses = async () => {
@@ -39,16 +41,19 @@ const Courses = () => {
         const user = await getLoggedInUser(accessToken);
         setLoggedInUser(user);
 
-        // Fetch enrolled courses for the logged-in user
-        const enrolledCoursesData = await getCoursesEnrolledByStudent(user.id, accessToken);
-        setEnrolledCourses(enrolledCoursesData);
+        if (user.is_student) {
+          const enrolledCoursesData = await getCoursesEnrolledByStudent(user.id, accessToken);
+          setEnrolledCourses(enrolledCoursesData);
+        } else {
+          navigate('/coursesT');
+        }
       } catch (error) {
         console.error('Error fetching logged-in user or enrolled courses:', error);
       }
     };
 
     fetchUser();
-  }, [accessToken]);
+  }, [accessToken, navigate])
 
   const handleEnrollClick = (course) => {
     setSelectedCourse(course);
