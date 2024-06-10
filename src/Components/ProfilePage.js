@@ -68,7 +68,7 @@ const ProfilePage = () => {
 
         // Fetch courses if the user is a teacher
         if (fetchedUser.is_teacher) {
-          const userCourses = await getCoursesByTeacher(fetchedUser.id, accessToken);
+          const userCourses = await getCoursesByTeacher(fetchedUser.username, accessToken);
           setCourses(userCourses);
         }
       } catch (error) {
@@ -130,6 +130,7 @@ const ProfilePage = () => {
       }
 
       if (isFollowing) {
+
         const unfollowResponse = await unfollowUser(user.id, accessToken);
         setIsFollowing(false);
       } else {
