@@ -6,7 +6,7 @@ import ProfileIcon from './ProfileIcon';
 import PostCard from './PostCard';
 import CourseList from './CourseList';
 import UserList from './UserList';
-import CourseModal from './CourseModal'; // Import the CourseModal
+import CourseModal from './CourseModal';
 import { getAllUsers } from '../API/users';
 import { getLoggedInUser } from '../API/auth';
 import { getPosts } from '../API/posts';
@@ -15,7 +15,7 @@ import '../styles/Home.css';
 
 const Home = () => {
   const [isPostModalOpen, setIsPostModalOpen] = useState(false);
-  const [isCourseModalOpen, setIsCourseModalOpen] = useState(false); // State for CourseModal
+  const [isCourseModalOpen, setIsCourseModalOpen] = useState(false);
   const [user, setUser] = useState(null);
   const [posts, setPosts] = useState([]);
   const [courses, setCourses] = useState([]);
@@ -84,7 +84,7 @@ const Home = () => {
           ))}
         </div>
         <div className="sidebar">
-          <CourseList courses={courses} />
+          {!user?.is_teacher && <CourseList courses={courses} />}
           <UserList users={users} />
         </div>
       </div>

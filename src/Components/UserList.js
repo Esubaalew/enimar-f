@@ -3,11 +3,12 @@ import ProfileIcon from './ProfileIcon';
 import '../styles/UserList.css';
 
 const UserList = ({ users }) => {
-  // Filter users with either is_teacher or is_student set to true
+
   const filteredUsers = users.filter(user => user.is_teacher || user.is_student);
 
   return (
     <div className="user-list">
+      <h1> Suggested Users</h1>
       <div className="user-list-container">
         {filteredUsers.map(user => (
           <div key={user.id} className="user-card">
