@@ -13,6 +13,7 @@ import NotFound from './Components/NotFound';
 import StudentCourseView from './Components/StudentCourseView';
 import Courses from './Components/Courses';
 import TeacherCourses from './Components/TeacherCourses';
+import Unauthorized from './Components/Unauthorized';
 
 
 
@@ -31,6 +32,7 @@ function App() {
     <Route path="/course/:id/edit" element={<CourseDashboard />} />
     <Route path="/course/:id/learn" element={<StudentCourseView />} />
     <Route path="/coursesT" element={<TeacherCourses />} />
+    <Route path="/unauthorized" element={<Unauthorized />} />
     <Route path="*" element={<NotFound />} />
     </Routes>
      </Router>
