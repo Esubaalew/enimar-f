@@ -5,6 +5,7 @@ import { getUserById, getCoursesEnrolledByStudent } from '../API/users';
 import { initializePayment, verifyPayment } from '../API/pay';
 import { getLoggedInUser } from '../API/auth';
 import { useNavigate } from 'react-router-dom';
+import Header from './Header';
 
 const Courses = () => {
   const [courses, setCourses] = useState([]);
@@ -96,6 +97,8 @@ const Courses = () => {
   });
 
   return (
+    <>
+    <Header/>
     <div className="courses-container">
       <h1>Explore Our Courses</h1>
       <p>Find the perfect course to expand your knowledge and skills.</p>
@@ -155,6 +158,7 @@ const Courses = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 

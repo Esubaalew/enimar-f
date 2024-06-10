@@ -4,6 +4,7 @@ import { getCourseById, getCourseSections } from '../API/courses';
 import { getSectionSubsections } from '../API/sections';
 import { getSubsectionFiles, getSubsectionPhotos, getSubsectionReadings, getSubsectionVideos } from '../API/subsections';
 import '../styles/StudentCourseView.css';
+import Header from './Header';
 
 const StudentCourseView = () => {
   const { id } = useParams();
@@ -70,6 +71,9 @@ const StudentCourseView = () => {
   if (error) return <p>Error: {error}</p>;
 
   return (
+    <>
+      <Header />
+   
     <div className="coursee-dashboard-container">
       <div className="sidebarL">
         <h2>Sections</h2>
@@ -157,6 +161,7 @@ const StudentCourseView = () => {
         )}
       </div>
     </div>
+    </>
   );
 };
 

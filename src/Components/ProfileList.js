@@ -4,6 +4,7 @@ import '../styles/ProfileList.css';
 import { getAllUsers } from '../API/users';
 import { useNavigate } from 'react-router-dom';
 import { Triangle } from 'react-loader-spinner';
+import Header from './Header';
 
 const Profiles = () => {
   const [teachers, setTeachers] = useState([]);
@@ -37,6 +38,8 @@ const Profiles = () => {
   };
 
   return (
+    <>
+      <Header />
     <div className="CMprofiles-container">
       <h1>All Profiles</h1>
       <div className="CMtabs">
@@ -59,6 +62,7 @@ const Profiles = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 

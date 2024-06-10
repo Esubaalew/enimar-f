@@ -23,23 +23,23 @@ const Header = () => {
   return (
     <header className="Hheader">
       <div className="Hlogo">
-        <div className="Hlogo-bing">E</div> {/* Bing Icon Placeholder */}
+        <div className="Hlogo-bing">E</div>
         <span className="Hlogo-text">Enimar</span>
       </div>
       <nav className="Hnav">
         <ul className="Hnav-list">
           <li className="Hnav-item">
-            <a href="#users" className="Hnav-link">
+            <a href="/community" className="Hnav-link">
               <FontAwesomeIcon icon={faUser} className="Hnav-icon" /> Users
             </a>
           </li>
           <li className="Hnav-item">
-            <a href="#courses" className="Hnav-link">
+            <a href="/coursesS" className="Hnav-link">
               <FontAwesomeIcon icon={faBook} className="Hnav-icon" /> Courses
             </a>
           </li>
           <li className="Hnav-item">
-            <a href="#chat" className="Hnav-link">
+            <a href="/chat" className="Hnav-link">
               <FontAwesomeIcon icon={faComments} className="Hnav-icon" /> Chat
             </a>
           </li>

@@ -17,6 +17,7 @@ import {
   getCoursesByTeacher, 
 } from '../API/users';
 import { getLoggedInUser } from '../API/auth';
+import Header from './Header';
 
 const ProfilePage = () => {
   const { username } = useParams();
@@ -33,7 +34,7 @@ const ProfilePage = () => {
   const [lastName, setLastName] = useState('');
   const [bio, setBio] = useState('');
   const [isEditingProfile, setIsEditingProfile] = useState(false);
-  const [courses, setCourses] = useState([]); // Add this state
+  const [courses, setCourses] = useState([]);
   
   const userData = JSON.parse(localStorage.getItem('user'));
   const accessToken = userData ? userData.access : null;
@@ -66,7 +67,6 @@ const ProfilePage = () => {
           setIsFollowing(isFollowingUser);
         }
 
-        // Fetch courses if the user is a teacher
         if (fetchedUser.is_teacher) {
           const userCourses = await getCoursesByTeacher(fetchedUser.username, accessToken);
           setCourses(userCourses);
@@ -185,6 +185,8 @@ const ProfilePage = () => {
   };
 
   return (
+    <>
+    <Header/>
     <div className="profile-container">
       <div className="profile-card">
         <div className="top-section">
@@ -333,6 +335,7 @@ const ProfilePage = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 
