@@ -64,3 +64,18 @@ export const getCourseSections = async (courseId, accessToken) => {
     throw new Error('Error fetching course sections');
   }
 };
+
+// Function to get students who made payments for a specific course
+export const getStudentsWhoPaidForCourse = async (courseId, accessToken) => {
+  try {
+    const response = await axios.get(`${domain}learning/course/${courseId}/students/`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching students who paid for course:', error.response ? error.response.data : error.message);
+    throw new Error('Error fetching students who paid for course');
+  }
+};

@@ -12,6 +12,7 @@ import CourseDashboard from './Components/CourseDashboard';
 import NotFound from './Components/NotFound';
 import StudentCourseView from './Components/StudentCourseView';
 import Courses from './Components/Courses';
+import TeacherCourses from './Components/TeacherCourses';
 
 
 
@@ -20,7 +21,7 @@ function App() {
     <Router>
     <Routes>
     <Route path="/in" element={ <SignIn/>} />
-    <Route path="/courses" element={<Courses/>} />
+    <Route path="/coursesS" element={<Courses/>} />
     <Route path="/user/:username" element={<ProfilePage />} />
     <Route path="/StudentSignUp"element={<StudentSignUp/>} />
     <Route path="/TeacherSignUp"element={<TeacherSignUp/>} />
@@ -29,6 +30,7 @@ function App() {
     <Route path="/home" element={<Home/>} />
     <Route path="/course/:id/edit" element={<CourseDashboard />} />
     <Route path="/course/:id/learn" element={<StudentCourseView />} />
+    <Route path="/coursesT" element={<TeacherCourses />} />
     <Route path="*" element={<NotFound />} />
     </Routes>
      </Router>
