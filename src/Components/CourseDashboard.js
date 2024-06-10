@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useNavigate } from 'react-router-dom';
 import {
   getCourseById,
   getCourseSections
@@ -26,6 +26,7 @@ import AddFileModal from './AddFileModal';
 import AddPhotoModal from './AddPhotoModal';
 import AddVideoModal from './AddVideoModal';
 import '../styles/CourseDashboard.css';
+import {getLoggedInUser} from '../API/auth';
 
 const CourseDashboard = () => {
   const { id } = useParams();
@@ -41,11 +42,20 @@ const CourseDashboard = () => {
   const [isAddVideoModalOpen, setIsAddVideoModalOpen] = useState(false);
   const [currentSectionId, setCurrentSectionId] = useState(null);
   const accessToken = JSON.parse(localStorage.getItem('user')).access;
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchCourse = async () => {
       try {
         const fetchedCourse = await getCourseById(id, accessToken);
+        const loggedInUser = await getLoggedInUser(accessToken);
+        const loggedInUserId = loggedInUser?.id;
+
+        if (fetchedCourse.teacher !== loggedInUserId) {
+          
+          navigate('/unauthorized'); 
+          return;
+        }
         setCourse(fetchedCourse);
         setLoading(false);
       } catch (error) {
@@ -79,7 +89,7 @@ const CourseDashboard = () => {
 
     fetchCourse();
     fetchSections();
-  }, [id, accessToken]);
+  }, [id, accessToken, navigate]);
 
   const handleAddSection = async (sectionData) => {
     try {
