@@ -1,5 +1,5 @@
 import React from 'react';
-import '../styles/ProfileIcon.css';
+import '../styles/ProfilePage.css';
 
 const getInitials = (firstName, lastName) => {
     const initials = (firstName ? firstName[0] : '') + (lastName ? lastName[0] : '');

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { formatDistanceToNow } from 'date-fns';
 import ProfileIcon from './ProfileIcon';
-import '../styles/Profil.css';  
+import '../styles/ProfilePage.css';  
 import {
   getUserByUsername,
   getPostsByUser,
@@ -187,11 +187,11 @@ const ProfilePage = () => {
   return (
     <>
     <Header/>
-    <div className="profile-container">
-      <div className="profile-card">
-        <div className="top-section">
+    <div className="PPprofile-container">
+      <div className="PPprofile-card">
+        <div className="PPtop-section">
           <ProfileIcon firstName={user?.first_name} lastName={user?.last_name} />
-          <div className="name-and-username">
+          <div className="PPname-and-username">
             {isEditingProfile ? (
               <>
                 <input
@@ -210,35 +210,35 @@ const ProfilePage = () => {
             ) : (
               <>
                 <h1>{user?.first_name} {user?.last_name}</h1>
-                <p className="username">@{user?.username}</p>
+                <p className="PPusername">@{user?.username}</p>
               </>
             )}
           </div>
         </div>
         {isEditingProfile ? (
-          <div className="edit-profile-section">
+          <div className="PPedit-profile-section">
             <textarea
               value={bio}
               onChange={(e) => setBio(e.target.value)}
               placeholder="Bio"
             />
-            <div className="button-container">
-              <button className="btn save-changes-btn" onClick={handleSaveChanges}>Save Changes</button>
-              <button className="btn cancel-edit-btn" onClick={() => setIsEditingProfile(false)}>Cancel</button>
+            <div className="PPbutton-container">
+              <button className="PPbtn PPsave-changes-btn" onClick={handleSaveChanges}>Save Changes</button>
+              <button className="PPbtn PPcancel-edit-btn" onClick={() => setIsEditingProfile(false)}>Cancel</button>
             </div>
           </div>
         ) : (
           <>
-            <p className="bio">{user?.bio}</p>
-            <div className="button-container">
+            <p className="PPbio">{user?.bio}</p>
+            <div className="PPbutton-container">
               {isOwnProfile ? (
-                <button className="btn edit-profile-btn" onClick={() => setIsEditingProfile(true)}>Edit Profile</button>
+                <button className="PPbtn PPedit-profile-btn" onClick={() => setIsEditingProfile(true)}>Edit Profile</button>
               ) : (
                 <>
-                  <button className="btn follow-btn" onClick={handleFollowToggle}>
+                  <button className="PPbtn PPfollow-btn" onClick={handleFollowToggle}>
                     {isFollowing ? 'Unfollow' : 'Follow'}
                   </button>
-                  <button className="btn message-btn">Message</button>
+                  <button className="PPbtn PPmessage-btn">Message</button>
                 </>
               )}
             </div>
@@ -246,33 +246,33 @@ const ProfilePage = () => {
         )}
       </div>
 
-      <div className="tabs-container">
-        <button className={`tab ${selectedTab === 'posts' ? 'active' : ''}`} onClick={() => handleTabClick('posts')}>Posts</button>
-        <button className={`tab ${selectedTab === 'following' ? 'active' : ''}`} onClick={() => handleTabClick('following')}>Following</button>
-        <button className={`tab ${selectedTab === 'followers' ? 'active' : ''}`} onClick={() => handleTabClick('followers')}>Followers</button>
+      <div className="PPtabs-container">
+        <button className={`PPtab ${selectedTab === 'posts' ? 'PPactive' : ''}`} onClick={() => handleTabClick('posts')}>Posts</button>
+        <button className={`PPtab ${selectedTab === 'following' ? 'PPactive' : ''}`} onClick={() => handleTabClick('following')}>Following</button>
+        <button className={`PPtab ${selectedTab === 'followers' ? 'PPactive' : ''}`} onClick={() => handleTabClick('followers')}>Followers</button>
         {user?.is_teacher && (
-          <button className={`tab ${selectedTab === 'courses' ? 'active' : ''}`} onClick={() => handleTabClick('courses')}>Courses</button>
+          <button className={`PPtab ${selectedTab === 'courses' ? 'PPactive' : ''}`} onClick={() => handleTabClick('courses')}>Courses</button>
         )}
       </div>
 
       {selectedTab === 'posts' && (
-        <div className="posts-container">
+        <div className="PPposts-container">
           {loading ? (
             <p>Loading...</p>
           ) : posts.length === 0 ? (
             <p>No posts found.</p>
           ) : (
             posts.map(post => (
-              <div key={post.id} className="post-card">
-                <div className="post-header">
+              <div key={post.id} className="PPpost-card">
+                <div className="PPpost-header">
                   <ProfileIcon firstName={user?.first_name} lastName={user?.last_name} />
-                  <div className="post-info">
+                  <div className="PPpost-info">
                     <h3>{user?.first_name} {user?.last_name}</h3>
-                    <p className="username">@{user?.username}</p>
-                    <p className="post-date">{formatRelativeDate(post.created)}</p>
+                    <p className="PPusername">@{user?.username}</p>
+                    <p className="PPpost-date">{formatRelativeDate(post.created)}</p>
                   </div>
                 </div>
-                <div className="post-content">
+                <div className="PPpost-content">
                   <p>{post.text}</p>
                   {post.image && <img src={post.image} alt="Post visual" />}
                 </div>
@@ -283,16 +283,16 @@ const ProfilePage = () => {
       )}
 
       {selectedTab === 'followers' && (
-        <div className="followers-container">
+        <div className="PPfollowers-container">
           {followers.length === 0 ? (
             <p>No followers found.</p>
           ) : (
             followers.map(follower => (
-              <div key={follower.id} className="follower-card">
+              <div key={follower.id} className="PPfollower-card">
                 <ProfileIcon firstName={follower.user?.first_name} lastName={follower.user?.last_name} />
-                <div className="follower-info">
+                <div className="PPfollower-info">
                   <h3>{follower.user?.first_name} {follower.user?.last_name}</h3>
-                  <p className="username">@{follower.user?.username}</p>
+                  <p className="PPusername">@{follower.user?.username}</p>
                 </div>
               </div>
             ))
@@ -301,16 +301,16 @@ const ProfilePage = () => {
       )}
 
       {selectedTab === 'following' && (
-        <div className="following-container">
+        <div className="PPfollowing-container">
           {following.length === 0 ? (
             <p>Not following anyone.</p>
           ) : (
             following.map(followedUser => (
-              <div key={followedUser.id} className="following-card">
+              <div key={followedUser.id} className="PPfollowing-card">
                 <ProfileIcon firstName={followedUser.user?.first_name} lastName={followedUser.user?.last_name} />
-                <div className="following-info">
+                <div className="PPfollowing-info">
                   <h3>{followedUser.user?.first_name} {followedUser.user?.last_name}</h3>
-                  <p className="username">@{followedUser.user?.username}</p>
+                  <p className="PPusername">@{followedUser.user?.username}</p>
                 </div>
               </div>
             ))
@@ -319,13 +319,13 @@ const ProfilePage = () => {
       )}
 
       {selectedTab === 'courses' && user?.is_teacher && (
-        <div className="courses-container">
+        <div className="PPcourses-container">
           {courses.length === 0 ? (
             <p>No courses found.</p>
           ) : (
             courses.map(course => (
-              <div key={course.id} className="course-card">
-                <div className="course-info">
+              <div key={course.id} className="PPcourse-card">
+                <div className="PPcourse-info">
                   <h3>{course.title}</h3>
                   <p>{course.description}</p>
                 </div>

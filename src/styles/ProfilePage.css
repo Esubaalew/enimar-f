@@ -1,0 +1,142 @@
+/* Profil.css */
+
+.PPprofile-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px;
+    width: 80%; /* Adjusted width to be larger */
+    margin: 0 auto; /* Center align the container */
+  }
+  
+  .PPprofile-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 100%;
+    max-width: 600px;
+    padding: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .PPtop-section {
+    display: flex;
+    align-items: center;
+  }
+  
+  .PPname-and-username {
+    margin-left: 20px;
+  }
+  
+  .PPname-and-username h1 {
+    margin: 0;
+    font-size: 24px;
+  }
+  
+  .PPusername {
+    color: gray;
+  }
+  
+  .PPedit-profile-section {
+    display: flex;
+    flex-direction: column;
+    margin-top: 10px;
+  }
+  
+  .PPedit-profile-section textarea {
+    width: 100%;
+    height: 60px;
+    margin-bottom: 10px;
+  }
+  
+  .PPbutton-container {
+    display: flex;
+    gap: 10px;
+  }
+  
+  .PPbio {
+    margin-top: 10px;
+    margin-bottom: 10px;
+  }
+  
+  .PPbtn {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+
+  }
+  
+  .PPedit-profile-btn,
+  .PPsave-changes-btn,
+  .PPcancel-edit-btn {
+    background-color: #007bff;
+    color: white;
+  }
+  
+  .PPfollow-btn {
+    background-color: #28a745;
+    color: white;
+  }
+  
+  .PPmessage-btn {
+    background-color: #ffc107;
+    color: black;
+  }
+  
+  .PPtabs-container {
+    display: flex;
+    justify-content: center;
+    gap: 20px;
+    margin-bottom: 20px;
+  }
+  
+  .PPtab {
+    background-color: gray;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .PPtab.PPactive {
+    border-bottom: 2px solid #007bff;
+  }
+  
+  .PPposts-container,
+  .PPfollowers-container,
+  .PPfollowing-container,
+  .PPcourses-container {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    width: 100%;
+    max-width: 600px;
+  }
+  
+  .PPpost-card,
+  .PPfollower-card,
+  .PPfollowing-card,
+  .PPcourse-card {
+    background-color: white;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    padding: 10px;
+  }
+  
+  .PPpost-header {
+    display: flex;
+    align-items: center;
+  }
+  
+  .PPpost-info {
+    margin-left: 10px;
+  }
+  
+  .PPpost-content {
+    margin-top: 10px;
+  }
+  
+  .PPpost-date {
+    color: gray;
+  }
+  
