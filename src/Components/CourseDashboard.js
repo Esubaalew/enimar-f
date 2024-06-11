@@ -27,6 +27,7 @@ import AddPhotoModal from './AddPhotoModal';
 import AddVideoModal from './AddVideoModal';
 import '../styles/CourseDashboard.css';
 import {getLoggedInUser} from '../API/auth';
+import Header from './Header';
 
 const CourseDashboard = () => {
   const { id } = useParams();
@@ -218,6 +219,8 @@ const CourseDashboard = () => {
   }
           
   return (
+    <>
+    <Header/>
     <div className="course-dashboard-container">
       <h1>{course.title}</h1>
       <div className="course-details">
@@ -356,6 +359,7 @@ const CourseDashboard = () => {
         subsectionId={currentSectionId}
       />
     </div>
+    </>
   );
 };
 

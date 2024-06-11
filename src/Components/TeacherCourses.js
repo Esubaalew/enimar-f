@@ -6,7 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash, faEye } from '@fortawesome/free-solid-svg-icons';
 import '../styles/TeacherCourses.css';
-
+import Header from './Header';
 const TeacherCourses = () => {
   const [courses, setCourses] = useState([]);
   const [loggedInUser, setLoggedInUser] = useState(null);
@@ -74,6 +74,8 @@ const TeacherCourses = () => {
   if (loading) return <div>Loading...</div>;
 
   return (
+    <>
+    <Header />
     <div className="TC-teacher-courses-container">
       <h1>{loggedInUser?.first_name}'s Courses</h1>
       {courses.length === 0 ? (
@@ -124,6 +126,7 @@ const TeacherCourses = () => {
         </div>
       )}
     </div>
+    </>
   );
 };
 
