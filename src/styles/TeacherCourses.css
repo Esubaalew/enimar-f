@@ -1,76 +1,155 @@
-.teacher-courses-container {
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 20px;
-  }
-  
-  .teacher-courses-container h1 {
-    text-align: center;
-    margin-bottom: 20px;
-    font-size: 2.5rem;
-  }
-  
-  .courses-list {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 20px;
-    justify-content: center;
-  }
-  
-  .course-card {
-    background-color: #fff;
-    border-radius: 8px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    width: 300px;
-    padding: 20px;
-    text-align: center;
-    transition: transform 0.3s;
-  }
-  
-  .course-card:hover {
-    transform: translateY(-5px);
-  }
-  
-  .course-card h2 {
-    font-size: 1.5rem;
-    margin-bottom: 10px;
-  }
-  
-  .course-card p {
-    font-size: 1rem;
-    margin-bottom: 15px;
-  }
-  
-  .course-card button {
-    background-color: #007BFF;
-    color: white;
-    border: none;
-    padding: 10px 20px;
-    border-radius: 5px;
-    cursor: pointer;
-  }
-  
-  .course-card button:hover {
-    background-color: #0056b3;
-  }
-  
-  .students-list {
-    margin-top: 20px;
-    text-align: left;
-  }
-  
-  .students-list h3 {
-    font-size: 1.25rem;
-    margin-bottom: 10px;
-  }
-  
-  .students-list ul {
-    list-style-type: none;
-    padding: 0;
-  }
-  
-  .students-list li {
-    padding: 5px 0;
-    border-bottom: 1px solid #eee;
-  }
-  
+.TC-teacher-courses-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.TC-courses-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.TC-course-card {
+  background-color: #ffffff;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  padding: 20px;
+  width: calc(33% - 20px);
+  margin-bottom: 20px;
+  transition: transform 0.3s ease;
+}
+
+.TC-course-card:hover {
+  transform: translateY(-10px);
+}
+
+.TC-course-info {
+  margin-bottom: 10px;
+}
+
+.TC-course-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+  color: #333;
+}
+
+.TC-course-description {
+  font-size: 16px;
+  margin-bottom: 10px;
+  color: #666;
+}
+
+.TC-student-count {
+  font-size: 14px;
+  margin-bottom: 20px;
+  color: #999;
+}
+
+.TC-icon-container {
+  display: flex;
+  gap: 10px;
+}
+
+.TC-icon-button {
+  background: #007bff; /* Updated background color */
+  color: #fff; /* White text color for contrast */
+  border: none;
+  cursor: pointer;
+  font-size: 16px;
+  padding: 10px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.TC-icon-button:hover {
+  background-color: #0056b3; /* Darker blue on hover */
+}
+
+.TC-students-list {
+  margin-top: 20px;
+}
+
+.TC-students-list h3 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.TC-students-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.TC-students-list li {
+  font-size: 14px;
+  color: #444;
+  padding: 5px 0;
+}
+
+.TC-button {
+  padding: 10px 20px;
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+}
+
+.TC-button:hover {
+  background-color: #0056b3;
+}
+
+.TC-modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.TC-modal-content {
+  background: #fff;
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.TC-modal-content p {
+  margin-bottom: 20px;
+  font-size: 16px;
+  color: #333;
+}
+
+.TC-modal-content button {
+  padding: 10px 20px;
+  margin: 0 10px;
+  border: none;
+  cursor: pointer;
+  font-size: 14px;
+  border-radius: 5px;
+  transition: background-color 0.3s ease;
+}
+
+.TC-modal-content button:first-of-type {
+  background-color: #d9534f;
+  color: #fff;
+}
+
+.TC-modal-content button:first-of-type:hover {
+  background-color: #c9302c;
+}
+
+.TC-modal-content button:last-of-type {
+  background-color: #5bc0de;
+  color: #fff;
+}
+
+.TC-modal-content button:last-of-type:hover {
+  background-color: #31b0d5;
+}

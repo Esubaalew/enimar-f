@@ -79,3 +79,19 @@ export const getStudentsWhoPaidForCourse = async (courseId, accessToken) => {
     throw new Error('Error fetching students who paid for course');
   }
 };
+
+// Function to delete a course
+export const deleteCourse = async (courseId, accessToken) => {
+  try {
+    const response = await axios.delete(`${domain}learning/courses/${courseId}/`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
+    return response.data;
+  }
+  catch (error) {
+    console.error('Error deleting course:', error.response ? error.response.data : error.message);
+    throw new Error('Error deleting course');
+  }
+};
