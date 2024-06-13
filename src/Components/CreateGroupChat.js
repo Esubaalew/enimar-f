@@ -1,6 +1,6 @@
 // src/components/CreateGroupChat.js
 import React, { useState, useEffect } from 'react';
-import { createGroupChat, sendMessage } from '../API/msg';
+import { createGroupChat, sendMessage } from '../API/chat';
 import { getAllUsers } from '../API/users';
 import { useNavigate } from 'react-router-dom';
 import '../styles/CreateGroupChat.css'; 

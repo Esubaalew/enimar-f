@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getAllUsers } from '../API/users';
-import { sendMessage } from '../API/msg'; 
+import { sendMessage } from '../API/chat'; 
 import { useNavigate } from 'react-router-dom'; 
 import '../styles/CreatePrivateChat.css'; // Import the CSS file
 

@@ -17,6 +17,7 @@ import Unauthorized from './Components/Unauthorized';
 import ChatList from './Components/ChatList'
 import CreateGroupChat from './Components/CreateGroupChat';
 import CreatePrivateChat from './Components/CreatePrivateChat';
+import GroupChat from './Components/GroupChat';
 
 
 
@@ -26,6 +27,7 @@ function App() {
     <Routes>
     <Route path="/in" element={ <SignIn/>} />
     <Route path="/chat" element={<ChatList/>}/>
+    <Route path='/group-chat/:groupId' element={<GroupChat />} />
     <Route path='/create-group-chat' element={<CreateGroupChat />} />
     <Route path='/create-private-chat' element={<CreatePrivateChat />} />
     <Route path="/coursesS" element={<Courses/>} />
