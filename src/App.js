@@ -14,6 +14,7 @@ import StudentCourseView from './Components/StudentCourseView';
 import Courses from './Components/Courses';
 import TeacherCourses from './Components/TeacherCourses';
 import Unauthorized from './Components/Unauthorized';
+import {ChatList} from './Components/ChatList'
 
 
 
@@ -22,6 +23,7 @@ function App() {
     <Router>
     <Routes>
     <Route path="/in" element={ <SignIn/>} />
+    <Route path="/chat" element={<ChatList/>}/>
     <Route path="/coursesS" element={<Courses/>} />
     <Route path="/user/:username" element={<ProfilePage />} />
     <Route path="/StudentSignUp"element={<StudentSignUp/>} />
