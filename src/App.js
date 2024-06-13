@@ -19,6 +19,7 @@ import CreateGroupChat from './Components/CreateGroupChat';
 import CreatePrivateChat from './Components/CreatePrivateChat';
 import GroupChat from './Components/GroupChat';
 import PrivateChat from './Components/PrivateChat';
+import Reset from './Components/Reset';
 
 
 
@@ -43,6 +44,7 @@ function App() {
     <Route path="/course/:id/learn" element={<StudentCourseView />} />
     <Route path="/coursesT" element={<TeacherCourses />} />
     <Route path="/unauthorized" element={<Unauthorized />} />
+    <Route path='/reset' element={<Reset />} />
     <Route path="*" element={<NotFound />} />
     </Routes>
      </Router>
