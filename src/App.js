@@ -15,6 +15,8 @@ import Courses from './Components/Courses';
 import TeacherCourses from './Components/TeacherCourses';
 import Unauthorized from './Components/Unauthorized';
 import ChatList from './Components/ChatList'
+import CreateGroupChat from './Components/CreateGroupChat';
+import CreatePrivateChat from './Components/CreatePrivateChat';
 
 
 
@@ -24,6 +26,8 @@ function App() {
     <Routes>
     <Route path="/in" element={ <SignIn/>} />
     <Route path="/chat" element={<ChatList/>}/>
+    <Route path='/create-group-chat' element={<CreateGroupChat />} />
+    <Route path='/create-private-chat' element={<CreatePrivateChat />} />
     <Route path="/coursesS" element={<Courses/>} />
     <Route path="/user/:username" element={<ProfilePage />} />
     <Route path="/StudentSignUp"element={<StudentSignUp/>} />
