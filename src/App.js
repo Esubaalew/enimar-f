@@ -20,6 +20,7 @@ import CreatePrivateChat from './Components/CreatePrivateChat';
 import GroupChat from './Components/GroupChat';
 import PrivateChat from './Components/PrivateChat';
 import Reset from './Components/Reset';
+import MakePass from './Components/MakePass';
 
 
 
@@ -45,6 +46,7 @@ function App() {
     <Route path="/coursesT" element={<TeacherCourses />} />
     <Route path="/unauthorized" element={<Unauthorized />} />
     <Route path='/reset' element={<Reset />} />
+    <Route path='/password-reset-confirm/:uidb64/:token' element={<MakePass />} />
     <Route path="*" element={<NotFound />} />
     </Routes>
      </Router>

@@ -55,7 +55,7 @@ export const signUpStudent = async (teacherData) => {
   // Function to request password reset
 export const requestPasswordReset = async (emailData) => {
   try {
-    const response = await axios.post(`${domain}api/password-reset/`, emailData);
+    const response = await axios.post(`${domain}account/password-reset/`, emailData);
     return response.data;
   } catch (error) {
     throw error.response.data;
@@ -65,7 +65,7 @@ export const requestPasswordReset = async (emailData) => {
 // Function to confirm password reset
 export const confirmPasswordReset = async (uidb64, token, newPasswordData) => {
   try {
-    const response = await axios.post(`${domain}api/password-reset-confirm/${uidb64}/${token}/`, newPasswordData);
+    const response = await axios.post(`${domain}account/password-reset-confirm/${uidb64}/${token}/`, newPasswordData);
     return response.data;
   } catch (error) {
     throw error.response.data;
