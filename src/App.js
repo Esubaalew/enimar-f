@@ -14,7 +14,7 @@ import StudentCourseView from './Components/StudentCourseView';
 import Courses from './Components/Courses';
 import TeacherCourses from './Components/TeacherCourses';
 import Unauthorized from './Components/Unauthorized';
-import {ChatList} from './Components/ChatList'
+import ChatList from './Components/ChatList'
 
 
 

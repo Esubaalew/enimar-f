@@ -1,9 +1,8 @@
 // src/components/ChatList.js
 import React, { useState, useEffect } from 'react';
-import { getGroups, getAllPrivateChats } from '../API/msg';
+import { getGroups, getAllPrivateChats } from '../API/chat';
 import { useNavigate } from 'react-router-dom';
 import '../styles/ChatList.css';
-import Footer from './Footer';
 import Header from './Header';
 
 const ChatList = () => {
@@ -107,7 +106,6 @@ const ChatList = () => {
                 )}
             </div>
         </div>
-        <Footer/>
         </>
     );
 };
