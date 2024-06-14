@@ -6,9 +6,11 @@ const AddSubsectionModal = ({ isOpen, onClose, onAddSubsection, sectionId }) => 
   const [subsectionContent, setSubsectionContent] = useState('');
   const [successMessage, setSuccessMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       await onAddSubsection({ name: subsectionName, content: subsectionContent, section: sectionId });
       setSuccessMessage('Subsection added successfully!');
@@ -16,6 +18,8 @@ const AddSubsectionModal = ({ isOpen, onClose, onAddSubsection, sectionId }) => 
       setSubsectionContent('');
     } catch (error) {
       setErrorMessage('Failed to add subsection. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -52,7 +56,16 @@ const AddSubsectionModal = ({ isOpen, onClose, onAddSubsection, sectionId }) => 
                     onChange={(e) => setSubsectionContent(e.target.value)}
                   />
                 </div>
-                <button type="submit">Add Subsection</button>
+                <div className="modal-actions">
+                  <button type="submit" disabled={loading}>
+                    {loading ? (
+                      <i className="fas fa-spinner fa-spin"></i>
+                    ) : (
+                      'Add Subsection'
+                    )}
+                  </button>
+                  <button type="button" onClick={closeModal} disabled={loading}>Cancel</button>
+                </div>
               </form>
             </div>
           </div>

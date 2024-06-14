@@ -6,9 +6,11 @@ const AddSectionModal = ({ isOpen, onClose, onAddSection, courseId }) => {
   const [sectionDescription, setSectionDescription] = useState('');
   const [successMessage, setSuccessMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       await onAddSection({ name: sectionName, description: sectionDescription, course: courseId });
       setSuccessMessage('Section added successfully!');
@@ -16,6 +18,8 @@ const AddSectionModal = ({ isOpen, onClose, onAddSection, courseId }) => {
       setSectionDescription('');
     } catch (error) {
       setErrorMessage('Failed to add section. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -54,7 +58,16 @@ const AddSectionModal = ({ isOpen, onClose, onAddSection, courseId }) => {
                     onChange={(e) => setSectionDescription(e.target.value)}
                   />
                 </div>
-                <button type="submit">Add Section</button>
+                <div className="modal-actions">
+                  <button type="submit" disabled={loading}>
+                    {loading ? (
+                      <i className="fas fa-spinner fa-spin"></i>
+                    ) : (
+                      'Add Section'
+                    )}
+                  </button>
+                  <button type="button" onClick={closeModal} disabled={loading}>Cancel</button>
+                </div>
               </form>
             </div>
           </div>
