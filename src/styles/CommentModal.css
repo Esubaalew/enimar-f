@@ -1,0 +1,80 @@
+.COM-modal-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+}
+
+.COM-modal-content {
+    background: white;
+    padding: 20px;
+    border-radius: 8px;
+    width: 80%;
+    max-width: 600px;
+    max-height: 90vh;
+    overflow-y: auto;
+    position: relative;
+}
+
+.COM-comment-modal .COM-post-card {
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+}
+
+.COM-post-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.COM-post-content {
+    margin-top: 10px;
+}
+
+.COM-post-photos img, .COM-post-video video {
+    max-width: 100%;
+    height: auto;
+}
+
+.COM-comments-section {
+    margin-bottom: 20px;
+}
+
+.COM-comment {
+    padding: 10px;
+    border-bottom: 1px solid #eee;
+}
+
+.COM-add-comment {
+    display: flex;
+    flex-direction: column;
+}
+
+.COM-add-comment textarea {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    border: 1px solid #ccc;
+}
+
+.COM-add-comment button {
+    align-self: flex-end;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 4px;
+    background-color: #007bff;
+    color: white;
+    cursor: pointer;
+}
+
+.COM-add-comment button:hover {
+    background-color: #0056b3;
+}

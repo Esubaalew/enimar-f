@@ -1,14 +1,16 @@
 import React, { useState, useEffect } from 'react';
 import { getUserById } from '../API/users';
-import ProfileIcon from './ProfileIcon'; // Make sure to import the ProfileIcon component
-import { FaThumbsUp, FaCommentAlt, FaShare } from 'react-icons/fa'; // Import the icons
-import { formatDistanceToNow } from 'date-fns'; // Import the date-fns function
+import ProfileIcon from './ProfileIcon';
+import { FaThumbsUp, FaCommentAlt, FaShare } from 'react-icons/fa'; 
+import { formatDistanceToNow } from 'date-fns'; 
+import CommentModal from './CommentModal'; 
 import '../styles/PostCard.css';
 
 const PostCard = ({ post }) => {
     const accessToken = JSON.parse(localStorage.getItem('user'))?.access;
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -63,13 +65,19 @@ const PostCard = ({ post }) => {
                 <button className="like-button">
                     <FaThumbsUp />
                 </button>
-                <button className="comment-button">
+                <button className="comment-button" onClick={() => setIsCommentModalOpen(true)}>
                     <FaCommentAlt />
                 </button>
                 <button className="share-button">
                     <FaShare />
                 </button>
             </div>
+            <CommentModal 
+                isOpen={isCommentModalOpen} 
+                onClose={() => setIsCommentModalOpen(false)} 
+                post={post}
+                accessToken={accessToken}
+            />
         </div>
     );
 };
