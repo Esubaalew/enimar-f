@@ -5,6 +5,7 @@ const AddPhotoModal = ({ isOpen, onClose, onAddPhoto, subsectionId }) => {
   const [photo, setPhoto] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -12,12 +13,15 @@ const AddPhotoModal = ({ isOpen, onClose, onAddPhoto, subsectionId }) => {
     photoData.append('image', photo);
     photoData.append('subsection', subsectionId);
 
+    setLoading(true);
     try {
       await onAddPhoto(photoData);
       setSuccessMessage('Photo added successfully!');
       setPhoto(null);
     } catch (error) {
       setErrorMessage('Failed to add photo. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -46,7 +50,16 @@ const AddPhotoModal = ({ isOpen, onClose, onAddPhoto, subsectionId }) => {
                     onChange={(e) => setPhoto(e.target.files[0])}
                   />
                 </div>
-                <button type="submit">Add Photo</button>
+                <div className="modal-actions">
+                  <button type="submit" disabled={loading}>
+                    {loading ? (
+                      <i className="fas fa-spinner fa-spin"></i>
+                    ) : (
+                      'Add Photo'
+                    )}
+                  </button>
+                  <button type="button" onClick={closeModal} disabled={loading}>Cancel</button>
+                </div>
               </form>
             </div>
           </div>
