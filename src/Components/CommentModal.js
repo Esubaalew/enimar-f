@@ -89,12 +89,22 @@ const CommentModal = ({ isOpen, onClose, post, accessToken }) => {
                         {loading ? (
                             <p>Loading comments...</p>
                         ) : (
-                            comments.map((comment) => (
-                                <div key={comment.id} className="COM-comment">
-                                    <p><strong>{comment.user.username}:</strong> {comment.text}</p>
-                                    <small>{formatDistanceToNow(new Date(comment.created))} ago</small>
-                                </div>
-                            ))
+                            <div className="COM-comments-list">
+                                {comments.map((comment) => (
+                                    <div key={comment.id} className="COM-comment">
+                                        <div className="COM-comment-user">
+                                            <div className="COM-user-icon">
+                                                {comment.user.first_name[0]}{comment.user.last_name[0]}
+                                            </div>
+                                            <div>
+                                                <p><strong>{comment.user.first_name} {comment.user.last_name}</strong></p>
+                                                <small>{formatDistanceToNow(new Date(comment.created))} ago</small>
+                                            </div>
+                                        </div>
+                                        <p>{comment.text}</p>
+                                    </div>
+                                ))}
+                            </div>
                         )}
                     </div>
                     <div className="COM-add-comment">

@@ -14,7 +14,7 @@
 .COM-modal-content {
     background: white;
     padding: 20px;
-    border-radius: 8px;
+    border-radius: 16px; /* Rounded corners */
     width: 80%;
     max-width: 600px;
     max-height: 90vh;
@@ -45,11 +45,38 @@
 
 .COM-comments-section {
     margin-bottom: 20px;
+    max-height: 300px; /* Set max height for scroll */
+    overflow-y: auto; /* Enable scrolling */
+}
+
+.COM-comments-list {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
 .COM-comment {
     padding: 10px;
     border-bottom: 1px solid #eee;
+}
+
+.COM-comment-user {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+}
+
+.COM-user-icon {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: #007bff;
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bold;
 }
 
 .COM-add-comment {
