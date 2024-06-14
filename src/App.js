@@ -21,11 +21,13 @@ import GroupChat from './Components/GroupChat';
 import PrivateChat from './Components/PrivateChat';
 import Reset from './Components/Reset';
 import MakePass from './Components/MakePass';
-
+import { Analytics } from "@vercel/analytics/react"
 
 
 function App() {
   return (
+    <>
+    <Analytics/>
     <Router>
     <Routes>
     <Route path="/in" element={ <SignIn/>} />
@@ -50,6 +52,7 @@ function App() {
     <Route path="*" element={<NotFound />} />
     </Routes>
      </Router>
+     </>
   );
 }
 
