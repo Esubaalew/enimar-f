@@ -11,7 +11,7 @@ const LikeModal = ({ isOpen, onClose, post, accessToken }) => {
     const [loading, setLoading] = useState(true);
     const [hasLiked, setHasLiked] = useState(false);
     const [currentUser, setCurrentUser] = useState(null);
-    const [currentLikeId, setCurrentLikeId] = useState(null); // Store the like ID for deletion
+    const [currentLikeId, setCurrentLikeId] = useState(null);
 
     useEffect(() => {
         if (isOpen) {
@@ -28,11 +28,11 @@ const LikeModal = ({ isOpen, onClose, post, accessToken }) => {
 
                     setLikes(likesWithUser);
 
-                    // Get the current logged-in user
+                    
                     const loggedInUser = await getLoggedInUser(accessToken);
                     setCurrentUser(loggedInUser);
 
-                    // Check if the current user has already liked the post and get the like ID
+                    
                     const userLike = likesWithUser.find(like => like.user.id === loggedInUser.id);
                     setHasLiked(!!userLike);
                     setCurrentLikeId(userLike ? userLike.id : null);
@@ -58,7 +58,7 @@ const LikeModal = ({ isOpen, onClose, post, accessToken }) => {
             const user = await getUserById(currentUser.id, accessToken);
             setLikes([...likes, { id: newLike.id, user, created: new Date() }]);
             setHasLiked(true);
-            setCurrentLikeId(newLike.id); // Store the new like ID
+            setCurrentLikeId(newLike.id);
         } catch (error) {
             console.error('Error liking post:', error);
         }
@@ -71,7 +71,7 @@ const LikeModal = ({ isOpen, onClose, post, accessToken }) => {
             await deleteLike(currentLikeId, accessToken);
             setLikes(likes.filter(like => like.id !== currentLikeId));
             setHasLiked(false);
-            setCurrentLikeId(null); // Clear the like ID
+            setCurrentLikeId(null); 
         } catch (error) {
             console.error('Error unliking post:', error);
         }
