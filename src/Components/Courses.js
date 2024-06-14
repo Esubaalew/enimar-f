@@ -134,6 +134,12 @@ const Courses = () => {
                   <h2>{course.title}</h2>
                   <p>{course.description}</p>
                   <p className="course-price">ETB{course.price}</p>
+                  <button
+                    className="open-course-button"
+                    onClick={() => navigate(`/course/${course.id}/learn`)}
+                  >
+                    Open Course
+                  </button>
                 </div>
               </div>
             ))

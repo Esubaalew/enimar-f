@@ -10,13 +10,16 @@ const Guest = () => {
     const handleTSignUp = () => {
         navigate('/TeacherSignUp');
         }
+    const handleSignIn = () => {
+        navigate('/in');
+    }
 
   return (
     <div className="guest-container">
       <header className="guest-header">
         <div className="logo">Enimar Code Learning</div>
         <nav className="nav-links">
-          <button className="btn-signin">Sign In</button>
+          <button onClick={handleSignIn} className="btn-signin">Sign In</button>
           <button className="btn-signup">Sign Up</button>
         </nav>
       </header>
