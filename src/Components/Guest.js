@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+// import React, { useEffect } from 'react';
 import '../styles/Guest.css';
 import guestImage from '../assets/images/guestL.jpeg';
 import { useNavigate } from 'react-router-dom';
@@ -6,12 +6,12 @@ import { useNavigate } from 'react-router-dom';
 const Guest = () => {
   const navigate = useNavigate();
 
-  useEffect(() => {
-    const loggedInUser = JSON.parse(localStorage.getItem('user'));
-    if (loggedInUser) {
-      navigate('/home');
-    }
-  }, [navigate]);
+  // useEffect(() => {
+  //   const loggedInUser = JSON.parse(localStorage.getItem('user'));
+  //   if (loggedInUser) {
+  //     navigate('/home');
+  //   }
+  // }, [navigate]);
 
   const handleSSignUp = () => {
     navigate('/StudentSignUp');
@@ -27,6 +27,7 @@ const Guest = () => {
 
   return (
     <div className="guest-container">
+      {/* Header section */}
       <header className="guest-header">
         <div className="logo">Enimar Code Learning</div>
         <nav className="nav-links">
@@ -37,6 +38,7 @@ const Guest = () => {
         </nav>
       </header>
 
+      {/* Introduction section */}
       <section className="intro-section">
         <div className="intro-content">
           <div className="intro-text">
@@ -60,6 +62,7 @@ const Guest = () => {
         </div>
       </section>
 
+      {/* Features section */}
       <section className="features-section">
         <div className="features">
           <div className="feature">
@@ -84,6 +87,13 @@ const Guest = () => {
           </div>
         </div>
       </section>
+
+      {/* Footer section */}
+      <footer className="footer">
+        <div className="footer-content">
+          <p>&copy; 2024 Enimar Code Learning. All rights reserved.</p>
+        </div>
+      </footer>
     </div>
   );
 };
