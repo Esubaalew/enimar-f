@@ -6,9 +6,11 @@ const AddReadingModal = ({ isOpen, onClose, onAddReading, subsectionId }) => {
   const [readingContent, setReadingContent] = useState('');
   const [successMessage, setSuccessMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     try {
       await onAddReading({ title: readingTitle, content: readingContent, subsection: subsectionId });
       setSuccessMessage('Reading added successfully!');
@@ -16,6 +18,8 @@ const AddReadingModal = ({ isOpen, onClose, onAddReading, subsectionId }) => {
       setReadingContent('');
     } catch (error) {
       setErrorMessage('Failed to add reading. Please try again.');
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -54,7 +58,16 @@ const AddReadingModal = ({ isOpen, onClose, onAddReading, subsectionId }) => {
                     onChange={(e) => setReadingContent(e.target.value)}
                   />
                 </div>
-                <button type="submit">Add Reading</button>
+                <div className="modal-actions">
+                  <button type="submit" disabled={loading}>
+                    {loading ? (
+                      <i className="fas fa-spinner fa-spin"></i>
+                    ) : (
+                      'Add Reading'
+                    )}
+                  </button>
+                  <button type="button" onClick={closeModal} disabled={loading}>Cancel</button>
+                </div>
               </form>
             </div>
           </div>
