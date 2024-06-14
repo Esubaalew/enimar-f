@@ -47,3 +47,19 @@ export const getPostComments = async (postId, accessToken) => {
     throw new Error('Error fetching comments');
   }
 }
+
+// Function to get likes of a post
+
+export const getPostLikes = async (postId, accessToken) => {
+  try {
+    const response = await axios.get(`${domain}social/posts/${postId}/likes/`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching likes:', error.response ? error.response.data : error.message);
+    throw new Error('Error fetching likes');
+  }
+}
