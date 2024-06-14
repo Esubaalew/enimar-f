@@ -21,7 +21,7 @@ import PrivateChat from './Components/PrivateChat';
 import Reset from './Components/Reset';
 import MakePass from './Components/MakePass';
 import { Analytics } from "@vercel/analytics/react"
-import SignIn from './Components/SignIn';
+import SignIn from './Components/Sign';
 
 
 function App() {
