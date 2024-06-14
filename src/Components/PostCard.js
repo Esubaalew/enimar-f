@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { getUserById } from '../API/users';
-import ProfileIcon from './ProfileIcon';
 import { FaThumbsUp, FaCommentAlt, FaShare } from 'react-icons/fa'; 
+import { getPostComments } from '../API/posts';
 import { formatDistanceToNow } from 'date-fns'; 
 import CommentModal from './CommentModal'; 
 import '../styles/PostCard.css';
@@ -11,6 +11,7 @@ const PostCard = ({ post }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
+    const [commentCount, setCommentCount] = useState(0);
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -24,8 +25,22 @@ const PostCard = ({ post }) => {
             }
         };
 
+        const fetchComments = async () => {
+            try {
+                const comments = await getPostComments(post.id, accessToken);
+                setCommentCount(comments.length);
+            } catch (error) {
+                console.error('Error fetching comments:', error);
+            }
+        };
+
         fetchUser();
-    }, [post.author, accessToken]);
+        fetchComments();
+    }, [post.author, post.id, accessToken]);
+
+    const getInitials = (firstName, lastName) => {
+        return `${firstName[0]}${lastName[0]}`;
+    };
 
     if (loading) {
         return <div>Loading...</div>;
@@ -35,10 +50,12 @@ const PostCard = ({ post }) => {
         <div className="post-card">
             <div className="post-header">
                 {user && (
-                    <ProfileIcon firstName={user.first_name} lastName={user.last_name} />
+                    <div className="user-icon">
+                        {getInitials(user.first_name, user.last_name)}
+                    </div>
                 )}
                 <div className="post-author">
-                    <strong>{user?.username}</strong>
+                    <strong>{user?.first_name} {user?.last_name}</strong>
                     <small>{formatDistanceToNow(new Date(post.created))} ago</small>
                 </div>
             </div>
@@ -67,6 +84,7 @@ const PostCard = ({ post }) => {
                 </button>
                 <button className="comment-button" onClick={() => setIsCommentModalOpen(true)}>
                     <FaCommentAlt />
+                    <span className="comment-count">{commentCount}</span>
                 </button>
                 <button className="share-button">
                     <FaShare />

@@ -14,7 +14,7 @@
 .COM-modal-content {
     background: white;
     padding: 20px;
-    border-radius: 16px; /* Rounded corners */
+    border-radius: 16px; 
     width: 80%;
     max-width: 600px;
     max-height: 90vh;
