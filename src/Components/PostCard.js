@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { getUserById } from '../API/users';
-import { FaThumbsUp, FaCommentAlt, FaShare } from 'react-icons/fa'; 
-import { getPostComments } from '../API/posts';
-import { formatDistanceToNow } from 'date-fns'; 
-import CommentModal from './CommentModal'; 
+import { FaThumbsUp, FaCommentAlt, FaShare } from 'react-icons/fa';
+import { getPostComments, getPostLikes } from '../API/posts'; // Importing getPostLikes
+import { formatDistanceToNow } from 'date-fns';
+import CommentModal from './CommentModal';
 import '../styles/PostCard.css';
 
 const PostCard = ({ post }) => {
@@ -12,6 +12,7 @@ const PostCard = ({ post }) => {
     const [loading, setLoading] = useState(true);
     const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
     const [commentCount, setCommentCount] = useState(0);
+    const [likeCount, setLikeCount] = useState(0); // State for like count
 
     useEffect(() => {
         const fetchUser = async () => {
@@ -34,8 +35,18 @@ const PostCard = ({ post }) => {
             }
         };
 
+        const fetchLikes = async () => {
+            try {
+                const likes = await getPostLikes(post.id, accessToken);
+                setLikeCount(likes.length);
+            } catch (error) {
+                console.error('Error fetching likes:', error);
+            }
+        };
+
         fetchUser();
         fetchComments();
+        fetchLikes(); // Call fetchLikes to get post likes
     }, [post.author, post.id, accessToken]);
 
     const getInitials = (firstName, lastName) => {
@@ -65,7 +76,7 @@ const PostCard = ({ post }) => {
                 {post.photos && post.photos.length > 0 && (
                     <div className="post-photos">
                         {post.photos.map((photo, index) => (
-                            <img key={index} src={photo.url} alt={` ${index + 1}`} />
+                            <img key={index} src={photo.url} alt={`Photos ${index + 1}`} />
                         ))}
                     </div>
                 )}
@@ -81,6 +92,7 @@ const PostCard = ({ post }) => {
             <div className="post-buttons">
                 <button className="like-button">
                     <FaThumbsUp />
+                    <span className="like-count">{likeCount}</span>
                 </button>
                 <button className="comment-button" onClick={() => setIsCommentModalOpen(true)}>
                     <FaCommentAlt />
