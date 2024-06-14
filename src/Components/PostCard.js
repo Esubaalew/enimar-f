@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from 'react';
 import { getUserById } from '../API/users';
 import { FaThumbsUp, FaCommentAlt, FaShare } from 'react-icons/fa';
-import { getPostComments, getPostLikes } from '../API/posts'; // Importing getPostLikes
+import { getPostComments, getPostLikes } from '../API/posts';
 import { formatDistanceToNow } from 'date-fns';
 import CommentModal from './CommentModal';
+import LikeModal from './LikeModal';
 import '../styles/PostCard.css';
 
 const PostCard = ({ post }) => {
@@ -11,6 +12,7 @@ const PostCard = ({ post }) => {
     const [user, setUser] = useState(null);
     const [loading, setLoading] = useState(true);
     const [isCommentModalOpen, setIsCommentModalOpen] = useState(false);
+    const [isLikeModalOpen, setIsLikeModalOpen] = useState(false); // State for LikeModal
     const [commentCount, setCommentCount] = useState(0);
     const [likeCount, setLikeCount] = useState(0); // State for like count
 
@@ -76,7 +78,7 @@ const PostCard = ({ post }) => {
                 {post.photos && post.photos.length > 0 && (
                     <div className="post-photos">
                         {post.photos.map((photo, index) => (
-                            <img key={index} src={photo.url} alt={`Photos ${index + 1}`} />
+                            <img key={index} src={photo.url} alt={`Photoing ${index + 1}`} />
                         ))}
                     </div>
                 )}
@@ -90,7 +92,7 @@ const PostCard = ({ post }) => {
                 )}
             </div>
             <div className="post-buttons">
-                <button className="like-button">
+                <button className="like-button" onClick={() => setIsLikeModalOpen(true)}>
                     <FaThumbsUp />
                     <span className="like-count">{likeCount}</span>
                 </button>
@@ -105,6 +107,12 @@ const PostCard = ({ post }) => {
             <CommentModal 
                 isOpen={isCommentModalOpen} 
                 onClose={() => setIsCommentModalOpen(false)} 
+                post={post}
+                accessToken={accessToken}
+            />
+            <LikeModal 
+                isOpen={isLikeModalOpen} 
+                onClose={() => setIsLikeModalOpen(false)} 
                 post={post}
                 accessToken={accessToken}
             />
