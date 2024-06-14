@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import './App.css';
 import StudentSignUp from './Components/StudentSignUp';
 import TeacherSignUp from './Components/TeacherSignUp';
-import SignIn from './Components/SignIn';
 import Guest from './Components/Guest';
 import ProfilePage from './Components/ProfilePage';
 import ProfileList from './Components/ProfileList';
@@ -22,6 +21,7 @@ import PrivateChat from './Components/PrivateChat';
 import Reset from './Components/Reset';
 import MakePass from './Components/MakePass';
 import { Analytics } from "@vercel/analytics/react"
+import SignIn from './Components/SignIn';
 
 
 function App() {
@@ -51,7 +51,7 @@ function App() {
     <Route path='/password-reset-confirm/:uidb64/:token' element={<MakePass />} />
     <Route path="*" element={<NotFound />} />
     </Routes>
-     </Router>
+    </Router>
      </>
   );
 }
