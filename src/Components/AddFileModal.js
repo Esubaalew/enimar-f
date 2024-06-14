@@ -6,9 +6,11 @@ const AddFileModal = ({ isOpen, onClose, onAddFile, subsectionId }) => {
   const [fileUrl, setFileUrl] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
+  const [loading, setLoading] = useState(false);
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     const fileData = new FormData();
     fileData.append('file_name', fileName);
     fileData.append('file_url', fileUrl);
@@ -19,8 +21,10 @@ const AddFileModal = ({ isOpen, onClose, onAddFile, subsectionId }) => {
       setSuccessMessage('File added successfully!');
       setFileName('');
       setFileUrl(null);
+      setLoading(false);
     } catch (error) {
       setErrorMessage('Failed to add file. Please try again.');
+      setLoading(false);
     }
   };
 
@@ -59,7 +63,18 @@ const AddFileModal = ({ isOpen, onClose, onAddFile, subsectionId }) => {
                     onChange={(e) => setFileUrl(e.target.files[0])}
                   />
                 </div>
-                <button type="submit">Add File</button>
+                <div className="modal-actions">
+                  <button type="submit" disabled={loading}>
+                    {loading ? (
+                      <i className="fas fa-spinner fa-spin"></i>
+                    ) : (
+                      'Add File'
+                    )}
+                  </button>
+                  <button type="button" onClick={closeModal} disabled={loading}>
+                    Cancel
+                  </button>
+                </div>
               </form>
             </div>
           </div>
