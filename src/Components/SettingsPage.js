@@ -4,6 +4,7 @@ import AddBioModal from './AddBioModal';
 import AddPersonalModal from './AddPersonalModal';
 import AddUsernameModal from './AddUsernameModal';
 import '../styles/SettingsPage.css';
+import Header from './Header';
 
 const SettingsPage = () => {
     const accessToken = JSON.parse(localStorage.getItem('user'))?.access;
@@ -49,7 +50,12 @@ const SettingsPage = () => {
     }
 
     return (
+        <>
+        <Header />
         <div className="ssp-settings-page">
+        <div className="fancy-header">
+            <h1>Settings</h1>
+        </div>
             <div className="ssp-profile-section">
                 <div className="ssp-user-avatar">
                     {user.first_name.charAt(0)}
@@ -73,6 +79,7 @@ const SettingsPage = () => {
             {showUsernameModal && <AddUsernameModal user={user} onClose={() => setShowUsernameModal(false)} />}
             {showBioModal && <AddBioModal user={user} onClose={() => setShowBioModal(false)} />}
         </div>
+        </>
     );
 };
 
