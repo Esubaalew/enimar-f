@@ -129,10 +129,11 @@ const ProfilePage = () => {
       }
 
       if (isFollowing) {
-
+        //eslint-disable-next-line
         const unfollowResponse = await unfollowUser(user.id, accessToken);
         setIsFollowing(false);
       } else {
+        //eslint-disable-next-line
         const followResponse = await followUser(user.id, accessToken);
         setIsFollowing(true);
       }
