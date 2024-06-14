@@ -32,3 +32,18 @@ export const getPosts = async (accessToken) => {
     throw new Error('Error fetching posts');
   }
 };
+
+// Function to get comments of a post
+export const getPostComments = async (postId, accessToken) => {
+  try {
+    const response = await axios.get(`${domain}social/posts/${postId}/comments/`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching comments:', error.response ? error.response.data : error.message);
+    throw new Error('Error fetching comments');
+  }
+}
