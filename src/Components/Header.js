@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faUser, faBook, faComments, faUserCircle } from '@fortawesome/free-solid-svg-icons';
+import { faUser, faBook, faComments, faUserCircle, faCog } from '@fortawesome/free-solid-svg-icons';
 import { getLoggedInUser } from '../API/auth';
 import '../styles/Header.css';
 
@@ -50,6 +50,12 @@ const Header = () => {
               </a>
             </li>
           )}
+          {/* Settings Link */}
+          <li className="Hnav-item">
+            <a href="/settings" className="Hnav-link">
+              <FontAwesomeIcon icon={faCog} className="Hnav-icon" /> Settings
+            </a>
+          </li>
         </ul>
       </nav>
     </header>
