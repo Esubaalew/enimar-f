@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Header from './Header';
 import PostModal from './PostModal';
-import ProfileIcon from './ProfileIcon';
 import PostCard from './PostCard';
 import CourseList from './CourseList';
 import UserList from './UserList';
@@ -60,19 +59,31 @@ const Home = () => {
     }
   };
 
+  const getInitials = (firstName, lastName) => {
+    return `${firstName[0]}${lastName[0]}`;
+  };
+
   return (
     <div className="home-container">
       <Header />
       <div className="main-content">
         <div className="post-section">
           <div className="create-post-card" onClick={openPostModal}>
-            <ProfileIcon firstName={user?.first_name} lastName={user?.last_name} />
+            {user && (
+              <div className="initials-icon">
+                {getInitials(user.first_name, user.last_name)}
+              </div>
+            )}
             <input type="text" placeholder="What's on your mind?" />
             <button type="button">Post</button>
           </div>
           {user?.is_teacher && (
             <div className="create-post-card" onClick={openCourseModal}>
-              <ProfileIcon firstName={user?.first_name} lastName={user?.last_name} />
+              {user && (
+                <div className="initials-icon">
+                  {getInitials(user.first_name, user.last_name)}
+                </div>
+              )}
               <input type="text" placeholder="Create a new course" />
               <button type="button">Create</button>
             </div>
