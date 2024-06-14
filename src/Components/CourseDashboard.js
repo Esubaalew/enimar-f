@@ -28,6 +28,7 @@ import AddVideoModal from './AddVideoModal';
 import '../styles/CourseDashboard.css';
 import { getLoggedInUser } from '../API/auth';
 import Header from './Header';
+const backendUrl = 'http://localhost:8000';
 
 const CourseDashboard = () => {
   const { id } = useParams();
@@ -281,7 +282,7 @@ const CourseDashboard = () => {
                                 <ul>
                                   {subsection.photos.map(photo => (
                                     <li key={photo.id}>
-                                      <img src={photo.image} alt={photo.image} />
+                                      <img src={`${backendUrl}${photo.image}`} alt={photo.image} />
                                     </li>
                                   ))}
                                 </ul>

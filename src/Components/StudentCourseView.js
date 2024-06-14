@@ -76,7 +76,7 @@ const StudentCourseView = () => {
    
     <div className="coursee-dashboard-container">
       <div className="sidebarL">
-        <h2>Sections</h2>
+        <h2>Contents</h2>
         {sections.length === 0 ? (
           <p>No sections added yet.</p>
         ) : (

@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import '../styles/AddVideoModal.css';
 
-const AddVideoModal = ({ isOpen, onClose, onAddVideo }) => {
+const AddVideoModal = ({ isOpen, onClose, onAddVideo, subsectionId }) => {
   const [video, setVideo] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
   const [errorMessage, setErrorMessage] = useState(null);
@@ -10,6 +10,7 @@ const AddVideoModal = ({ isOpen, onClose, onAddVideo }) => {
     e.preventDefault();
     const videoData = new FormData();
     videoData.append('video_file', video);
+    videoData.append('subsection', subsectionId);
 
     try {
       await onAddVideo(videoData);
