@@ -137,6 +137,7 @@ const ProfilePage = () => {
         const followed_user = await getUserByUsername(username, accessToken);
         console.log(followed_user);
         const followData = {followed: followed_user.id, follower: user.id}
+        // eslint-disable-next-line
         const followResponse = await addFollow(followData,  accessToken);
         setIsFollowing(true);
       }
