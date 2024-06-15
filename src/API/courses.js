@@ -158,3 +158,36 @@ export const getCompletedSubsectionsForCourse = async (courseId, accessToken) =>
   });
   return response.data;
 };
+
+// Function to create a certificate
+export const createCertificate = async (certificateData, accessToken) => {
+  try {
+    const response = await axios.post(`${domain}learning/certificates/`, certificateData, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error creating certificate:', error.response ? error.response.data : error.message);
+    throw new Error('Error creating certificate');
+  }
+};
+
+// Function to fetch certificates for a specific user and course
+export const fetchUserCourseCertificates = async (courseId, accessToken) => {
+  try {
+    const response = await axios.get(`${domain}learning/certificates/user_course_certificates/`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      },
+      params: {
+        course_id: courseId
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching certificates:', error.response ? error.response.data : error.message);
+    throw new Error('Error fetching certificates');
+  }
+};

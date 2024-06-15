@@ -5,6 +5,7 @@ import { getSectionSubsections } from '../API/sections';
 import { getSubsectionFiles, getSubsectionPhotos, getSubsectionReadings, getSubsectionVideos } from '../API/subsections';
 import { makeCompletion, getCompletedSubsectionsForCourse } from '../API/courses';
 import { getLoggedInUser } from '../API/auth';
+import { createCertificate, fetchUserCourseCertificates } from '../API/courses';
 import '../styles/StudentCourseView.css';
 import Header from './Header';
 
@@ -24,8 +25,10 @@ const StudentCourseView = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isCompleting, setIsCompleting] = useState(false);
+  const [certificates, setCertificates] = useState([]); // State to hold user's certificates
   const accessToken = JSON.parse(localStorage.getItem('user')).access;
   const backendUrl = 'http://localhost:8000';
+  const [allSectionsCompleted, setAllSectionsCompleted] = useState(false);
 
   useEffect(() => {
     const fetchCourseData = async () => {
@@ -33,7 +36,7 @@ const StudentCourseView = () => {
         const [fetchedCourse, fetchedSections, fetchedCompletedSubsections] = await Promise.all([
           getCourseById(id, accessToken),
           getCourseSections(id, accessToken),
-          getCompletedSubsectionsForCourse(id, accessToken) 
+          getCompletedSubsectionsForCourse(id, accessToken)
         ]);
 
         const sectionsWithSubsections = await Promise.all(fetchedSections.map(async (section) => {
@@ -44,6 +47,17 @@ const StudentCourseView = () => {
         setCourse(fetchedCourse);
         setSections(sectionsWithSubsections);
         setCompletedSubsections(fetchedCompletedSubsections.map(item => item.subsection));
+
+        const allCompleted = sectionsWithSubsections.every(section =>
+          section.subsections.every(subsection =>
+            fetchedCompletedSubsections.some(item => item.subsection === subsection.id)
+          )
+        );
+        setAllSectionsCompleted(allCompleted);
+
+        // Fetch certificates for the user and course
+        const fetchedCertificates = await fetchUserCourseCertificates(id, accessToken);
+        setCertificates(fetchedCertificates);
       } catch (error) {
         setError(error.message);
       } finally {
@@ -87,11 +101,29 @@ const StudentCourseView = () => {
           completed: true
         }));
         setCompletedSubsections(prev => [...prev, selectedSubsection.id]);
+
+        const allCompleted = sections.every(section =>
+          section.subsections.every(subsection =>
+            completedSubsections.includes(subsection.id)
+          )
+        );
+        setAllSectionsCompleted(allCompleted);
       }
     } catch (error) {
       setError('Error marking subsection as completed');
     } finally {
       setIsCompleting(false);
+    }
+  };
+
+  const handleClaimCertificate = async () => {
+    try {
+      const user = await getLoggedInUser(accessToken);
+      const certificateData = { course: id, user: user?.id};
+      const newCertificate = await createCertificate(certificateData, accessToken);
+      setCertificates(prevCertificates => [...prevCertificates, newCertificate]);
+    } catch (error) {
+      setError(error.message);
     }
   };
 
@@ -101,7 +133,7 @@ const StudentCourseView = () => {
   return (
     <>
       <Header />
-      <div className="coursee-dashboard-container">
+      <div className="course-dashboard-container">
         <div className="sidebarL">
           <h2>Contents</h2>
           {sections.length === 0 ? (
@@ -130,6 +162,20 @@ const StudentCourseView = () => {
                 </li>
               ))}
             </ul>
+          )}
+          {allSectionsCompleted && (
+            <div className="congratulations-section">
+              {certificates.length > 0 ? (
+                <button className="claim-certificate-btn" onClick={() => console.log('Download Certificate')}>
+                  Download Certificate
+                </button>
+              ) : (
+                <button className="claim-certificate-btn" onClick={handleClaimCertificate}>
+                  Claim Certificate
+                </button>
+              )}
+              <p>Congratulations! You have completed all sections of this course.</p>
+            </div>
           )}
         </div>
         <div className="contentL .custom-content">
@@ -177,40 +223,39 @@ const StudentCourseView = () => {
                   <ul>
                     {subsectionContent.videos.map(video => (
                       <li key={video.id}>
-                      <video src={`${backendUrl}${video.video_file}`} controls>
-                        Your browser does not support the video tag.
-                      </video>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            )}
-            {!completedSubsections.includes(selectedSubsection.id) && (
-              // Show the button only if subsection is not completed
-              <button
-                className="mark-completed-btn"
-                onClick={markAsCompleted}
-                disabled={isCompleting}
-              >
-                {isCompleting ? (
-                  <i className="fas fa-spinner fa-spin"></i>
-                ) : (
-                  'Mark as Completed'
-                )}
-              </button>
-            )}
-            {completedSubsections.includes(selectedSubsection.id) && (
-              <span className="completed-tag">Completed</span>
-            )}
-          </div>
-        ) : (
-          <p>Select a subsection to view its content</p>
-        )}
+                        <video src={`${backendUrl}${video.video_file}`} controls>
+                          Your browser does not support the video tag.
+                        </video>
+                      </li>
+                    ))}
+                  </ul>
+                </div>
+              )}
+              {!completedSubsections.includes(selectedSubsection.id) && (
+                // Show the button only if subsection is not completed
+                <button
+                  className="mark-completed-btn"
+                  onClick={markAsCompleted}
+                  disabled={isCompleting}
+                >
+                  {isCompleting ? (
+                    <i className="fas fa-spinner fa-spin"></i>
+                  ) : (
+                    'Mark as Completed'
+                  )}
+                </button>
+              )}
+              {completedSubsections.includes(selectedSubsection.id) && (
+                <span className="completed-tag">Completed</span>
+              )}
+            </div>
+          ) : (
+            <p>Select a subsection to view its content</p>
+          )}
+        </div>
       </div>
-    </div>
-  </>
-);
+    </>
+  );
 };
 
 export default StudentCourseView;
-
