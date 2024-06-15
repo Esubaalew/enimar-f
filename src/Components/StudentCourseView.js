@@ -25,7 +25,7 @@ const StudentCourseView = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isCompleting, setIsCompleting] = useState(false);
-  const [certificates, setCertificates] = useState([]); // State to hold user's certificates
+  const [certificates, setCertificates] = useState([]);
   const accessToken = JSON.parse(localStorage.getItem('user')).access;
   const backendUrl = 'http://localhost:8000';
   const [allSectionsCompleted, setAllSectionsCompleted] = useState(false);
@@ -55,7 +55,6 @@ const StudentCourseView = () => {
         );
         setAllSectionsCompleted(allCompleted);
 
-        // Fetch certificates for the user and course
         const fetchedCertificates = await fetchUserCourseCertificates(id, accessToken);
         setCertificates(fetchedCertificates);
       } catch (error) {
@@ -119,13 +118,28 @@ const StudentCourseView = () => {
   const handleClaimCertificate = async () => {
     try {
       const user = await getLoggedInUser(accessToken);
-      const certificateData = { course: id, user: user?.id};
+      const certificateData = { course: id, user: user?.id };
       const newCertificate = await createCertificate(certificateData, accessToken);
       setCertificates(prevCertificates => [...prevCertificates, newCertificate]);
     } catch (error) {
       setError(error.message);
     }
   };
+
+  const handleDownloadCertificate = () => {
+    if (certificates.length > 0) {
+      const firstCertificate = certificates[0];
+      const url = firstCertificate.pdf_file;
+      const a = document.createElement('a');
+      a.href = url;
+      a.download = 'certificate.pdf';
+      document.body.appendChild(a);
+      a.click();
+      document.body.removeChild(a);
+    }
+  };
+  
+  
 
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
@@ -166,7 +180,7 @@ const StudentCourseView = () => {
           {allSectionsCompleted && (
             <div className="congratulations-section">
               {certificates.length > 0 ? (
-                <button className="claim-certificate-btn" onClick={() => console.log('Download Certificate')}>
+                <button className="claim-certificate-btn" onClick={handleDownloadCertificate}>
                   Download Certificate
                 </button>
               ) : (
@@ -178,7 +192,7 @@ const StudentCourseView = () => {
             </div>
           )}
         </div>
-        <div className="contentL .custom-content">
+        <div className="contentL custom-content">
           {selectedSubsection ? (
             <div className="subsection-content">
               <h2>{selectedSubsection.name}</h2>
@@ -232,7 +246,6 @@ const StudentCourseView = () => {
                 </div>
               )}
               {!completedSubsections.includes(selectedSubsection.id) && (
-                // Show the button only if subsection is not completed
                 <button
                   className="mark-completed-btn"
                   onClick={markAsCompleted}
