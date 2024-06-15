@@ -90,11 +90,14 @@ const Courses = () => {
     }
   };
 
-  // Filter out enrolled courses from all courses
-  const recommendedCourses = courses.filter(course => {
-    // Check if the course is not in the enrolled courses list
-    return !enrolledCourses.some(enrolledCourse => enrolledCourse.id === course.id);
-  });
+ // Filter out enrolled courses from all published courses
+const recommendedCourses = courses.filter(course => {
+
+  return (
+    !enrolledCourses.some(enrolledCourse => enrolledCourse.id === course.id) &&
+    course.published
+  );
+});
 
   return (
     <>
