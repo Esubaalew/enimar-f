@@ -133,3 +133,28 @@ export const makeCompletion = async (completionData, accessToken) => {
     throw new Error('Error marking subsection as completed');
   }
 };
+
+// get all compelte subsections
+export const getCompleteSubsections = async (accessToken) => {
+  try {
+    const response = await axios.get(`${domain}learning/subsection-completions/`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching complete subsections:', error.response ? error.response.data : error.message);
+    throw new Error('Error fetching complete subsections');
+  }
+};
+
+
+export const getCompletedSubsectionsForCourse = async (courseId, accessToken) => {
+  const response = await axios.get(`${domain}learning/courses/${courseId}/completed-subsections/`, {
+    headers: {
+      Authorization: `Bearer ${accessToken}`
+    }
+  });
+  return response.data;
+};

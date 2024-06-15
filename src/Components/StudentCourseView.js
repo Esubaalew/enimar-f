@@ -3,7 +3,7 @@ import { useParams } from 'react-router-dom';
 import { getCourseById, getCourseSections } from '../API/courses';
 import { getSectionSubsections } from '../API/sections';
 import { getSubsectionFiles, getSubsectionPhotos, getSubsectionReadings, getSubsectionVideos } from '../API/subsections';
-import { makeCompletion } from '../API/courses';
+import { makeCompletion, getCompletedSubsectionsForCourse } from '../API/courses'; // Import the new API function
 import { getLoggedInUser } from '../API/auth'; // Import getLoggedInUser function
 import '../styles/StudentCourseView.css';
 import Header from './Header';
@@ -20,17 +20,30 @@ const StudentCourseView = () => {
     photos: [],
     videos: []
   });
+  const [completedSubsections, setCompletedSubsections] = useState([]); // State to store completed subsections
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
-  const [isCompleting, setIsCompleting] = useState(false); // State to manage completion loading state
+  const [isCompleting, setIsCompleting] = useState(false);
   const accessToken = JSON.parse(localStorage.getItem('user')).access;
   const backendUrl = 'http://localhost:8000';
 
   useEffect(() => {
-    const fetchCourse = async () => {
+    const fetchCourseData = async () => {
       try {
-        const fetchedCourse = await getCourseById(id, accessToken);
+        const [fetchedCourse, fetchedSections, fetchedCompletedSubsections] = await Promise.all([
+          getCourseById(id, accessToken),
+          getCourseSections(id, accessToken),
+          getCompletedSubsectionsForCourse(id, accessToken) 
+        ]);
+
+        const sectionsWithSubsections = await Promise.all(fetchedSections.map(async (section) => {
+          const subsections = await getSectionSubsections(section.id, accessToken);
+          return { ...section, subsections };
+        }));
+
         setCourse(fetchedCourse);
+        setSections(sectionsWithSubsections);
+        setCompletedSubsections(fetchedCompletedSubsections.map(item => item.subsection));
       } catch (error) {
         setError(error.message);
       } finally {
@@ -38,21 +51,7 @@ const StudentCourseView = () => {
       }
     };
 
-    const fetchSections = async () => {
-      try {
-        const fetchedSections = await getCourseSections(id, accessToken);
-        const sectionsWithSubsections = await Promise.all(fetchedSections.map(async (section) => {
-          const subsections = await getSectionSubsections(section.id, accessToken);
-          return { ...section, subsections };
-        }));
-        setSections(sectionsWithSubsections);
-      } catch (error) {
-        setError('Error fetching course sections');
-      }
-    };
-
-    fetchCourse();
-    fetchSections();
+    fetchCourseData();
   }, [id, accessToken]);
 
   const handleSubsectionClick = async (subsection) => {
@@ -70,34 +69,32 @@ const StudentCourseView = () => {
     }
   };
 
-const markAsCompleted = async () => {
-  setIsCompleting(true); 
-  try {
-    const user = await getLoggedInUser(accessToken);
+  const markAsCompleted = async () => {
+    setIsCompleting(true);
+    try {
+      const user = await getLoggedInUser(accessToken);
 
-    const completionData = {
-      user: user?.id,
-      subsection: selectedSubsection?.id,
-      completed: true
+      const completionData = {
+        user: user?.id,
+        subsection: selectedSubsection?.id,
+        completed: true
+      };
+      await makeCompletion(completionData, accessToken);
 
-    };
-    await makeCompletion(completionData, accessToken);
-
-    if (selectedSubsection) {
-      setSelectedSubsection(prevState => ({
-        ...prevState,
-        completed: true 
-      }));
+      if (selectedSubsection) {
+        setSelectedSubsection(prevState => ({
+          ...prevState,
+          completed: true
+        }));
+        setCompletedSubsections(prev => [...prev, selectedSubsection.id]); // Update completed subsections state
+      }
+    } catch (error) {
+      setError('Error marking subsection as completed');
+    } finally {
+      setIsCompleting(false);
     }
-  } catch (error) {
-    setError('Error marking subsection as completed');
-  } finally {
-    setIsCompleting(false); 
-  }
-};
+  };
 
-  
-  
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
@@ -123,6 +120,9 @@ const markAsCompleted = async () => {
                           onClick={() => handleSubsectionClick(subsection)}
                         >
                           {subsection.name}
+                          {completedSubsections.includes(subsection.id) && (
+                            <i className="fas fa-check-circle completed-checkmark"></i> // Font Awesome checkmark icon
+                          )}
                         </li>
                       ))}
                     </ul>
@@ -177,38 +177,40 @@ const markAsCompleted = async () => {
                   <ul>
                     {subsectionContent.videos.map(video => (
                       <li key={video.id}>
-                        <video src={`${backendUrl}${video.video_file}`} controls>
-                          Your browser does not support the video tag.
-                        </video>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-              {!selectedSubsection.completed && ( // Show the button only if subsection is not completed
-                <button
-                  className="mark-completed-btn"
-                  onClick={markAsCompleted}
-                  disabled={isCompleting}
-                >
-                  {isCompleting ? (
-                    <i className="fas fa-spinner fa-spin"></i>
-                  ) : (
-                    'Mark as Completed'
-                  )}
-                </button>
-              )}
-              {selectedSubsection.completed && (
-                <span className="completed-tag">Completed</span>
-              )}
-            </div>
-          ) : (
-            <p>Select a subsection to view its content</p>
-          )}
-        </div>
+                      <video src={`${backendUrl}${video.video_file}`} controls>
+                        Your browser does not support the video tag.
+                      </video>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+            )}
+            {!completedSubsections.includes(selectedSubsection.id) && (
+              // Show the button only if subsection is not completed
+              <button
+                className="mark-completed-btn"
+                onClick={markAsCompleted}
+                disabled={isCompleting}
+              >
+                {isCompleting ? (
+                  <i className="fas fa-spinner fa-spin"></i>
+                ) : (
+                  'Mark as Completed'
+                )}
+              </button>
+            )}
+            {completedSubsections.includes(selectedSubsection.id) && (
+              <span className="completed-tag">Completed</span>
+            )}
+          </div>
+        ) : (
+          <p>Select a subsection to view its content</p>
+        )}
       </div>
-    </>
-  );
+    </div>
+  </>
+);
 };
 
 export default StudentCourseView;
+

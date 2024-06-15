@@ -1,113 +1,116 @@
 .coursee-dashboard-container {
-    display: flex;
-    height: 100vh;
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-    color: #333;
-  }
-  
-  .sidebarL {
-    width: 250px;
-    background-color: #fff;
-    border-right: 2px solid #ececec;
-    padding: 20px;
-    overflow-y: auto;
-    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
-    position: fixed;
-    top: 0;
-    left: 0;
-    bottom: 0;
-  }
-  
-  .contentL {
-    flex-grow: 1;
-    padding: 20px;
-    overflow-y: auto;
-    background-color: #f4f4f4;
-    margin-left: 290px; 
-    border-left: 2px solid #ececec;
-    width: calc(100% - 250px); 
-  }
-  
-  .section-list,
-  .subsection-list {
-    list-style: none;
-    padding: 0;
-  }
-  
-  .section-item,
-  .subsection-item {
-    margin-bottom: 10px;
-    transition: background-color 0.3s;
-  }
-  
-  .section-item details {
-    cursor: pointer;
-  }
-  
-  .subsection-item {
-    padding: 8px 12px;
-    cursor: pointer;
-    border-radius: 4px;
-    transition: transform 0.2s;
-  }
-  
-  .subsection-item:hover {
-    transform: translateY(-2px);
-    background-color: #e9ecef;
-  }
-  
-  .subsection-item.selected {
-    background-color: #007bff;
-    color: #fff;
-  }
-  
-  .subsection-content {
-    margin-top: 20px;
-    background-color: #fff;
-    padding: 15px;
-    border-radius: 6px;
-    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-    border: 2px solid #ececec;
-  }
-  
-  .reading-list,
-  .file-list,
-  .photo-list,
-  .video-list {
-    margin-bottom: 20px;
-  }
-  
-  .reading-list h4,
-  .file-list h4,
-  .photo-list h4,
-  .video-list h4 {
-    margin-top: 0;
-    margin-bottom: 15px;
-    color: #007bff;
-  }
-  
-  .reading-list ul li,
-  .file-list ul li,
-  .photo-list ul li,
-  .video-list ul li {
-    margin-bottom: 10px;
-    background-color: #f8f9fa;
-    padding: 10px;
-    border-radius: 4px;
-  }
-  
-  .photo-list img,
-  .video-list video {
-   
-    border-radius: 4px;
-    display: block;
-    margin-left: auto;
-    margin-right: auto;
-    width: 50%;
-    height: auto;
-  }
-  
+  display: flex;
+  height: 100vh;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
 
-  .custom-content {
-    width: calc(100% - 250px); 
-  }
+.sidebarL {
+  width: 250px;
+  background-color: #fff;
+  border-right: 2px solid #ececec;
+  padding: 20px;
+  overflow-y: auto;
+  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+  position: fixed;
+  top: 0;
+  left: 0;
+  bottom: 0;
+}
+
+.contentL {
+  flex-grow: 1;
+  padding: 20px;
+  overflow-y: auto;
+  background-color: #f4f4f4;
+  margin-left: 290px; 
+  border-left: 2px solid #ececec;
+  width: calc(100% - 250px); 
+}
+
+.section-list,
+.subsection-list {
+  list-style: none;
+  padding: 0;
+}
+
+.section-item,
+.subsection-item {
+  margin-bottom: 10px;
+  transition: background-color 0.3s;
+}
+
+.section-item details {
+  cursor: pointer;
+}
+
+.subsection-item {
+  padding: 8px 12px;
+  cursor: pointer;
+  border-radius: 4px;
+  transition: transform 0.2s;
+}
+
+.subsection-item:hover {
+  transform: translateY(-2px);
+  background-color: #e9ecef;
+}
+
+.subsection-item.selected {
+  background-color: #007bff;
+  color: #fff;
+}
+
+.subsection-content {
+  margin-top: 20px;
+  background-color: #fff;
+  padding: 15px;
+  border-radius: 6px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  border: 2px solid #ececec;
+}
+
+.reading-list,
+.file-list,
+.photo-list,
+.video-list {
+  margin-bottom: 20px;
+}
+
+.reading-list h4,
+.file-list h4,
+.photo-list h4,
+.video-list h4 {
+  margin-top: 0;
+  margin-bottom: 15px;
+  color: #007bff;
+}
+
+.reading-list ul li,
+.file-list ul li,
+.photo-list ul li,
+.video-list ul li {
+  margin-bottom: 10px;
+  background-color: #f8f9fa;
+  padding: 10px;
+  border-radius: 4px;
+}
+
+.photo-list img,
+.video-list video {
+  border-radius: 4px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+  width: 50%;
+  height: auto;
+}
+
+.custom-content {
+  width: calc(100% - 250px); 
+}
+
+.completed-checkmark {
+  color: green;
+  margin-left: 10px;
+}
