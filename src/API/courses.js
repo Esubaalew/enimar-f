@@ -114,3 +114,22 @@ export const updateCourseStatus = async (courseId, publishedStatus, accessToken)
     throw new Error('Error updating course published status');
   }
 };
+
+// Function to mark a subsection as completed
+export const makeCompletion = async (completionData, accessToken) => {
+  try {
+    const response = await axios.post(
+      `${domain}learning/subsection-completions/`,
+      completionData,
+      {
+        headers: {
+          Authorization: `Bearer ${accessToken}`
+        }
+      }
+    );
+    return response.data;
+  } catch (error) {
+    console.error('Error marking subsection as completed:', error.response ? error.response.data : error.message);
+    throw new Error('Error marking subsection as completed');
+  }
+};
