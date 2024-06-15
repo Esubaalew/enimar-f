@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import { useNavigate } from 'react-router-dom'; 
 import '../styles/CourseModal.css';
 import { addCourse } from '../API/courses';
 
@@ -10,6 +10,7 @@ const CourseModal = ({ onClose }) => {
   const [price, setPrice] = useState('');
   const [error, setError] = useState(null);
   const [successMessage, setSuccessMessage] = useState(null);
+  const [loading, setLoading] = useState(false);
   const accessToken = JSON.parse(localStorage.getItem('user')).access;
   const teacher = JSON.parse(localStorage.getItem('user')).id; 
   const navigate = useNavigate(); 
@@ -20,6 +21,7 @@ const CourseModal = ({ onClose }) => {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
+    setLoading(true);
 
     const courseData = new FormData();
     courseData.append('title', title);
@@ -40,12 +42,14 @@ const CourseModal = ({ onClose }) => {
     } catch (error) {
       setError(error.message);
       console.error('Failed to create course:', error);
+    } finally {
+      setLoading(false);
     }
   };
 
   return (
-    <div className="Cmodal-overlay">
-      <div className="Cmodal">
+    <div className="Cmodal-overlay" onClick={onClose}>
+      <div className="Cmodal" onClick={(e) => e.stopPropagation()}>
         <button className="close-button" onClick={onClose}>X</button>
         <form onSubmit={handleSubmit}>
           <div className="form-group">
@@ -89,8 +93,16 @@ const CourseModal = ({ onClose }) => {
             />
           </div>
           <div className="form-actions">
-            <button type="submit" className="course-button">Create Course</button>
-            <button type="button" className="cancel-button" onClick={onClose}>Cancel</button>
+            <button type="submit" className="course-button" disabled={loading}>
+              {loading ? (
+                <i className="fas fa-spinner fa-spin"></i>
+              ) : (
+                'Create Course'
+              )}
+            </button>
+            <button type="button" className="cancel-button" onClick={onClose} disabled={loading}>
+              Cancel
+            </button>
           </div>
         </form>
         {error && <p style={{ color: 'red' }}>{error}</p>}
