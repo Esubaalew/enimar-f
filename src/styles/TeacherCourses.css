@@ -7,6 +7,7 @@
 .TC-courses-list {
   display: flex;
   flex-wrap: wrap;
+  justify-content: center; /* Center-align the course cards */
   gap: 20px;
 }
 

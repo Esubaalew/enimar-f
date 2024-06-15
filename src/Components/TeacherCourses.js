@@ -7,6 +7,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faEdit, faTrash, faEye } from '@fortawesome/free-solid-svg-icons';
 import '../styles/TeacherCourses.css';
 import Header from './Header';
+
 const TeacherCourses = () => {
   const [courses, setCourses] = useState([]);
   const [loggedInUser, setLoggedInUser] = useState(null);
@@ -25,7 +26,7 @@ const TeacherCourses = () => {
           const teacherCourses = await getCoursesByTeacher(user.username, accessToken);
           setCourses(teacherCourses);
         } else {
-          navigate('/coursesS');
+          navigate('/courses');
         }
       } catch (error) {
         console.error('Error fetching teacher data:', error);
@@ -75,57 +76,62 @@ const TeacherCourses = () => {
 
   return (
     <>
-    <Header />
-    <div className="TC-teacher-courses-container">
-      <h1>{loggedInUser?.first_name}'s Courses</h1>
-      {courses.length === 0 ? (
-        <p>No courses found.</p>
-      ) : (
-        <div className="TC-courses-list">
-          {courses.map(course => (
-            <div className="TC-course-card" key={course.id}>
-              <div className="TC-course-info">
-                <h2 className="TC-course-title">{course.title}</h2>
-                <p className="TC-course-description">{course.description}</p>
-                <p className="TC-student-count">Number of Students Enrolled: {students[course.id] ? students[course.id].length : 0}</p>
-                <div className="TC-icon-container">
-                  <button className="TC-icon-button" onClick={() => navigate(`/course/${course.id}/edit`)}>
-                    <FontAwesomeIcon icon={faEdit} />
-                  </button>
-                  <button className="TC-icon-button" onClick={() => openDeleteConfirmationModal(course)}>
-                    <FontAwesomeIcon icon={faTrash} />
-                  </button>
-                  <button className="TC-icon-button" onClick={() => toggleStudentsForCourse(course.id)}>
-                    <FontAwesomeIcon icon={faEye} />
-                  </button>
+      <Header />
+      <div className="TC-teacher-courses-container">
+        <h1>{loggedInUser?.first_name}'s Courses</h1>
+        {courses.length === 0 ? (
+          <p>No courses found.</p>
+        ) : (
+          <div className="TC-courses-list">
+            {courses.map(course => (
+              <div className="TC-course-card" key={course.id}>
+                <div className="TC-course-info">
+                  <h2 className="TC-course-title">{course.title}</h2>
+                  <p className="TC-course-description">{course.description}</p>
+                  <p className="TC-course-status">
+                    Status: {course.published ? 'Published' : 'Draft'}
+                  </p>
+                  <p className="TC-student-count">
+                    Number of Students Enrolled: {students[course.id] ? students[course.id].length : 0}
+                  </p>
+                  <div className="TC-icon-container">
+                    <button className="TC-icon-button" onClick={() => navigate(`/course/${course.id}/edit`)}>
+                      <FontAwesomeIcon icon={faEdit} />
+                    </button>
+                    <button className="TC-icon-button" onClick={() => openDeleteConfirmationModal(course)}>
+                      <FontAwesomeIcon icon={faTrash} />
+                    </button>
+                    <button className="TC-icon-button" onClick={() => toggleStudentsForCourse(course.id)}>
+                      <FontAwesomeIcon icon={faEye} />
+                    </button>
+                  </div>
                 </div>
+                {students[course.id] && (
+                  <div className="TC-students-list">
+                    <h3>Students Enrolled</h3>
+                    <ul>
+                      {students[course.id].map(student => (
+                        <li key={student.id}>{student.first_name} {student.last_name} - {student.email}</li>
+                      ))}
+                    </ul>
+                  </div>
+                )}
               </div>
-              {students[course.id] && (
-                <div className="TC-students-list">
-                  <h3>Students Enrolled</h3>
-                  <ul>
-                    {students[course.id].map(student => (
-                      <li key={student.id}>{student.first_name} {student.last_name} - {student.email}</li>
-                    ))}
-                  </ul>
-                </div>
-              )}
-            </div>
-          ))}
-        </div>
-      )}
-      {courseToDelete && (
-        <div className="TC-modal">
-          <div className="TC-modal-content">
-            <p>Are you sure you want to delete the course <strong>{courseToDelete.title}</strong>?</p>
-            <div>
-              <button onClick={handleDeleteCourse}>Yes</button>
-              <button onClick={() => setCourseToDelete(null)}>No</button>
+            ))}
+          </div>
+        )}
+        {courseToDelete && (
+          <div className="TC-modal">
+            <div className="TC-modal-content">
+              <p>Are you sure you want to delete the course <strong>{courseToDelete.title}</strong>?</p>
+              <div>
+                <button onClick={handleDeleteCourse}>Yes</button>
+                <button onClick={() => setCourseToDelete(null)}>No</button>
+              </div>
             </div>
           </div>
-        </div>
-      )}
-    </div>
+        )}
+      </div>
     </>
   );
 };
