@@ -3,8 +3,8 @@ import { useParams } from 'react-router-dom';
 import { getCourseById, getCourseSections } from '../API/courses';
 import { getSectionSubsections } from '../API/sections';
 import { getSubsectionFiles, getSubsectionPhotos, getSubsectionReadings, getSubsectionVideos } from '../API/subsections';
-import { makeCompletion, getCompletedSubsectionsForCourse } from '../API/courses'; // Import the new API function
-import { getLoggedInUser } from '../API/auth'; // Import getLoggedInUser function
+import { makeCompletion, getCompletedSubsectionsForCourse } from '../API/courses';
+import { getLoggedInUser } from '../API/auth';
 import '../styles/StudentCourseView.css';
 import Header from './Header';
 
@@ -20,7 +20,7 @@ const StudentCourseView = () => {
     photos: [],
     videos: []
   });
-  const [completedSubsections, setCompletedSubsections] = useState([]); // State to store completed subsections
+  const [completedSubsections, setCompletedSubsections] = useState([]);
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
   const [isCompleting, setIsCompleting] = useState(false);
@@ -86,7 +86,7 @@ const StudentCourseView = () => {
           ...prevState,
           completed: true
         }));
-        setCompletedSubsections(prev => [...prev, selectedSubsection.id]); // Update completed subsections state
+        setCompletedSubsections(prev => [...prev, selectedSubsection.id]);
       }
     } catch (error) {
       setError('Error marking subsection as completed');
@@ -121,7 +121,7 @@ const StudentCourseView = () => {
                         >
                           {subsection.name}
                           {completedSubsections.includes(subsection.id) && (
-                            <i className="fas fa-check-circle completed-checkmark"></i> // Font Awesome checkmark icon
+                            <i className="fas fa-check-circle completed-checkmark"></i>
                           )}
                         </li>
                       ))}
