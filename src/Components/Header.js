@@ -3,6 +3,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faUser, faBook, faComments, faUserCircle, faCog, faBell } from '@fortawesome/free-solid-svg-icons';
 import { getLoggedInUser } from '../API/auth';
 import '../styles/Header.css';
+import Search from './Search';
 
 const Header = () => {
   const [username, setUsername] = useState('');
@@ -26,6 +27,7 @@ const Header = () => {
         <div className="Hlogo-bing">E</div>
         <span className="Hlogo-text">Enimar</span>
       </div>
+      <Search />
       <nav className="Hnav">
         <ul className="Hnav-list">
           <li className="Hnav-item">

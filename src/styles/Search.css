@@ -1,0 +1,136 @@
+/* Search.css */
+.search-container {
+    display: flex;
+    align-items: center;
+    background-color: #f8f9fa; 
+  }
+  
+  .search-input-container {
+    position: relative;
+    flex: 1;
+    margin-right: 10px;
+  }
+  
+  .search-input {
+    width: 100%;
+    padding: 12px 16px;
+    padding-left: 48px;
+    border: 2px solid #007bff; 
+    border-radius: 20px; 
+    font-size: 16px; 
+    box-shadow: 0 2px 4px rgba(0, 123, 255, 0.2); 
+  }
+  
+  .search-icon {
+    position: absolute;
+    top: 50%;
+    left: 16px; 
+    transform: translateY(-50%);
+    color: #007bff;
+    pointer-events: none;
+  }
+  
+  .search-button {
+    padding: 10px 20px; 
+    background-color: #007bff;
+    color: white;
+    border: none;
+    border-radius: 20px;
+    font-weight: bold; 
+    cursor: pointer;
+    transition: background-color 0.2s; 
+  }
+  
+  .search-button:hover {
+    background-color: #0056b3;
+  }
+  
+  .search-results {
+    /* max-height: 400px; */
+    overflow-y: auto;
+    background-color: white; 
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    border-radius: 4px; 
+  }
+  
+  .result-item {
+    display: flex;
+    align-items: center;
+    padding: 15px;
+    cursor: pointer;
+    border-bottom: 1px solid #e9ecef;
+    transition: background-color 0.2s;
+  }
+  
+  .result-item:hover {
+    background-color: #f8f9fa;
+  }
+  
+  .result-item-link:hover {
+    background-color: transparent;
+  }
+ 
+
+  .user-info,
+  .resource-info {
+    flex: 1;
+  }
+  
+  .user-name,
+  .resource-caption {
+    font-weight: bold;
+    font-size: 18px; 
+  }
+  
+  .user-username,
+  .resource-topic {
+    color: black;
+    font-size: 14px;
+  }
+  
+  .no-results {
+    text-align: center;
+    padding: 20px;
+    font-style: italic;
+    color: #6c757d; 
+  }
+  
+  .result-item-link {
+    text-decoration: none; 
+    color: inherit; 
+  }
+  
+  @media screen and (max-width: 780px) {
+    .search-input {
+      padding: 10px 14px;
+      padding-left: 40px;
+      font-size: 10px; 
+      width: 100px;
+    }
+  
+    .search-icon {
+      left: 14px; 
+    }
+  
+    .search-button {
+      padding: 8px 16px; 
+    }
+  
+    .user-icon,
+    .resource-icon {
+      width: 40px;
+      height: 40px; 
+      font-size: 16px;
+    }
+  
+    .user-name,
+    .resource-caption {
+      font-size: 16px; 
+    }
+  
+    .user-username,
+    .resource-topic {
+      font-size: 12px;
+    }
+    
+  }
