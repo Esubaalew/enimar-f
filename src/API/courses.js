@@ -95,3 +95,19 @@ export const deleteCourse = async (courseId, accessToken) => {
     throw new Error('Error deleting course');
   }
 };
+
+// Function to update the published status of a course
+export const updateCourseStatus = async (courseId, publishedStatus, accessToken) => {
+  try {
+    const response = await axios.patch(`${domain}learning/courses/${courseId}/`, 
+    { published: publishedStatus }, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error updating course published status:', error.response ? error.response.data : error.message);
+    throw new Error('Error updating course published status');
+  }
+};
