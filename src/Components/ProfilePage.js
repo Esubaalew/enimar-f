@@ -8,13 +8,12 @@ import {
   getUserFollowers,
   getUserFollowing,
   getUserById,
-  followUser,
-  unfollowUser,
   updateFirstName,
   updateLastName,
   updateBio,
   getCoursesByTeacher, 
 } from '../API/users';
+import { addFollow, deleteFollow } from '../API/follows';
 import { getLoggedInUser } from '../API/auth';
 import Header from './Header';
 
@@ -130,11 +129,15 @@ const ProfilePage = () => {
 
       if (isFollowing) {
         //eslint-disable-next-line
-        const unfollowResponse = await unfollowUser(user.id, accessToken);
+        const unfollowResponse = await deleteFollow(user.id, accessToken);
         setIsFollowing(false);
       } else {
         //eslint-disable-next-line
-        const followResponse = await followUser(user.id, accessToken);
+       
+        const followed_user = await getUserByUsername(username, accessToken);
+        console.log(followed_user);
+        const followData = {followed: followed_user.id, follower: user.id}
+        const followResponse = await addFollow(followData,  accessToken);
         setIsFollowing(true);
       }
     } catch (error) {
