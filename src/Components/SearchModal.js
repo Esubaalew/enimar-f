@@ -41,14 +41,9 @@ const Modal = ({ onClose, results, isLoading }) => {
                 ) : (
                   <div className="resource-info">
                     <div className="resource-caption">
-                      {result.caption.length > 50 ? `${result.caption.substring(0, 50)}...` : result.caption}
+                      {result.title.length > 50 ? `${result.title.substring(0, 50)}...` : result.title}
                     </div>
-                    <div className="resource-topic">
-                      {result.topic}
-                    </div>
-                    <div className="resource-language">
-                      {result.language_name}
-                    </div>
+    
                   </div>
                 )}
               </div>
