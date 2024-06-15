@@ -2,7 +2,8 @@ import React, { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import {
   getCourseById,
-  getCourseSections
+  getCourseSections,
+  updateCourseStatus
 } from '../API/courses';
 import {
   addSection,
@@ -25,9 +26,11 @@ import AddReadingModal from './AddReadingModal';
 import AddFileModal from './AddFileModal';
 import AddPhotoModal from './AddPhotoModal';
 import AddVideoModal from './AddVideoModal';
+import ConfirmPublishModal from './ConfirmPublishModal';
 import '../styles/CourseDashboard.css';
 import { getLoggedInUser } from '../API/auth';
 import Header from './Header';
+
 const backendUrl = 'http://localhost:8000';
 
 const CourseDashboard = () => {
@@ -42,6 +45,8 @@ const CourseDashboard = () => {
   const [isAddFileModalOpen, setIsAddFileModalOpen] = useState(false);
   const [isAddPhotoModalOpen, setIsAddPhotoModalOpen] = useState(false);
   const [isAddVideoModalOpen, setIsAddVideoModalOpen] = useState(false);
+  const [isConfirmPublishModalOpen, setIsConfirmPublishModalOpen] = useState(false);
+  const [publishError, setPublishError] = useState(null);
   const [currentSectionId, setCurrentSectionId] = useState(null);
   const [currentSubsectionId, setCurrentSubsectionId] = useState(null);
   const accessToken = JSON.parse(localStorage.getItem('user'))?.access || '';
@@ -210,6 +215,17 @@ const CourseDashboard = () => {
     }
   };
 
+  const handlePublish = async () => {
+    try {
+      await updateCourseStatus(id, true, accessToken); 
+      setCourse(prevCourse => ({ ...prevCourse, published: true }));
+      setIsConfirmPublishModalOpen(false);
+    } catch (error) {
+      setPublishError('Error publishing course');
+    }
+  };
+  
+
   if (loading) {
     return <p>Loading...</p>;
   }
@@ -223,135 +239,188 @@ const CourseDashboard = () => {
       <div className="course-dashboard-container">
         <h1>{course.title}</h1>
         <div className="course-details">
-          <p>Description: {course.description}</p>
-          <p>Price: ${course.price}</p>
-          <p>Teacher: {course.teacher}</p>
-        </div>
-        <div className="sections">
-          <h2>Sections</h2>
-          <button onClick={() => setIsAddSectionModalOpen(true)}>Add Section</button>
-          {sections.length === 0 ? (
-            <p>No sections added yet.</p>
+        <p>Description: {course.description}</p>
+  <p>Price: ${course.price}</p>
+  <p>Teacher: {course.teacher}</p>
+</div>
+<div className="sections">
+  <h2>Sections</h2>
+  <button onClick={() => setIsAddSectionModalOpen(true)}>Add Section</button>
+  {sections.length === 0 ? (
+    <p>No sections added yet.</p>
+  ) : (
+    <ul className="section-list">
+      {sections.map((section) => (
+        <li key={section.id} className="section-item">
+          <div className="section-header">
+            {section.name}
+            <button
+              onClick={() => {
+                setIsAddSubsectionModalOpen(true);
+                setCurrentSectionId(section.id);
+              }}
+            >
+              Add Subsection
+            </button>
+          </div>
+          {section.subsections?.length === 0 ? (
+            <p>No subsections added yet.</p>
           ) : (
-            <ul className="section-list">
-              {sections.map(section => (
-                <li key={section.id} className="section-item">
-                  <div className="section-header">
-                    {section.name}
-                    <button onClick={() => { setIsAddSubsectionModalOpen(true); setCurrentSectionId(section.id); }}>Add Subsection</button>
+            <ul className="subsection-list">
+              {section.subsections?.map((subsection) => (
+                <li key={subsection.id} className="subsection-item">
+                  <div className="subsection-header">
+                    {subsection.name}
+                    <div className="subsection-actions">
+                      <button
+                        onClick={() => {
+                          setIsAddReadingModalOpen(true);
+                          setCurrentSubsectionId(subsection.id);
+                        }}
+                      >
+                        Add Reading
+                      </button>
+                      <button
+                        onClick={() => {
+                          setIsAddFileModalOpen(true);
+                          setCurrentSubsectionId(subsection.id);
+                        }}
+                      >
+                        Add File
+                      </button>
+                      <button
+                        onClick={() => {
+                          setIsAddPhotoModalOpen(true);
+                          setCurrentSubsectionId(subsection.id);
+                        }}
+                      >
+                        Add Photo
+                      </button>
+                      <button
+                        onClick={() => {
+                          setIsAddVideoModalOpen(true);
+                          setCurrentSubsectionId(subsection.id);
+                        }}
+                      >
+                        Add Video
+                      </button>
+                    </div>
                   </div>
-                  {section.subsections?.length === 0 ? (
-                    <p>No subsections added yet.</p>
-                  ) : (
-                    <ul className="subsection-list">
-                      {section.subsections?.map(subsection => (
-                        <li key={subsection.id} className="subsection-item">
-                          <div className="subsection-header">
-                            {subsection.name}
-                            <div className="subsection-actions">
-                              <button onClick={() => { setIsAddReadingModalOpen(true); setCurrentSubsectionId(subsection.id); }}>Add Reading</button>
-                              <button onClick={() => { setIsAddFileModalOpen(true); setCurrentSubsectionId(subsection.id); }}>Add File</button>
-                              <button onClick={() => { setIsAddPhotoModalOpen(true); setCurrentSubsectionId(subsection.id); }}>Add Photo</button>
-                              <button onClick={() => { setIsAddVideoModalOpen(true); setCurrentSubsectionId(subsection.id); }}>Add Video</button>
-                            </div>
-                          </div>
-                          <div className="subsection-content">
-                            {subsection.readings?.length > 0 && (
-                              <div className="reading-list">
-                                <h3>Readings:</h3>
-                                <ul>
-                                  {subsection.readings.map(reading => (
-                                    <li key={reading.id}>{reading.title}</li>
-                                  ))}
-                                </ul>
-                              </div>
-                            )}
-                            {subsection.files?.length > 0 && (
-                              <div className="file-list">
-                                <h3>Files:</h3>
-                                <ul>
-                                  {subsection.files.map(file => (
-                                    <li key={file.id}>{file.file_name}</li>
-                                  ))}
-                                </ul>
-                              </div>
-                            )}
-                            {subsection.photos?.length > 0 && (
-                              <div className="photo-list">
-                                <h3>Photos:</h3>
-                                <ul>
-                                  {subsection.photos.map(photo => (
-                                    <li key={photo.id}>
-                                      <img src={`${backendUrl}${photo.image}`} alt={photo.image} />
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            )}
-                            {subsection.videos?.length > 0 && (
-                              <div className="video-list">
-                                <h3>Videos:</h3>
-                                <ul>
-                                  {subsection.videos.map(video => (
-                                    <li key={video.id}>
-                                      <video src={video.video_file} controls>
-                                        Your browser does not support the video tag.
-                                      </video>
-                                    </li>
-                                  ))}
-                                </ul>
-                              </div>
-                            )}
-                          </div>
-                        </li>
-                      ))}
-                    </ul>
-                  )}
+                  <div className="subsection-content">
+                    {subsection.readings?.length > 0 && (
+                      <div className="reading-list">
+                        <h3>Readings:</h3>
+                        <ul>
+                          {subsection.readings.map((reading) => (
+                            <li key={reading.id}>{reading.title}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    {subsection.files?.length > 0 && (
+                      <div className="file-list">
+                        <h3>Files:</h3>
+                        <ul>
+                          {subsection.files.map((file) => (
+                            <li key={file.id}>{file.file_name}</li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    {subsection.photos?.length > 0 && (
+                      <div className="photo-list">
+                        <h3>Photos:</h3>
+                        <ul>
+                          {subsection.photos.map((photo) => (
+                            <li key={photo.id}>
+                              <img
+                                src={`${backendUrl}${photo.image}`}
+                                alt={photo.image}
+                              />
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                    {subsection.videos?.length > 0 && (
+                      <div className="video-list">
+                        <h3>Videos:</h3>
+                        <ul>
+                          {subsection.videos.map((video) => (
+                            <li key={video.id}>
+                              <video src={video.video_file} controls>
+                                Your browser does not support the video tag.
+                              </video>
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    )}
+                  </div>
                 </li>
               ))}
             </ul>
           )}
-        </div>
+        </li>
+      ))}
+    </ul>
+  )}
+</div>
 
-        <AddSectionModal
-          isOpen={isAddSectionModalOpen}
-          onClose={() => setIsAddSectionModalOpen(false)}
-          onAddSection={handleAddSection}
-          courseId={id}
-        />
-        <AddSubsectionModal
-          isOpen={isAddSubsectionModalOpen}
-          onClose={() => setIsAddSubsectionModalOpen(false)}
-          onAddSubsection={handleAddSubsection}
-          sectionId={currentSectionId}
-        />
-        <AddReadingModal
-          isOpen={isAddReadingModalOpen}
-          onClose={() => setIsAddReadingModalOpen(false)}
-          onAddReading={handleAddReading}
-          subsectionId={currentSubsectionId}
-        />
-        <AddFileModal
-          isOpen={isAddFileModalOpen}
-          onClose={() => setIsAddFileModalOpen(false)}
-          onAddFile={handleAddFile}
-          subsectionId={currentSubsectionId}
-        />
-        <AddPhotoModal
-          isOpen={isAddPhotoModalOpen}
-          onClose={() => setIsAddPhotoModalOpen(false)}
-          onAddPhoto={handleAddPhoto}
-          subsectionId={currentSubsectionId}
-        />
-        <AddVideoModal
-          isOpen={isAddVideoModalOpen}
-          onClose={() => setIsAddVideoModalOpen(false)}
-          onAddVideo={handleAddVideo}
-          subsectionId={currentSubsectionId}
-        />
-      </div>
-    </>
-  );
+<AddSectionModal
+  isOpen={isAddSectionModalOpen}
+  onClose={() => setIsAddSectionModalOpen(false)}
+  onAddSection={handleAddSection}
+  courseId={id}
+/>
+<AddSubsectionModal
+  isOpen={isAddSubsectionModalOpen}
+  onClose={() => setIsAddSubsectionModalOpen(false)}
+  onAddSubsection={handleAddSubsection}
+  sectionId={currentSectionId}
+/>
+<AddReadingModal
+  isOpen={isAddReadingModalOpen}
+  onClose={() => setIsAddReadingModalOpen(false)}
+  onAddReading={handleAddReading}
+  subsectionId={currentSubsectionId}
+/>
+<AddFileModal
+  isOpen={isAddFileModalOpen}
+  onClose={() => setIsAddFileModalOpen(false)}
+  onAddFile={handleAddFile}
+  subsectionId={currentSubsectionId}
+/>
+<AddPhotoModal
+  isOpen={isAddPhotoModalOpen}
+  onClose={() => setIsAddPhotoModalOpen(false)}
+  onAddPhoto={handleAddPhoto}
+  subsectionId={currentSubsectionId}
+/>
+<AddVideoModal
+  isOpen={isAddVideoModalOpen}
+  onClose={() => setIsAddVideoModalOpen(false)}
+  onAddVideo={handleAddVideo}
+  subsectionId={currentSubsectionId}
+/>
+
+<ConfirmPublishModal
+  isOpen={isConfirmPublishModalOpen}
+  onRequestClose={() => setIsConfirmPublishModalOpen(false)}
+  onConfirm={handlePublish}
+  error={publishError}
+/>
+<button
+  onClick={() => setIsConfirmPublishModalOpen(true)}
+  disabled={course.published}
+>
+  Publish Course
+</button>
+</div>
+</>
+);
 };
 
 export default CourseDashboard;
+
+
