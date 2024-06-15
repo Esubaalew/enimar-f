@@ -23,6 +23,7 @@ import MakePass from './Components/MakePass';
 import { Analytics } from "@vercel/analytics/react"
 import SignIn from './Components/Sign';
 import SettingsPage from './Components/SettingsPage';
+import Notifications from './Components/Notifications';
 
 
 function App() {
@@ -50,7 +51,9 @@ function App() {
     <Route path="/unauthorized" element={<Unauthorized />} />
     <Route path='/reset' element={<Reset />} />
     <Route path='/password-reset-confirm/:uidb64/:token' element={<MakePass />} />
+    <Route path='/notifications' element={<Notifications />} />
     <Route path='/settings' element={<SettingsPage />} />
+
     <Route path="*" element={<NotFound />} />
     </Routes>
     </Router>
