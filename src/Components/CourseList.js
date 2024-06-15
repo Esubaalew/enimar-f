@@ -45,11 +45,13 @@ const CourseItem = ({ course, accessToken }) => {
 
 const CourseList = ({ courses }) => {
     const accessToken = JSON.parse(localStorage.getItem('user'))?.access;
+    // Filter out courses that are not published
+    const publishedCourses = courses.filter(course => course.published);
 
     return (
         <div className="course-list">
             <h2>Recommended Courses</h2>
-            {courses.map(course => (
+            {publishedCourses.map(course => (
                 <CourseItem key={course.id} course={course} accessToken={accessToken} />
             ))}
         </div>
