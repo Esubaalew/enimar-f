@@ -1,22 +1,34 @@
 .ssp-settings-page {
-    width: 98%;
-    margin: 0; 
     padding: 20px;
-    font-family: Arial, sans-serif;
-    background-color: #f9f9f9;
-    border: 1px solid #ccc;
-    border-radius: 8px;
+    font-family: 'Arial, sans-serif';
+    max-width: 1100px;
+    margin: auto;
+    background: #f9f9f9;
+    border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-}
-
-
-.ssp-profile-section {
+    margin-top: 10px;
+  }
+  
+  .fancy-header {
+    text-align: center;
+    margin-bottom: 20px;
+  }
+  
+  .fancy-header h1 {
+    font-size: 24px;
+    color: #007bff;
+    text-transform: uppercase;
+    border-bottom: 2px solid #007bff;
+    padding-bottom: 10px;
+  }
+  
+  .ssp-profile-section {
     display: flex;
     align-items: center;
     margin-bottom: 20px;
-}
-
-.ssp-user-avatar {
+  }
+  
+  .ssp-user-avatar {
     width: 50px;
     height: 50px;
     border-radius: 50%;
@@ -26,37 +38,42 @@
     align-items: center;
     font-size: 24px;
     margin-right: 20px;
-}
-
-.ssp-profile-info {
+  }
+  
+  .ssp-profile-info {
     flex: 1;
-}
-
-.ssp-user-name {
+  }
+  
+  .ssp-user-name {
     font-size: 20px;
     font-weight: bold;
     margin-bottom: 5px;
-}
-
-.ssp-user-username {
+  }
+  
+  .ssp-user-username {
     color: #777;
     font-size: 16px;
-}
-
-.ssp-settings-section {
+  }
+  
+  .ssp-settings-section {
     margin-bottom: 20px;
     padding: 15px;
     background-color: #fff;
     border-radius: 8px;
     box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
     cursor: pointer;
-}
-
-.ssp-settings-section h3 {
+    transition: background 0.3s ease;
+  }
+  
+  .ssp-settings-section:hover {
+    background: #f1f1f1;
+  }
+  
+  .ssp-settings-section h3 {
     margin-bottom: 10px;
-}
-
-.modal {
+  }
+  
+  .modal {
     position: fixed;
     top: 0;
     left: 0;
@@ -67,38 +84,38 @@
     justify-content: center;
     align-items: center;
     z-index: 1000;
-}
-
-.modal-content {
+  }
+  
+  .modal-content {
     background-color: #fff;
     padding: 20px;
     max-width: 400px;
     width: 100%;
-    border-radius: 12px; /* Rounded corners */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Shadow effect */
-}
-
-.modal-actions {
+    border-radius: 12px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  }
+  
+  .modal-actions {
     display: flex;
     justify-content: flex-end;
     margin-top: 20px;
-}
-
-.modal-actions button {
+  }
+  
+  .modal-actions button {
     margin-left: 10px;
-}
-
-textarea,
-input {
+  }
+  
+  textarea,
+  input {
     width: 100%;
     padding: 10px;
     margin-bottom: 10px;
     border: 1px solid #ccc;
     border-radius: 4px;
     font-size: 14px;
-}
-
-button {
+  }
+  
+  button {
     padding: 10px 20px;
     background-color: #007bff;
     color: #fff;
@@ -107,26 +124,14 @@ button {
     cursor: pointer;
     font-size: 14px;
     transition: background-color 0.3s ease;
-}
-
-button:hover {
+  }
+  
+  button:hover {
     background-color: #0056b3;
-}
-
-button:disabled {
+  }
+  
+  button:disabled {
     background-color: #ccc;
     cursor: not-allowed;
-}
-
-.fancy-header {
-    text-align: center;
-    margin-bottom: 20px;
-}
-
-.fancy-header h1 {
-    font-size: 24px;
-    color: #007bff; 
-    text-transform: uppercase;
-    border-bottom: 2px solid #007bff; 
-    padding-bottom: 10px; 
-}
+  }
+  

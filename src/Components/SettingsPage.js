@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { getLoggedInUser } from '../API/auth';
+import { useNavigate } from 'react-router-dom';
 import AddBioModal from './AddBioModal';
 import AddPersonalModal from './AddPersonalModal';
 import AddUsernameModal from './AddUsernameModal';
@@ -13,6 +14,7 @@ const SettingsPage = () => {
     const [showBioModal, setShowBioModal] = useState(false);
     const [showPersonalModal, setShowPersonalModal] = useState(false);
     const [showUsernameModal, setShowUsernameModal] = useState(false);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const fetchUserData = async () => {
@@ -39,6 +41,11 @@ const SettingsPage = () => {
 
     const handleOpenUsernameModal = () => {
         setShowUsernameModal(true);
+    };
+
+    const handleLogout = () => {
+        localStorage.removeItem('user');
+        navigate('/in');
     };
 
     if (loading) {
@@ -74,6 +81,9 @@ const SettingsPage = () => {
             </div>
             <div className="ssp-settings-section" onClick={handleOpenBioModal}>
                 <h3>Bio</h3>
+            </div>
+            <div className="ssp-settings-section" onClick={handleLogout}>
+                <h3>Logout</h3>
             </div>
             {showPersonalModal && <AddPersonalModal user={user} onClose={() => setShowPersonalModal(false)} />}
             {showUsernameModal && <AddUsernameModal user={user} onClose={() => setShowUsernameModal(false)} />}
