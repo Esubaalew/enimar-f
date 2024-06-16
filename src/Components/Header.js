@@ -23,10 +23,12 @@ const Header = () => {
 
   return (
     <header className="Hheader">
-      <div className="Hlogo">
-        <div className="Hlogo-bing">E</div>
-        <span className="Hlogo-text">Enimar</span>
-      </div>
+      <a href="/home" className="Hlogo-link">
+        <div className="Hlogo">
+          <div className="Hlogo-bing">E</div>
+          <span className="Hlogo-text">Enimar</span>
+        </div>
+      </a>
       <Search />
       <nav className="Hnav">
         <ul className="Hnav-list">

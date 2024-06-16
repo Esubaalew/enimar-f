@@ -1,62 +1,71 @@
-
 .Hheader {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background-color: #0a1628;
-    padding: 10px 20px;
-    color: #ffffff;
-  }
-  
-  .Hlogo {
-    display: flex;
-    align-items: center;
-  }
-  
-  .Hlogo-bing {
-    background-color: #ffffff;
-    color: #0a1628; 
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    height: 30px;
-    width: 30px;
-    border-radius: 50%; /* Makes the div a circle */
-    font-size: 1.5em;
-    font-weight: bold;
-    margin-right: 10px;
-  }
-  
-  .Hlogo-text {
-    font-size: 1.5em;
-    font-weight: bold;
-  }
-  
-  .Hnav {
-    display: flex;
-  }
-  
-  .Hnav-list {
-    display: flex;
-    list-style: none;
-    margin: 0;
-    padding: 0;
-  }
-  
-  .Hnav-item {
-    margin-left: 20px;
-  }
-  
-  .Hnav-link {
-    color: #ffffff;
-    text-decoration: none;
-    font-size: 1em;
-    display: flex;
-    align-items: center;
-  }
-  
-  .Hnav-icon {
-    margin-right: 5px;
-    font-size: 1.2em;
-  }
-  
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #0a1628;
+  padding: 10px 20px;
+  color: #ffffff;
+}
+
+.Hlogo-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+}
+
+.Hlogo {
+  display: flex;
+  align-items: center;
+}
+
+.Hlogo-bing {
+  background-color: #ffffff;
+  color: #0a1628; 
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 30px;
+  width: 30px;
+  border-radius: 50%; /* Makes the div a circle */
+  font-size: 1.5em;
+  font-weight: bold;
+  margin-right: 10px;
+}
+
+.Hlogo-text {
+  font-size: 1.5em;
+  font-weight: bold;
+  color: #ffffff; /* Ensure the text color is white */
+}
+
+.Hnav {
+  display: flex;
+}
+
+.Hnav-list {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.Hnav-item {
+  margin-left: 20px;
+}
+
+.Hnav-link {
+  color: #ffffff;
+  text-decoration: none;
+  font-size: 1em;
+  display: flex;
+  align-items: center;
+}
+
+.Hnav-link:hover {
+  text-decoration: underline;
+}
+
+.Hnav-icon {
+  margin-right: 5px;
+  font-size: 1.2em;
+}
