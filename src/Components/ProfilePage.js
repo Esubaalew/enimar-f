@@ -205,29 +205,36 @@ const ProfilePage = () => {
                 </div>
               )}
             </div>
+            
             <div className="PPname-and-username">
-              {isEditingProfile ? (
-                <>
-                  <input
-                    type="text"
-                    value={firstName}
-                    onChange={(e) => setFirstName(e.target.value)}
-                    placeholder="First Name"
-                  />
-                  <input
-                    type="text"
-                    value={lastName}
-                    onChange={(e) => setLastName(e.target.value)}
-                    placeholder="Last Name"
-                  />
-                </>
-              ) : (
-                <>
-                  <h1>{user?.first_name} {user?.last_name}</h1>
-                  <p className="PPusername">@{user?.username}</p>
-                </>
-              )}
-            </div>
+  {isEditingProfile ? (
+    <>
+      <input
+        type="text"
+        value={firstName}
+        onChange={(e) => setFirstName(e.target.value)}
+        placeholder="First Name"
+      />
+      <input
+        type="text"
+        value={lastName}
+        onChange={(e) => setLastName(e.target.value)}
+        placeholder="Last Name"
+      />
+    </>
+  ) : (
+    <>
+      <h1 className="PPname">
+        {user?.first_name} {user?.last_name}
+        {user?.is_teacher && (
+          <span className="PPteacher-check">t &#10003;</span>
+        )}
+      </h1>
+      <p className="PPusername">@{user?.username}</p>
+    </>
+  )}
+</div>
+
           </div>
           {isEditingProfile ? (
             <div className="PPedit-profile-section">
