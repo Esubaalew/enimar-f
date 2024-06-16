@@ -6,7 +6,7 @@ const domain = 'http://127.0.0.1:8000/';
 
 export const signIn = async (userData) => {
   try {
-    const response = await axios.post(`${domain}/account/signin/`, userData);
+    const response = await axios.post(`${domain}account/signin/`, userData);
     return response.data;
   } catch (error) {
     throw error.response.data;
@@ -16,7 +16,7 @@ export const signIn = async (userData) => {
 
 export const signUpTeacher = async (teacherData) => {
   try {
-    const response = await axios.post(`${domain}/account/signup/teacher/`, teacherData);
+    const response = await axios.post(`${domain}account/signup/teacher/`, teacherData);
     return response.data; // Ensure the correct path to the data
   } catch (error) {
     console.error('Error signing up teacher:', error);
@@ -27,7 +27,7 @@ export const signUpTeacher = async (teacherData) => {
 
 export const signUpStudent = async (teacherData) => {
   try {
-    const response = await axios.post(`${domain}/account/signup/student/`, teacherData);
+    const response = await axios.post(`${domain}account/signup/student/`, teacherData);
     return response.data; // Ensure the correct path to the data
   } catch (error) {
     console.error('Error signing up teacher:', error);
