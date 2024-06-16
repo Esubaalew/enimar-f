@@ -1,50 +1,56 @@
 /* CourseDashboard.css */
 
-.course-dashboard-container {
+.DDB-course-dashboard-container {
   max-width: 800px;
   margin: 0 auto;
   padding: 20px;
 }
 
-.course-details {
-  background-color: #f9f9f9;
+.DDB-course-details {
+  background-color: #fff;
   border: 1px solid #ddd;
   padding: 20px;
   margin-top: 20px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  border-radius: 8px;
 }
 
-.course-details h2 {
+.DDB-course-details h2 {
   margin-top: 0;
 }
 
-.course-details p {
+.DDB-course-details p {
   margin-bottom: 10px;
 }
 
-.sections {
+.DDB-sections {
   margin-top: 20px;
 }
 
-.section-list {
+.DDB-section-list {
   list-style: none;
   padding: 0;
 }
 
-.section-item {
+.DDB-section-item {
   border: 1px solid #ddd;
   margin-bottom: 20px;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-.section-header {
+.DDB-section-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
   background-color: #f2f2f2;
   padding: 10px;
+  border-top-left-radius: 8px;
+  border-top-right-radius: 8px;
 }
 
-.section-header button {
-  background-color: #4caf50;
+.DDB-section-header .DDB-button {
+  background-color: #7f4caf;
   color: white;
   border: none;
   padding: 8px 16px;
@@ -54,21 +60,22 @@
   font-size: 14px;
   margin-left: 10px;
   cursor: pointer;
+  border-radius: 4px;
 }
 
-.subsection-item {
+.DDB-subsection-item {
   padding: 10px;
   border-bottom: 1px solid #ddd;
 }
 
-.subsection-header {
+.DDB-subsection-header {
   display: flex;
   justify-content: space-between;
   align-items: center;
 }
 
-.subsection-actions button {
-  background-color: #4caf50;
+.DDB-subsection-actions .DDB-button {
+  background-color: #af4c7d;
   color: white;
   border: none;
   padding: 5px 10px;
@@ -78,48 +85,66 @@
   font-size: 12px;
   margin-left: 10px;
   cursor: pointer;
+  border-radius: 4px;
 }
 
-.subsection-content {
+.DDB-subsection-content {
   margin-top: 10px;
 }
 
-.reading-list,
-.file-list,
-.photo-list,
-.video-list {
+.DDB-reading-list,
+.DDB-file-list,
+.DDB-photo-list,
+.DDB-video-list {
   margin-bottom: 15px;
 }
 
-.reading-list h3,
-.file-list h3,
-.photo-list h3,
-.video-list h3 {
+.DDB-reading-list h3,
+.DDB-file-list h3,
+.DDB-photo-list h3,
+.DDB-video-list h3 {
   margin-top: 0;
   margin-bottom: 10px;
 }
 
-.reading-list ul,
-.file-list ul,
-.photo-list ul,
-.video-list ul {
+.DDB-reading-list ul,
+.DDB-file-list ul,
+.DDB-photo-list ul,
+.DDB-video-list ul {
   list-style: none;
   padding: 0;
 }
 
-.reading-list ul li,
-.file-list ul li,
-.photo-list ul li,
-.video-list ul li {
+.DDB-reading-list ul li,
+.DDB-file-list ul li,
+.DDB-photo-list ul li,
+.DDB-video-list ul li {
   margin-bottom: 5px;
 }
 
-.photo-list img {
+.DDB-photo-list img {
   max-width: 100%;
   height: auto;
 }
 
-.video-list video {
+.DDB-video-list video {
   max-width: 100%;
   height: auto;
+}
+
+.DDB-button {
+  background-color: #4caf50;
+  color: white;
+  border: none;
+  padding: 8px 16px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 14px;
+  cursor: pointer;
+  border-radius: 4px;
+}
+
+.DDB-publish-button {
+  margin-top: 20px;
 }
