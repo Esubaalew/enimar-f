@@ -78,7 +78,9 @@ const TeacherCourses = () => {
     <>
       <Header />
       <div className="TC-teacher-courses-container">
+      <div className="fancy-header">
         <h1>{loggedInUser?.first_name}'s Courses</h1>
+      </div>
         {courses.length === 0 ? (
           <p>No courses found.</p>
         ) : (

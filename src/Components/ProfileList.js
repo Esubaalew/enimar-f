@@ -41,7 +41,9 @@ const Profiles = () => {
     <>
       <Header />
     <div className="CMprofiles-container">
-      <h1>All Profiles</h1>
+    <div className="fancy-header">
+      <h1>Find a community </h1>
+      </div>
       <div className="CMtabs">
         <button className={`CMtab ${activeTab === 'teachers' ? 'active' : ''}`} onClick={() => handleTabClick('teachers')}>Teachers</button>
         <button className={`CMtab ${activeTab === 'students' ? 'active' : ''}`} onClick={() => handleTabClick('students')}>Students</button>

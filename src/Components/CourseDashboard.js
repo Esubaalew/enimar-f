@@ -237,7 +237,9 @@ const CourseDashboard = () => {
     <>
       <Header />
       <div className="DDB-course-dashboard-container">
+      <div className="fancy-header">
         <h1>{course.title}</h1>
+        </div>
         <div className="DDB-course-details">
           <p>Description: {course.description}</p>
           <p>Price: ${course.price}</p>

@@ -103,7 +103,9 @@ const recommendedCourses = courses.filter(course => {
     <>
     <Header/>
     <div className="courses-container">
+    <div className="fancy-header">
       <h1>Explore Our Courses</h1>
+    </div>
       <p>Find the perfect course to expand your knowledge and skills.</p>
       <div className="tabs">
         <button onClick={() => setActiveTab('recommended')} className={activeTab === 'recommended' ? 'active' : ''}>
