@@ -13,7 +13,7 @@ import Header from './Header';
 
 const StudentCourseView = () => {
   const { id } = useParams();
-  // eslint-disable-next-line
+  // eslint-disable-next-line no-unused-vars
   const [course, setCourse] = useState(null);
   const [sections, setSections] = useState([]);
   const [selectedSubsection, setSelectedSubsection] = useState(null);
@@ -148,7 +148,7 @@ const StudentCourseView = () => {
       document.body.removeChild(a);
     }
   };
-  
+
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
@@ -257,14 +257,7 @@ const StudentCourseView = () => {
                 <div className="question-list">
                   <h4>Questions:</h4>
                   {subsectionContent.questions.map(question => (
-                    <div key={question.id} className="question-card">
-                      <h5>{question.text}</h5>
-                      <ul>
-                        {question.choices.map(choice => (
-                          <li key={choice.id}>{choice.text}</li>
-                        ))}
-                      </ul>
-                    </div>
+                    <QuestionCard key={question.id} question={question} />
                   ))}
                 </div>
               )}
@@ -291,6 +284,47 @@ const StudentCourseView = () => {
         </div>
       </div>
     </>
+  );
+};
+
+const QuestionCard = ({ question }) => {
+  const [selectedChoice, setSelectedChoice] = useState(null);
+  const [feedback, setFeedback] = useState('');
+
+  const handleChoiceChange = (choiceId) => {
+    setSelectedChoice(choiceId);
+  };
+
+  const handleCheckAnswer = () => {
+    const correctChoice = question.choices.find(choice => choice.is_correct);
+    if (selectedChoice === correctChoice.id) {
+      setFeedback('Correct!');
+    } else {
+      setFeedback(`Incorrect. The correct answer is "${correctChoice.text}".`);
+    }
+  };
+
+  return (
+    <div className="question-card">
+      <h5>{question.text}</h5>
+      <ul>
+        {question.choices.map(choice => (
+          <li key={choice.id}>
+            <label>
+              <input
+                type="radio"
+                name={`question-${question.id}`}
+                value={choice.id}
+                onChange={() => handleChoiceChange(choice.id)}
+              />
+              {choice.text}
+            </label>
+          </li>
+        ))}
+      </ul>
+      <button onClick={handleCheckAnswer}>Check Answer</button>
+      {feedback && <p>{feedback}</p>}
+    </div>
   );
 };
 
