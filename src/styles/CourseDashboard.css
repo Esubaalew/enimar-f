@@ -184,3 +184,31 @@
   margin-left: 20px;
   color: #666;
 }
+
+/* Styles for choices */
+.DDB-choice-list {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0 0 20px;
+}
+
+.DDB-choice-item {
+  background-color: #f9f9f9;
+  border: 1px solid #ddd;
+  padding: 5px 10px;
+  margin-bottom: 5px;
+  border-radius: 4px;
+}
+
+.choice-text {
+  margin: 0;
+}
+
+.add-choice-button {
+  margin-top: 10px;
+  background-color: #007bff;
+}
+
+.add-choice-button:hover {
+  background-color: #0056b3;
+}

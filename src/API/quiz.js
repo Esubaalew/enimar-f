@@ -18,9 +18,9 @@ export const addQuestion = async (questionData, accessToken) => {
 };
 
 // Function to add a quiz question
-export const addQuestionChoice = async (questionChoiceData, accessToken) => {
+export const addQuestionChoice = async (choiceData, accessToken) => {
     try {
-        const response = await axios.post(`${domain}learning/questions/`, questionChoiceData, {
+        const response = await axios.post(`${domain}learning/choices/`, choiceData, {
         headers: {
             Authorization: `Bearer ${accessToken}`
         } });

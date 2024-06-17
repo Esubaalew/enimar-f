@@ -21,7 +21,7 @@ import {
   getSubsectionVideos,
   getSubsectionQuestions // Import the function to fetch questions
 } from '../API/subsections';
-import { addQuestion } from '../API/quiz';
+import { addQuestion, addQuestionChoice, getQuestionChoices } from '../API/quiz';
 import AddSectionModal from './AddSectionModal';
 import AddSubsectionModal from './AddSubsectionModal';
 import AddReadingModal from './AddReadingModal';
@@ -30,6 +30,7 @@ import AddPhotoModal from './AddPhotoModal';
 import AddVideoModal from './AddVideoModal';
 import ConfirmPublishModal from './ConfirmPublishModal';
 import AddQuestionModal from './AddQuestionModal';
+import AddChoiceModal from './AddChoiceModal'; // Corrected import statement
 import '../styles/CourseDashboard.css';
 import { getLoggedInUser } from '../API/auth';
 import Header from './Header';
@@ -54,6 +55,10 @@ const CourseDashboard = () => {
   const [currentSubsectionId, setCurrentSubsectionId] = useState(null);
   const [isAddQuestionModalOpen, setIsAddQuestionModalOpen] = useState(false);
   const [currentSubsectionIdForQuestion, setCurrentSubsectionIdForQuestion] = useState(null);
+  const [isAddChoiceModalOpen, setIsAddChoiceModalOpen] = useState(false);
+  const [currentQuestionIdForChoice, setCurrentQuestionIdForChoice] = useState(null);
+
+
 
   const accessToken = JSON.parse(localStorage.getItem('user'))?.access || '';
   const navigate = useNavigate();
@@ -88,9 +93,13 @@ const CourseDashboard = () => {
               getSubsectionReadings(subsection.id, accessToken),
               getSubsectionPhotos(subsection.id, accessToken),
               getSubsectionVideos(subsection.id, accessToken),
-              getSubsectionQuestions(subsection.id, accessToken) // Fetch questions for each subsection
+              getSubsectionQuestions(subsection.id, accessToken)
             ]);
-            return { ...subsection, files, readings, photos, videos, questions }; // Include questions in subsection object
+            const questionsWithChoices = await Promise.all(questions.map(async (question) => {
+              const choices = await getQuestionChoices(question.id, accessToken);
+              return { ...question, choices };
+            }));
+            return { ...subsection, files, readings, photos, videos, questions: questionsWithChoices };
           }));
           return { ...section, subsections: subsectionsWithContent };
         }));
@@ -99,7 +108,7 @@ const CourseDashboard = () => {
         setError('Error fetching course sections');
       }
     };
-
+  
     fetchCourse();
     fetchSections();
   }, [id, accessToken, navigate]);
@@ -244,7 +253,33 @@ const CourseDashboard = () => {
       setError('Error adding question');
     }
   };
-
+  const handleAddChoice = async (choiceData) => {
+    try {
+      const newChoice = await addQuestionChoice(choiceData, accessToken);
+      console.log("3", newChoice);
+      setSections(prevSections =>
+        prevSections.map(section =>
+          section.subsections.map(subsection =>
+            subsection.id === currentSubsectionIdForQuestion
+              ? {
+                  ...subsection,
+                  questions: subsection.questions.map(question =>
+                    question.id === currentQuestionIdForChoice
+                      ? { ...question, choices: [...question.choices, newChoice] }
+                      : question
+                  )
+                }
+              : subsection
+          )
+        )
+      );
+      setIsAddChoiceModalOpen(false);
+    } catch (error) {
+      setError('Error adding choice');
+    }
+  };
+  
+  
   const handlePublish = async () => {
     try {
       await updateCourseStatus(id, true, accessToken); 
@@ -364,14 +399,24 @@ const CourseDashboard = () => {
                                       <p>{question.text}</p>
                                       {/* Display Choices if available */}
                                       {question.choices?.length > 0 && (
-                                        <ul>
-                                          {question.choices.map((choice) => (
-                                            <li key={choice.id}>
-                                              <p>{choice.choice_text}</p>
-                                            </li>
-                                          ))}
-                                        </ul>
-                                      )}
+                                  <ul className="DDB-choice-list">
+                                    {question.choices.map((choice) => (
+                                      <li key={choice.id} className="DDB-choice-item">
+                                        <p className="choice-text">{choice.text}</p>
+                                      </li>
+                                    ))}
+                                  </ul>
+                                )}
+                                      {/* Add Choice Button */}
+                                      <button
+                                        onClick={() => {
+                                          setIsAddChoiceModalOpen(true); // Open AddChoiceModal
+                                          setCurrentQuestionIdForChoice(question.id); // Pass question id
+                                        }}
+                                        className="DDB-button"
+                                      >
+                                        Add Choice
+                                      </button>
                                     </li>
                                   ))}
                                 </ul>
@@ -481,6 +526,12 @@ const CourseDashboard = () => {
           onAddQuestion={handleAddQuestion}
           subsectionId={currentSubsectionIdForQuestion}
         />
+        <AddChoiceModal
+          isOpen={isAddChoiceModalOpen} // State for opening/closing modal
+          onClose={() => setIsAddChoiceModalOpen(false)} // Close modal function
+          onSubmit={handleAddChoice} // Function to handle adding choice
+          questionId={currentQuestionIdForChoice} // Pass questionId to modal
+        />
   
         {/* Publish Button */}
         <ConfirmPublishModal
@@ -499,6 +550,8 @@ const CourseDashboard = () => {
       </div>
     </>
   );
+  
+  
   
   
   
