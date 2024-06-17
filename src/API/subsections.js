@@ -158,3 +158,18 @@ export const getSubsectionVideos = async (subsectionId, accessToken) => {
     throw new Error('Error fetching subsection videos');
   }
 };
+
+// get questions of a subsection
+export const getSubsectionQuestions = async (subsectionId, accessToken) => {
+  try {
+    const response = await axios.get(`${domain}learning/subsections/${subsectionId}/questions/`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching subsection questions:', error.response ? error.response.data : error.message);
+    throw new Error('Error fetching subsection questions');
+  }
+}
