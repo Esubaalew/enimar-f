@@ -18,7 +18,8 @@ import {
   addSubsectionReading,
   addSubsectionPhoto,
   addSubsectionVideo,
-  getSubsectionVideos
+  getSubsectionVideos,
+  getSubsectionQuestions // Import the function to fetch questions
 } from '../API/subsections';
 import { addQuestion } from '../API/quiz';
 import AddSectionModal from './AddSectionModal';
@@ -82,13 +83,14 @@ const CourseDashboard = () => {
         const sectionsWithSubsections = await Promise.all(fetchedSections.map(async (section) => {
           const subsections = await getSectionSubsections(section.id, accessToken);
           const subsectionsWithContent = await Promise.all(subsections.map(async (subsection) => {
-            const [files, readings, photos, videos] = await Promise.all([
+            const [files, readings, photos, videos, questions] = await Promise.all([
               getSubsectionFiles(subsection.id, accessToken),
               getSubsectionReadings(subsection.id, accessToken),
               getSubsectionPhotos(subsection.id, accessToken),
-              getSubsectionVideos(subsection.id, accessToken)
+              getSubsectionVideos(subsection.id, accessToken),
+              getSubsectionQuestions(subsection.id, accessToken) // Fetch questions for each subsection
             ]);
-            return { ...subsection, files, readings, photos, videos };
+            return { ...subsection, files, readings, photos, videos, questions }; // Include questions in subsection object
           }));
           return { ...section, subsections: subsectionsWithContent };
         }));
@@ -222,10 +224,7 @@ const CourseDashboard = () => {
 
   const handleAddQuestion = async (questionData) => {
     try {
-      // Call your API function to add a question
       const newQuestion = await addQuestion(questionData, accessToken);
-  
-      // Update sections state to include the new question under the correct subsection
       setSections(prevSections =>
         prevSections.map(section =>
           section.id === currentSectionId
@@ -240,13 +239,11 @@ const CourseDashboard = () => {
             : section
         )
       );
-  
       setIsAddQuestionModalOpen(false);
     } catch (error) {
       setError('Error adding question');
     }
   };
-  
 
   const handlePublish = async () => {
     try {
@@ -257,7 +254,6 @@ const CourseDashboard = () => {
       setPublishError('Error publishing course');
     }
   };
-  
 
   if (loading) {
     return <p>Loading...</p>;
@@ -358,25 +354,30 @@ const CourseDashboard = () => {
                             </div>
                           </div>
                           <div className="DDB-subsection-content">
+                            {/* Display Questions */}
                             {subsection.questions?.length > 0 && (
                               <div className="DDB-question-list">
                                 <h3>Questions:</h3>
                                 <ul>
                                   {subsection.questions.map((question) => (
                                     <li key={question.id}>
-                                      <p>{question.question_text}</p>
-                                      <ul>
-                                        {question.choices.map((choice) => (
-                                          <li key={choice.id}>
-                                            <p>{choice.choice_text}</p>
-                                          </li>
-                                        ))}
-                                      </ul>
+                                      <p>{question.text}</p>
+                                      {/* Display Choices if available */}
+                                      {question.choices?.length > 0 && (
+                                        <ul>
+                                          {question.choices.map((choice) => (
+                                            <li key={choice.id}>
+                                              <p>{choice.choice_text}</p>
+                                            </li>
+                                          ))}
+                                        </ul>
+                                      )}
                                     </li>
                                   ))}
                                 </ul>
                               </div>
                             )}
+                            {/* Display Readings */}
                             {subsection.readings?.length > 0 && (
                               <div className="DDB-reading-list">
                                 <h3>Readings:</h3>
@@ -387,6 +388,7 @@ const CourseDashboard = () => {
                                 </ul>
                               </div>
                             )}
+                            {/* Display Files */}
                             {subsection.files?.length > 0 && (
                               <div className="DDB-file-list">
                                 <h3>Files:</h3>
@@ -397,6 +399,7 @@ const CourseDashboard = () => {
                                 </ul>
                               </div>
                             )}
+                            {/* Display Photos */}
                             {subsection.photos?.length > 0 && (
                               <div className="DDB-photo-list">
                                 <h3>Photos:</h3>
@@ -409,6 +412,7 @@ const CourseDashboard = () => {
                                 </ul>
                               </div>
                             )}
+                            {/* Display Videos */}
                             {subsection.videos?.length > 0 && (
                               <div className="DDB-video-list">
                                 <h3>Videos:</h3>
@@ -495,6 +499,7 @@ const CourseDashboard = () => {
       </div>
     </>
   );
+  
   
   
 };

@@ -148,3 +148,39 @@
 .DDB-publish-button {
   margin-top: 20px;
 }
+
+
+.DDB-question-list {
+  margin-bottom: 15px;
+}
+
+.DDB-question-list h3 {
+  margin-top: 0;
+  margin-bottom: 10px;
+}
+
+.DDB-question-list ul {
+  list-style: none;
+  padding: 0;
+}
+
+.DDB-question-list ul li {
+  margin-bottom: 5px;
+}
+
+
+.DDB-question-list ul li {
+  margin-bottom: 8px;
+}
+
+/* Example: Style question text */
+.DDB-question-list .question-text {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Example: Style answers */
+.DDB-question-list .answer {
+  margin-left: 20px;
+  color: #666;
+}
