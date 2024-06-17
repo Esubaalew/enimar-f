@@ -30,3 +30,20 @@ export const verifyPayment = async (txRef, accessToken) => {
     throw new Error('Error verifying payment');
   }
 };
+
+
+// payements for course
+export const getPaymentsForCourseForTeacher = async (courseId, accessToken) => {
+  try {
+    const response = await axios.get(`${domain}payments/teacher/${courseId}`, {
+      headers: {
+        Authorization: `Bearer ${accessToken}`
+      }
+    });
+    return response.data;
+  } catch (error) {
+    console.error('Error fetching payments for course:', error.response ? error.response.data : error.message);
+    throw new Error('Error fetching payments for course');
+  }
+}
+
