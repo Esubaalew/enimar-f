@@ -124,7 +124,6 @@ const CourseDashboard = () => {
     }
   };
   
-
   const handleAddSubsection = async (subsectionData) => {
     try {
       const newSubsection = await addSubsection(subsectionData, accessToken);
@@ -133,7 +132,9 @@ const CourseDashboard = () => {
           section.id === currentSectionId
             ? {
                 ...section,
-                subsections: section.subsections ? [...section.subsections, newSubsection] : [newSubsection]
+                subsections: section.subsections
+                  ? [...section.subsections, { ...newSubsection, readings: [], files: [], photos: [], videos: [], questions: [] }]
+                  : [{ ...newSubsection, readings: [], files: [], photos: [], videos: [], questions: [] }]
               }
             : section
         )
@@ -144,7 +145,6 @@ const CourseDashboard = () => {
     }
   };
   
-
   const handleAddReading = async (readingData) => {
     try {
       const newReading = await addSubsectionReading(readingData, accessToken);
@@ -152,13 +152,16 @@ const CourseDashboard = () => {
         prevSections.map(section =>
           section.id === currentSectionId
             ? {
-              ...section,
-              subsections: section.subsections.map(subsection =>
-                subsection.id === currentSubsectionId
-                  ? { ...subsection, readings: [...subsection.readings, newReading] }
-                  : subsection
-              )
-            }
+                ...section,
+                subsections: section.subsections.map(subsection =>
+                  subsection.id === currentSubsectionId
+                    ? { 
+                        ...subsection, 
+                        readings: subsection.readings ? [...subsection.readings, newReading] : [newReading] 
+                      }
+                    : subsection
+                )
+              }
             : section
         )
       );
@@ -167,7 +170,7 @@ const CourseDashboard = () => {
       setError('Error adding reading');
     }
   };
-
+  
   const handleAddFile = async (fileData) => {
     try {
       const newFile = await addSubsectionFile(fileData, accessToken);
@@ -175,13 +178,16 @@ const CourseDashboard = () => {
         prevSections.map(section =>
           section.id === currentSectionId
             ? {
-              ...section,
-              subsections: section.subsections.map(subsection =>
-                subsection.id === currentSubsectionId
-                  ? { ...subsection, files: [...subsection.files, newFile] }
-                  : subsection
-              )
-            }
+                ...section,
+                subsections: section.subsections.map(subsection =>
+                  subsection.id === currentSubsectionId
+                    ? { 
+                        ...subsection, 
+                        files: subsection.files ? [...subsection.files, newFile] : [newFile] 
+                      }
+                    : subsection
+                )
+              }
             : section
         )
       );
@@ -190,7 +196,7 @@ const CourseDashboard = () => {
       setError('Error adding file');
     }
   };
-
+  
   const handleAddPhoto = async (photoData) => {
     try {
       const newPhoto = await addSubsectionPhoto(photoData, accessToken);
@@ -198,13 +204,16 @@ const CourseDashboard = () => {
         prevSections.map(section =>
           section.id === currentSectionId
             ? {
-              ...section,
-              subsections: section.subsections.map(subsection =>
-                subsection.id === currentSubsectionId
-                  ? { ...subsection, photos: [...subsection.photos, newPhoto] }
-                  : subsection
-              )
-            }
+                ...section,
+                subsections: section.subsections.map(subsection =>
+                  subsection.id === currentSubsectionId
+                    ? { 
+                        ...subsection, 
+                        photos: subsection.photos ? [...subsection.photos, newPhoto] : [newPhoto] 
+                      }
+                    : subsection
+                )
+              }
             : section
         )
       );
@@ -213,7 +222,7 @@ const CourseDashboard = () => {
       setError('Error adding photo');
     }
   };
-
+  
   const handleAddVideo = async (videoData) => {
     try {
       const newVideo = await addSubsectionVideo(videoData, accessToken);
@@ -221,13 +230,16 @@ const CourseDashboard = () => {
         prevSections.map(section =>
           section.id === currentSectionId
             ? {
-              ...section,
-              subsections: section.subsections.map(subsection =>
-                subsection.id === currentSubsectionId
-                  ? { ...subsection, videos: [...subsection.videos, newVideo] }
-                  : subsection
-              )
-            }
+                ...section,
+                subsections: section.subsections.map(subsection =>
+                  subsection.id === currentSubsectionId
+                    ? { 
+                        ...subsection, 
+                        videos: subsection.videos ? [...subsection.videos, newVideo] : [newVideo] 
+                      }
+                    : subsection
+                )
+              }
             : section
         )
       );
@@ -236,7 +248,7 @@ const CourseDashboard = () => {
       setError('Error adding video');
     }
   };
-
+  
   const handleAddQuestion = async (questionData) => {
     try {
       const newQuestion = await addQuestion(questionData, accessToken);
@@ -247,7 +259,10 @@ const CourseDashboard = () => {
                 ...section,
                 subsections: section.subsections.map(subsection =>
                   subsection.id === currentSubsectionIdForQuestion
-                    ? { ...subsection, questions: [...subsection.questions, newQuestion] }
+                    ? { 
+                        ...subsection, 
+                        questions: subsection.questions ? [...subsection.questions, { ...newQuestion, choices: [] }] : [{ ...newQuestion, choices: [] }] 
+                      }
                     : subsection
                 )
               }
@@ -259,10 +274,10 @@ const CourseDashboard = () => {
       setError('Error adding question');
     }
   };
+  
   const handleAddChoice = async (choiceData) => {
     try {
       const newChoice = await addQuestionChoice(choiceData, accessToken);
-      console.log("3", newChoice);
       setSections(prevSections =>
         prevSections.map(section =>
           section.subsections.map(subsection =>
@@ -271,7 +286,10 @@ const CourseDashboard = () => {
                   ...subsection,
                   questions: subsection.questions.map(question =>
                     question.id === currentQuestionIdForChoice
-                      ? { ...question, choices: [...question.choices, newChoice] }
+                      ? { 
+                          ...question, 
+                          choices: question.choices ? [...question.choices, newChoice] : [newChoice] 
+                        }
                       : question
                   )
                 }
