@@ -34,6 +34,11 @@ const StudentSignUp = () => {
       return;
     }
 
+    if (/^\d+$/.test(userData.firstName) || /^\d+$/.test(userData.lastName) || /^\d+$/.test(userData.username)) {
+      setError('First name, last name, and username cannot be only numbers.');
+      return;
+    }
+
     if (userData.password !== userData.confirmPassword) {
       setError('Passwords do not match.');
       return;
