@@ -20,6 +20,7 @@ import {
   addSubsectionVideo,
   getSubsectionVideos
 } from '../API/subsections';
+import { addQuestion } from '../API/quiz';
 import AddSectionModal from './AddSectionModal';
 import AddSubsectionModal from './AddSubsectionModal';
 import AddReadingModal from './AddReadingModal';
@@ -27,6 +28,7 @@ import AddFileModal from './AddFileModal';
 import AddPhotoModal from './AddPhotoModal';
 import AddVideoModal from './AddVideoModal';
 import ConfirmPublishModal from './ConfirmPublishModal';
+import AddQuestionModal from './AddQuestionModal';
 import '../styles/CourseDashboard.css';
 import { getLoggedInUser } from '../API/auth';
 import Header from './Header';
@@ -49,6 +51,9 @@ const CourseDashboard = () => {
   const [publishError, setPublishError] = useState(null);
   const [currentSectionId, setCurrentSectionId] = useState(null);
   const [currentSubsectionId, setCurrentSubsectionId] = useState(null);
+  const [isAddQuestionModalOpen, setIsAddQuestionModalOpen] = useState(false);
+  const [currentSubsectionIdForQuestion, setCurrentSubsectionIdForQuestion] = useState(null);
+
   const accessToken = JSON.parse(localStorage.getItem('user'))?.access || '';
   const navigate = useNavigate();
 
@@ -215,6 +220,34 @@ const CourseDashboard = () => {
     }
   };
 
+  const handleAddQuestion = async (questionData) => {
+    try {
+      // Call your API function to add a question
+      const newQuestion = await addQuestion(questionData, accessToken);
+  
+      // Update sections state to include the new question under the correct subsection
+      setSections(prevSections =>
+        prevSections.map(section =>
+          section.id === currentSectionId
+            ? {
+                ...section,
+                subsections: section.subsections.map(subsection =>
+                  subsection.id === currentSubsectionIdForQuestion
+                    ? { ...subsection, questions: [...subsection.questions, newQuestion] }
+                    : subsection
+                )
+              }
+            : section
+        )
+      );
+  
+      setIsAddQuestionModalOpen(false);
+    } catch (error) {
+      setError('Error adding question');
+    }
+  };
+  
+
   const handlePublish = async () => {
     try {
       await updateCourseStatus(id, true, accessToken); 
@@ -237,8 +270,8 @@ const CourseDashboard = () => {
     <>
       <Header />
       <div className="DDB-course-dashboard-container">
-      <div className="fancy-header">
-        <h1>{course.title}</h1>
+        <div className="fancy-header">
+          <h1>{course.title}</h1>
         </div>
         <div className="DDB-course-details">
           <p>Description: {course.description}</p>
@@ -247,7 +280,9 @@ const CourseDashboard = () => {
         </div>
         <div className="DDB-sections">
           <h2>Sections</h2>
-          <button onClick={() => setIsAddSectionModalOpen(true)} className="DDB-button">Add Section</button>
+          <button onClick={() => setIsAddSectionModalOpen(true)} className="DDB-button">
+            Add Section
+          </button>
           {sections.length === 0 ? (
             <p>No sections added yet.</p>
           ) : (
@@ -275,6 +310,15 @@ const CourseDashboard = () => {
                           <div className="DDB-subsection-header">
                             {subsection.name}
                             <div className="DDB-subsection-actions">
+                              <button
+                                onClick={() => {
+                                  setIsAddQuestionModalOpen(true);
+                                  setCurrentSubsectionIdForQuestion(subsection.id);
+                                }}
+                                className="DDB-button"
+                              >
+                                Add Question
+                              </button>
                               <button
                                 onClick={() => {
                                   setIsAddReadingModalOpen(true);
@@ -314,6 +358,25 @@ const CourseDashboard = () => {
                             </div>
                           </div>
                           <div className="DDB-subsection-content">
+                            {subsection.questions?.length > 0 && (
+                              <div className="DDB-question-list">
+                                <h3>Questions:</h3>
+                                <ul>
+                                  {subsection.questions.map((question) => (
+                                    <li key={question.id}>
+                                      <p>{question.question_text}</p>
+                                      <ul>
+                                        {question.choices.map((choice) => (
+                                          <li key={choice.id}>
+                                            <p>{choice.choice_text}</p>
+                                          </li>
+                                        ))}
+                                      </ul>
+                                    </li>
+                                  ))}
+                                </ul>
+                              </div>
+                            )}
                             {subsection.readings?.length > 0 && (
                               <div className="DDB-reading-list">
                                 <h3>Readings:</h3>
@@ -340,10 +403,7 @@ const CourseDashboard = () => {
                                 <ul>
                                   {subsection.photos.map((photo) => (
                                     <li key={photo.id}>
-                                      <img
-                                        src={`${backendUrl}${photo.image}`}
-                                        alt={photo.image}
-                                      />
+                                      <img src={`${backendUrl}${photo.image}`} alt={photo.image} />
                                     </li>
                                   ))}
                                 </ul>
@@ -374,6 +434,7 @@ const CourseDashboard = () => {
           )}
         </div>
   
+        {/* Modals */}
         <AddSectionModal
           isOpen={isAddSectionModalOpen}
           onClose={() => setIsAddSectionModalOpen(false)}
@@ -410,7 +471,14 @@ const CourseDashboard = () => {
           onAddVideo={handleAddVideo}
           subsectionId={currentSubsectionId}
         />
+        <AddQuestionModal
+          isOpen={isAddQuestionModalOpen}
+          onClose={() => setIsAddQuestionModalOpen(false)}
+          onAddQuestion={handleAddQuestion}
+          subsectionId={currentSubsectionIdForQuestion}
+        />
   
+        {/* Publish Button */}
         <ConfirmPublishModal
           isOpen={isConfirmPublishModalOpen}
           onRequestClose={() => setIsConfirmPublishModalOpen(false)}
@@ -427,6 +495,7 @@ const CourseDashboard = () => {
       </div>
     </>
   );
+  
   
 };
 
