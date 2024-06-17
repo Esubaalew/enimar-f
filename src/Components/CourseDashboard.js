@@ -101,13 +101,14 @@ const CourseDashboard = () => {
             }));
             return { ...subsection, files, readings, photos, videos, questions: questionsWithChoices };
           }));
-          return { ...section, subsections: subsectionsWithContent };
+          return { ...section, subsections: subsectionsWithContent.length ? subsectionsWithContent : [] };
         }));
         setSections(sectionsWithSubsections);
       } catch (error) {
         setError('Error fetching course sections');
       }
     };
+    
   
     fetchCourse();
     fetchSections();
@@ -116,12 +117,13 @@ const CourseDashboard = () => {
   const handleAddSection = async (sectionData) => {
     try {
       const newSection = await addSection({ ...sectionData, course: id }, accessToken);
-      setSections(prevSections => [...prevSections, newSection]);
+      setSections(prevSections => [...prevSections, { ...newSection, subsections: [] }]);
       setIsAddSectionModalOpen(false);
     } catch (error) {
       setError('Error adding section');
     }
   };
+  
 
   const handleAddSubsection = async (subsectionData) => {
     try {
@@ -129,7 +131,10 @@ const CourseDashboard = () => {
       setSections(prevSections =>
         prevSections.map(section =>
           section.id === currentSectionId
-            ? { ...section, subsections: [...section.subsections, newSubsection] }
+            ? {
+                ...section,
+                subsections: section.subsections ? [...section.subsections, newSubsection] : [newSubsection]
+              }
             : section
         )
       );
@@ -138,6 +143,7 @@ const CourseDashboard = () => {
       setError('Error adding subsection');
     }
   };
+  
 
   const handleAddReading = async (readingData) => {
     try {
