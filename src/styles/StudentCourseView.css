@@ -71,14 +71,16 @@
 .reading-list,
 .file-list,
 .photo-list,
-.video-list {
+.video-list,
+.question-list {
   margin-bottom: 20px;
 }
 
 .reading-list h4,
 .file-list h4,
 .photo-list h4,
-.video-list h4 {
+.video-list h4,
+.question-list h4 {
   margin-top: 0;
   margin-bottom: 15px;
   color: #007bff;
@@ -87,10 +89,28 @@
 .reading-list ul li,
 .file-list ul li,
 .photo-list ul li,
-.video-list ul li {
+.video-list ul li,
+.question-card {
   margin-bottom: 10px;
   background-color: #f8f9fa;
   padding: 10px;
+  border-radius: 4px;
+}
+
+.question-card h5 {
+  margin: 0 0 10px 0;
+  font-size: 16px;
+}
+
+.question-card ul {
+  list-style: none;
+  padding: 0;
+}
+
+.question-card ul li {
+  padding: 5px;
+  background-color: #e9ecef;
+  margin-bottom: 5px;
   border-radius: 4px;
 }
 

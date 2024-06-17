@@ -3,6 +3,8 @@ import { useParams } from 'react-router-dom';
 import { getCourseById, getCourseSections } from '../API/courses';
 import { getSectionSubsections } from '../API/sections';
 import { getSubsectionFiles, getSubsectionPhotos, getSubsectionReadings, getSubsectionVideos } from '../API/subsections';
+import { getSubsectionQuestions } from '../API/subsections';
+import { getQuestionChoices } from '../API/quiz';
 import { makeCompletion, getCompletedSubsectionsForCourse } from '../API/courses';
 import { getLoggedInUser } from '../API/auth';
 import { createCertificate, fetchUserCourseCertificates } from '../API/courses';
@@ -11,7 +13,7 @@ import Header from './Header';
 
 const StudentCourseView = () => {
   const { id } = useParams();
-  // eslint-disable-next-line no-unused-vars
+  // eslint-disable-next-line
   const [course, setCourse] = useState(null);
   const [sections, setSections] = useState([]);
   const [selectedSubsection, setSelectedSubsection] = useState(null);
@@ -19,7 +21,8 @@ const StudentCourseView = () => {
     readings: [],
     files: [],
     photos: [],
-    videos: []
+    videos: [],
+    questions: []
   });
   const [completedSubsections, setCompletedSubsections] = useState([]);
   const [loading, setLoading] = useState(true);
@@ -70,13 +73,20 @@ const StudentCourseView = () => {
   const handleSubsectionClick = async (subsection) => {
     setSelectedSubsection(subsection);
     try {
-      const [readings, files, photos, videos] = await Promise.all([
+      const [readings, files, photos, videos, questions] = await Promise.all([
         getSubsectionReadings(subsection.id, accessToken),
         getSubsectionFiles(subsection.id, accessToken),
         getSubsectionPhotos(subsection.id, accessToken),
-        getSubsectionVideos(subsection.id, accessToken)
+        getSubsectionVideos(subsection.id, accessToken),
+        getSubsectionQuestions(subsection.id, accessToken)
       ]);
-      setSubsectionContent({ readings, files, photos, videos });
+
+      const questionsWithChoices = await Promise.all(questions.map(async (question) => {
+        const choices = await getQuestionChoices(question.id, accessToken);
+        return { ...question, choices };
+      }));
+
+      setSubsectionContent({ readings, files, photos, videos, questions: questionsWithChoices });
     } catch (error) {
       setError('Error fetching subsection content');
     }
@@ -139,8 +149,6 @@ const StudentCourseView = () => {
     }
   };
   
-  
-
   if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
 
@@ -243,6 +251,21 @@ const StudentCourseView = () => {
                       </li>
                     ))}
                   </ul>
+                </div>
+              )}
+              {subsectionContent.questions.length > 0 && (
+                <div className="question-list">
+                  <h4>Questions:</h4>
+                  {subsectionContent.questions.map(question => (
+                    <div key={question.id} className="question-card">
+                      <h5>{question.text}</h5>
+                      <ul>
+                        {question.choices.map(choice => (
+                          <li key={choice.id}>{choice.text}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  ))}
                 </div>
               )}
               {!completedSubsections.includes(selectedSubsection.id) && (
