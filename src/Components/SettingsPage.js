@@ -48,6 +48,10 @@ const SettingsPage = () => {
         navigate('/in');
     };
 
+    const handleHelp = () => {
+
+        navigate('/help');
+    };
     if (loading) {
         return <div className="ssp-settings-page">Loading...</div>;
     }
@@ -84,6 +88,9 @@ const SettingsPage = () => {
             </div>
             <div className="ssp-settings-section" onClick={handleLogout}>
                 <h3>Logout</h3>
+            </div>
+            <div className="ssp-settings-section" onClick={handleHelp}>
+                <h3>Help</h3>
             </div>
             {showPersonalModal && <AddPersonalModal user={user} onClose={() => setShowPersonalModal(false)} />}
             {showUsernameModal && <AddUsernameModal user={user} onClose={() => setShowUsernameModal(false)} />}

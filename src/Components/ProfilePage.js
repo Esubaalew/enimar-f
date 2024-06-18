@@ -65,8 +65,8 @@ const ProfilePage = () => {
           setIsFollowing(isFollowingUser);
         }
 
-        if (fetchedUser.is_teacher) {
-          const userCourses = await getCoursesByTeacher(fetchedUser.username, accessToken);
+        if (fetchedUser?.is_teacher) {
+          const userCourses = await getCoursesByTeacher(fetchedUser?.username, accessToken);
           setCourses(userCourses);
         }
       } catch (error) {
@@ -97,14 +97,14 @@ const ProfilePage = () => {
     const fetchData = async () => {
       try {
         if (user) {
-          const userFollowers = await getUserFollowers(user.id, accessToken);
+          const userFollowers = await getUserFollowers(user?.id, accessToken);
           const followerDetails = await Promise.all(userFollowers.map(async (follower) => {
             const userDetails = await getUserById(follower.follower, accessToken);
             return { ...follower, user: userDetails };
           }));
           setFollowers(followerDetails);
 
-          const userFollowing = await getUserFollowing(user.id, accessToken);
+          const userFollowing = await getUserFollowing(user?.id, accessToken);
           const followingDetails = await Promise.all(userFollowing.map(async (followedUser) => {
             const userDetails = await getUserById(followedUser.followed_user, accessToken);
             return { ...followedUser, user: userDetails };

@@ -19,7 +19,7 @@ import {
   addSubsectionPhoto,
   addSubsectionVideo,
   getSubsectionVideos,
-  getSubsectionQuestions // Import the function to fetch questions
+  getSubsectionQuestions 
 } from '../API/subsections';
 import { addQuestion, addQuestionChoice, getQuestionChoices } from '../API/quiz';
 import AddSectionModal from './AddSectionModal';
