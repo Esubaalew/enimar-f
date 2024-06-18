@@ -16,7 +16,7 @@
 .user-card-link {
   text-decoration: none;
   color: inherit;
-  display: block; /* Make the link block-level to cover the whole card */
+  display: block;
 }
 
 .user-card-link:hover .user-card {

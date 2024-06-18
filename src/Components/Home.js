@@ -95,8 +95,10 @@ const Home = () => {
           ))}
         </div>
         <div className="sidebar">
-          {!user?.is_teacher && <CourseList courses={courses} />}
-          <UserList users={users} />
+          <div className="lists-container">
+            {!user?.is_teacher && <CourseList courses={courses} />}
+            <UserList users={users} />
+          </div>
         </div>
       </div>
     </div>

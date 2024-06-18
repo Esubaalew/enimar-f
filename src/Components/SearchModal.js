@@ -19,7 +19,7 @@ const Modal = ({ onClose, results, isLoading }) => {
           results.map(result => (
             <Link
               key={result.id}
-              to={result.hasOwnProperty('username') ? `/user/${result.username}` : `/resource/${result.id}`}
+              to={result.hasOwnProperty('username') ? `/user/${result.username}` : `/coursesS`}
               className="resultt-item-link"
             >
               <div className="resultt-item">

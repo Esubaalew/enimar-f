@@ -23,6 +23,9 @@
 
 .sidebar {
   flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end; /* Aligns items to the bottom */
 }
 
 .create-post-card {
@@ -88,4 +91,10 @@ button:hover {
   border: 1px solid #ddd;
   padding: 10px;
   margin: 10px 0;
+}
+
+.lists-container {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
 }
