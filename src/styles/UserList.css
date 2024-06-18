@@ -3,14 +3,24 @@
 }
 
 .user-card {
-  background-color: white;
+  background-color: whitesmoke;
   border: 1px solid #ddd;
   border-radius: 8px;
   padding: 16px;
   display: flex;
   align-items: center;
   margin-bottom: 16px;
-  background-color: whitesmoke;
+  transition: background-color 0.3s;
+}
+
+.user-card-link {
+  text-decoration: none;
+  color: inherit;
+  display: block; /* Make the link block-level to cover the whole card */
+}
+
+.user-card-link:hover .user-card {
+  background-color: #f1f1f1;
 }
 
 .initials-avatar {

@@ -61,7 +61,7 @@ const TeacherCourses = () => {
   const fetchPaymentsForCourse = async (courseId) => {
     try {
       const paymentsData = await getPaymentsForCourseForTeacher(loggedInUser?.id, accessToken);
-      // Iterate through paymentsData and fetch user and course details
+      
       const populatedPayments = await Promise.all(paymentsData.map(async (payment) => {
         try {
           const user = await getUserById(payment.user, accessToken);
@@ -73,7 +73,7 @@ const TeacherCourses = () => {
           };
         } catch (error) {
           console.error(`Error fetching details for payment ${payment.id}:`, error);
-          return payment; // Return original payment object on error
+          return payment; 
         }
       }));
       setPayments(prevState => ({ ...prevState, [courseId]: populatedPayments }));
