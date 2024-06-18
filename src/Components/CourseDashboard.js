@@ -557,7 +557,7 @@ const CourseDashboard = () => {
           questionId={currentQuestionIdForChoice} // Pass questionId to modal
         />
   
-        {/* Publish Button */}
+        
         <ConfirmPublishModal
           isOpen={isConfirmPublishModalOpen}
           onRequestClose={() => setIsConfirmPublishModalOpen(false)}
@@ -566,7 +566,7 @@ const CourseDashboard = () => {
         />
         <button
           onClick={() => setIsConfirmPublishModalOpen(true)}
-          disabled={course.published}
+          disabled={true}
           className="DDB-button DDB-publish-button"
         >
           Publish Course
