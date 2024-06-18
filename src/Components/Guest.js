@@ -1,4 +1,4 @@
-// import React, { useEffect } from 'react';
+import React, { useEffect } from 'react';
 import '../styles/Guest.css';
 import guestImage from '../assets/images/guestL.jpeg';
 import { useNavigate } from 'react-router-dom';
@@ -6,12 +6,12 @@ import { useNavigate } from 'react-router-dom';
 const Guest = () => {
   const navigate = useNavigate();
 
-  // useEffect(() => {
-  //   const loggedInUser = JSON.parse(localStorage.getItem('user'));
-  //   if (loggedInUser) {
-  //     navigate('/home');
-  //   }
-  // }, [navigate]);
+  useEffect(() => {
+    const loggedInUser = JSON.parse(localStorage.getItem('user'));
+    if (loggedInUser) {
+      navigate('/home');
+    }
+  }, [navigate]);
 
   const handleSSignUp = () => {
     navigate('/StudentSignUp');
