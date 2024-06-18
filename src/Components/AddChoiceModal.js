@@ -3,7 +3,7 @@ import '../styles/AddChoiceModal.css';
 
 const AddChoiceModal = ({ isOpen, onClose, onSubmit, questionId }) => {
   const [choiceText, setChoiceText] = useState('');
-  const [isCorrect, setIsCorrect] = useState(false); // State for is_correct field
+  const [isCorrect, setIsCorrect] = useState(false); 
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState(null);
 

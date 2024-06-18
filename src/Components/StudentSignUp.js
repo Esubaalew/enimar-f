@@ -72,7 +72,7 @@ const StudentSignUp = () => {
 
   return (
     <div className="signup-container">
-      <h2>Sign Up</h2>
+      <h2>Student Sign Up</h2>
       <div className="signup-form">
         <input type="text" name="firstName" placeholder="First Name" onChange={handleChange} className="input-field" />
         <input type="text" name="lastName" placeholder="Last Name" onChange={handleChange} className="input-field" />
@@ -85,6 +85,7 @@ const StudentSignUp = () => {
           {loading ? <i className="fa fa-spinner fa-spin"></i> : 'Sign Up'}
         </button>
         <p className="log-link">Have an account? <Link to="/in">Log in</Link></p>
+        <p className="log-link">U Teacher? <Link to="/TeacherSignUp">SignUp </Link></p>
       </div>
     </div>
   );

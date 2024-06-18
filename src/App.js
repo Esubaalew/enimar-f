@@ -24,6 +24,7 @@ import { Analytics } from "@vercel/analytics/react"
 import SignIn from './Components/Sign';
 import SettingsPage from './Components/SettingsPage';
 import Notifications from './Components/Notifications';
+import HelpCenter from './Components/HelpCenter';
 
 
 function App() {
@@ -53,7 +54,7 @@ function App() {
     <Route path='/password-reset-confirm/:uidb64/:token' element={<MakePass />} />
     <Route path='/notifications' element={<Notifications />} />
     <Route path='/settings' element={<SettingsPage />} />
-
+    <Route path='/help' element={<HelpCenter />} />
     <Route path="*" element={<NotFound />} />
     </Routes>
     </Router>
