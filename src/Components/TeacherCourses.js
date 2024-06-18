@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from 'react';
-import { getStudentsWhoPaidForCourse, deleteCourse } from '../API/courses';
+import { getStudentsWhoPaidForCourse, deleteCourse, getCourseById } from '../API/courses';
 import { getPaymentsForCourseForTeacher } from '../API/pay';
-import { getCoursesByTeacher } from '../API/users';
+import { getCoursesByTeacher, getUserById } from '../API/users';
 import { getLoggedInUser } from '../API/auth';
 import { useNavigate } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
@@ -61,12 +61,27 @@ const TeacherCourses = () => {
   const fetchPaymentsForCourse = async (courseId) => {
     try {
       const paymentsData = await getPaymentsForCourseForTeacher(loggedInUser?.id, accessToken);
-      setPayments(prevState => ({ ...prevState, [courseId]: paymentsData }));
+      // Iterate through paymentsData and fetch user and course details
+      const populatedPayments = await Promise.all(paymentsData.map(async (payment) => {
+        try {
+          const user = await getUserById(payment.user, accessToken);
+          const course = await getCourseById(payment.course, accessToken);
+          return {
+            ...payment,
+            user: user,
+            course: course
+          };
+        } catch (error) {
+          console.error(`Error fetching details for payment ${payment.id}:`, error);
+          return payment; // Return original payment object on error
+        }
+      }));
+      setPayments(prevState => ({ ...prevState, [courseId]: populatedPayments }));
     } catch (error) {
       console.error(`Error fetching payments for course ${courseId}:`, error);
     }
   };
-
+  
   const handleDeleteCourse = async () => {
     if (courseToDelete) {
       try {
@@ -163,11 +178,11 @@ const TeacherCourses = () => {
                 {Object.keys(payments).map(courseId => (
                   payments[courseId].map(payment => (
                     <tr key={payment.id}>
-                      <td>{payment.course}</td>
-                      <td>{payment.user}</td>
-                      <td>{payment.amount}</td>
-                      <td>{payment.created_at}</td>
-                    </tr>
+                    <td>{payment.course ? payment.course.title : 'Loading...'}</td>
+                    <td>{payment.user ? payment.user.username : 'Loading...'}</td>
+                    <td>{payment.amount}</td>
+                    <td>{payment.created_at}</td>
+                  </tr>
                   ))
                 ))}
               </tbody>

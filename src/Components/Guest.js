@@ -34,7 +34,7 @@ const Guest = () => {
           <button onClick={handleSignIn} className="btn-signin">
             Sign In
           </button>
-          <button className="btn-signup">Sign Up</button>
+          <button className="btn-signup" onClick={handleSSignUp}>Sign Up</button>
         </nav>
       </header>
 
