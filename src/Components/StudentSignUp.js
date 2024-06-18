@@ -38,6 +38,10 @@ const StudentSignUp = () => {
       setError('First name, last name, and username cannot be only numbers.');
       return;
     }
+    if (userData.password.length < 8) {
+      setError('Password must be at least 8 characters long.');
+      return;
+    }
 
     if (userData.password !== userData.confirmPassword) {
       setError('Passwords do not match.');
