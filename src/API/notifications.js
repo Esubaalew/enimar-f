@@ -2,7 +2,7 @@ import axios from "axios";
 
 
 
-const domain = 'http://localhost:8000/';
+const domain = 'https://enimar.4gmobiles.com/';
 
 // function to get all notifications
 export const getAllNotifications = async (userId, accessToken) => {
