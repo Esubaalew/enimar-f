@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const domain = ' http://127.0.0.1:8000';
+const domain = 'https://enimar.4gmobiles.com/';
 const getUserFollowers = async (userId, accessToken) => {
     try {
         const response = await axios.get(`${domain}/account/users/${userId}/followers/`, {
