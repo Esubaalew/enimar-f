@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const domain = 'http://localhost:8000/';
+const domain = 'https://enimar.4gmobiles.com/';
 
 // Function to search for users
 const searchUsers = async (query, accessToken) => {
