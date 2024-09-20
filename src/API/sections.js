@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const domain = 'http://localhost:8000/';
+const domain = 'https://enimar.4gmobiles.com/';
 
 // Function to get all sections
 export const getAllSections = async (accessToken) => {
