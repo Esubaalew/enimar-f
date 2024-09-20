@@ -53,7 +53,7 @@ const SignIn = () => {
             {loading ? <i className="fa fa-spinner fa-spin"></i> : 'Sign In'}
           </button>
           <p className="forgot-password-link"><Link to="/reset">Forgot Password?</Link></p>
-          <p className="register-link">Not Registered Yet? <Link to="/signup">Register</Link></p>
+          <p className="register-link">Not Registered Yet? <Link to="/StudentSignUp">Register</Link></p>
         </div>
       </div>
     </div>
