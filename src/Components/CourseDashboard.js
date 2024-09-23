@@ -566,7 +566,7 @@ const CourseDashboard = () => {
         />
         <button
           onClick={() => setIsConfirmPublishModalOpen(true)}
-          disabled={true}
+          disabled={false}
           className="DDB-button DDB-publish-button"
         >
           Publish Course
